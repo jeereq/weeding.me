@@ -11,12 +11,12 @@ import { Textarea } from '@/components/ui/textarea';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import dynamic from 'next/dynamic'
- 
+
 const MapModal = dynamic(
   () => import('@/components/ui/map-modal'),
   { ssr: false }
 )
- 
+
 
 interface Location {
   latitude: number | null;
@@ -549,7 +549,7 @@ export default function InvitationsPage() {
         initialLocation={
           formData.location.latitude && formData.location.longitude
             ? { lat: formData.location.latitude, lng: formData.location.longitude }
-            : null
+            : { lat: 4.323554693688447, lng: 15.27127504348755 }
         }
       />
     </div>

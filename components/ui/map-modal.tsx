@@ -1,20 +1,19 @@
 "use client";
 
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { MapContainer, TileLayer, Marker, useMapEvents } from 'react-leaflet';
 import { LatLng } from 'leaflet';
 import 'leaflet/dist/leaflet.css';
-import { Button } from './button';
-
+interface location { lat: number; lng: number }
 interface MapModalProps {
   isOpen: boolean;
   onClose: () => void;
   onLocationSelect: (location: { lat: number; lng: number }) => void;
-  initialLocation?: { lat: number; lng: number } | null;
+  initialLocation: location;
 }
 
-function MapEvents({ onLocationSelect }: { onLocationSelect: (location: { lat: number; lng: number }) => void }) {
+function MapEvents({ onLocationSelect }: { onLocationSelect: (location: location) => void }) {
   useMapEvents({
     click(e) {
       onLocationSelect({ lat: e.latlng.lat, lng: e.latlng.lng });
@@ -24,6 +23,7 @@ function MapEvents({ onLocationSelect }: { onLocationSelect: (location: { lat: n
 }
 
 export default function MapModal({ isOpen, onClose, onLocationSelect, initialLocation }: MapModalProps) {
+  const [current, setCurrent] = useState<location>(initialLocation);
   useEffect(() => {
     // Fix Leaflet icon paths
     try {
@@ -40,31 +40,32 @@ export default function MapModal({ isOpen, onClose, onLocationSelect, initialLoc
     }
   }, []);
 
-  const defaultCenter = initialLocation || { lat: 48.8566, lng: 2.3522 }; // Paris by default
+  // const defaultCenter = initialLocation || { lat: -4.3322097, lng: 15.2780097 }; // Paris by default
 
   const handleLocationSelect = (location: { lat: number; lng: number }) => {
     onLocationSelect(location);
+    setCurrent(location);
     onClose();
   };
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[800px] h-[600px] p-0">
+      <DialogContent className="sm:max-w-[800px] h-fit p-0">
         <DialogHeader className="p-6">
           <DialogTitle>Sélectionner un emplacement</DialogTitle>
         </DialogHeader>
-        <div className="h-[calc(100%-80px)]">
+        <div className="h-fit">
           <MapContainer
-            center={[defaultCenter.lat, defaultCenter.lng]}
+            center={[current.lat, current.lng]}
             zoom={13}
-            style={{ height: '100%', width: '100%' }}
+            style={{ height: 500, width: '100%' }}
           >
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {initialLocation && (
-              <Marker position={new LatLng(initialLocation.lat, initialLocation.lng)} />
+            {current && (
+              <Marker position={new LatLng(current.lat, current.lng)} />
             )}
             <MapEvents onLocationSelect={handleLocationSelect} />
           </MapContainer>
