@@ -91,7 +91,11 @@ export default function InvitationContent({ initialGuest, initialInvitation }: P
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className={`w-full max-w-4xl ${template.overlayColor} backdrop-blur-sm rounded-2xl shadow-2xl overflow-hidden border ${template.borderColor}`}
+        style={{ 
+          backdropFilter: 'blur(10px)', 
+          border: `1px solid ${template.borderColor}` 
+        }}
+        // className={`w-full max-w-4xl ${template.overlayColor} rounded-2xl shadow-2xl overflow-hidden`}
       >
         <div className={`p-8 md:p-12 ${template.textColor}`}>
           <div className="text-center mb-12">
@@ -114,9 +118,9 @@ export default function InvitationContent({ initialGuest, initialInvitation }: P
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6, delay: 0.4 }}
-            className="grid md:grid-cols-2 gap-8"
+            // className="grid md:grid-cols-2 gap-8 text-white"
           >
-            <Card className="bg-white/10 backdrop-blur-md border-white/20">
+            <Card className="bg-white/10 text-white backdrop-blur-md border-white/20">
               <CardHeader>
                 <CardTitle className="text-2xl flex items-center gap-3">
                   <Calendar className="h-6 w-6 text-rose-400" />
@@ -164,7 +168,7 @@ export default function InvitationContent({ initialGuest, initialInvitation }: P
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.3, delay: idx * 0.1 }}
-                            className="flex justify-between items-center bg-white/5 p-3 rounded-lg"
+                            // className="flex justify-between items-center bg-white/5 p-3 rounded-lg"
                           >
                             <span className="text-lg">{member.name}</span>
                             {member.relation && (
@@ -199,7 +203,7 @@ export default function InvitationContent({ initialGuest, initialInvitation }: P
                     <motion.p
                       initial={{ opacity: 0 }}
                       animate={{ opacity: 1 }}
-                      className="text-center text-sm opacity-80"
+                      // className="text-center text-sm opacity-80"
                     >
                       Votre réponse a été enregistrée. Vous pouvez la modifier à tout moment.
                     </motion.p>
