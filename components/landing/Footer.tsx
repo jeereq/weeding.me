@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
           <div className="md:col-span-2">
             <h3 className="text-xl font-bold mb-4 flex items-center">
-              <Heart className="h-5 w-5 mr-2 text-primary" /> InviteVite
+              <Heart className="h-5 w-5 mr-2 text-primary" /> Weeding.me
             </h3>
             <p className="text-muted-foreground mb-4 max-w-md">
               Créez des invitations électroniques élégantes, écologiques et personnalisables pour tous vos événements spéciaux.
@@ -35,11 +35,11 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <a href="/#gallery" className="text-muted-foreground hover:text-foreground transition-colors">
                   Designs
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                   Tarifs
                 </a>
@@ -48,7 +48,7 @@ export default function Footer() {
                 <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                   Blog
                 </a>
-              </li>
+              </li> */}
               <li>
                 <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                   Contact
@@ -61,27 +61,17 @@ export default function Footer() {
             <h4 className="font-medium mb-4">Informations</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <a href="/#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
                   À propos
                 </a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Confidentialité
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Conditions d'utilisation
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <a href="/#faq" className="text-muted-foreground hover:text-foreground transition-colors">
                   FAQ
                 </a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <a href="mailto:mingandajeereq@gmail.com" target="_blank" className="text-muted-foreground hover:text-foreground transition-colors">
                   Support
                 </a>
               </li>

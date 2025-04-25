@@ -21,11 +21,11 @@ export default function Header() {
 
   const navItems = [
     { label: "Accueil", href: "/" },
-    { label: "Fonctionnalités", href: "#features" },
-    { label: "Designs", href: "#gallery" },
-    { label: "Comment ça marche", href: "#how-it-works" },
-    { label: "Témoignages", href: "#testimonials" },
-    { label: "FAQ", href: "#faq" },
+    { label: "Fonctionnalités", href: "/#features" },
+    { label: "Designs", href: "/#gallery" },
+    { label: "Comment ça marche", href: "/#how-it-works" },
+    { label: "Témoignages", href: "/#testimonials" },
+    { label: "FAQ", href: "/#faq" },
     { label: "Templates", href: "/templates" },
     { label: "Contact", href: "/contact" },
   ];
@@ -36,7 +36,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           <Link href="/" className="flex items-center space-x-2">
             <Heart className="h-6 w-6 text-primary" />
-            <span className="font-bold text-lg">InviteVite</span>
+            <span className="font-bold text-lg">Weeding.me</span>
           </Link>
 
           {/* Desktop Navigation */}

@@ -5,6 +5,8 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 
 const designs = {
   wedding: [
@@ -63,8 +65,14 @@ const designs = {
 export default function GallerySection() {
   const [activeCategory, setActiveCategory] = useState("wedding");
 
+  const router = useRouter();
+  const handleTemplateSelect = (templateId: any) => {
+    // In a real application, this would create a new invitation with the selected template
+    // For now, we'll just navigate to the admin invitations page
+    router.push(`/contact?template=${templateId}`);
+  };
   return (
-    <section className="py-20 bg-secondary/20">
+    <section id="gallery" className="py-20 bg-secondary/20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <motion.div
@@ -102,14 +110,16 @@ export default function GallerySection() {
                     transition={{ duration: 0.4, delay: idx * 0.1 }}
                   >
                     <Card className="overflow-hidden group h-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] bg-background/50 backdrop-blur-sm">
-                      <div className="aspect-[4/5] relative overflow-hidden">
+                      <div className="aspect-[4.5/5] relative overflow-hidden">
                         <img
                           src={design.imageUrl}
                           alt={design.title}
-                          className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
+                          className="object-cover bg-grey-100 h-full w-full transition-transform duration-500 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                          <Button variant="secondary" className="w-full backdrop-blur-sm">
+                          <Button variant="secondary"
+                            onClick={() => handleTemplateSelect(design.style)}
+                            className="w-full backdrop-blur-sm">
                             Utiliser ce design
                           </Button>
                         </div>
@@ -127,9 +137,9 @@ export default function GallerySection() {
         </Tabs>
 
         <div className="text-center mt-12">
-          <Button variant="outline" size="lg" className="rounded-full">
+          <Link href={"/templates"} className=" border px-4 hover:scale-110 hover:bg-black hover:text-white py-3 rounded-lg">
             Voir tous nos designs
-          </Button>
+          </Link>
         </div>
       </div>
     </section>

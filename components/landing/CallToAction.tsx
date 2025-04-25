@@ -36,7 +36,7 @@ export default function CallToAction() {
                 Créer mon invitation
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-              <Button variant="outline" size="lg" className="rounded-full text-md px-8 border-white/30 hover:bg-white/10">
+              <Button variant="secondary" size="lg" className="rounded-full text-md px-8 border-white/30 ">
                 Voir les exemples
               </Button>
             </div>

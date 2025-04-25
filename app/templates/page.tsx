@@ -68,7 +68,7 @@ export default function Templates() {
   const handleTemplateSelect = (templateId: number) => {
     // In a real application, this would create a new invitation with the selected template
     // For now, we'll just navigate to the admin invitations page
-    router.push(`/admin/invitations?template=${templateId}`);
+    router.push(`/contact?template=${templateId}`);
   };
 
   return (
@@ -81,10 +81,10 @@ export default function Templates() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl font-bold tracking-tight mb-4">
+            <h1 className="text-4xl font-bold text-center tracking-tight mb-4">
               Nos Templates
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-center text-muted-foreground max-w-2xl mx-auto">
               Découvrez notre collection de templates élégants et personnalisables pour tous vos événements.
             </p>
           </motion.div>
@@ -116,7 +116,7 @@ export default function Templates() {
                   transition={{ duration: 0.6 }}
                 >
                   <Card className="overflow-hidden group h-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] bg-background/50 backdrop-blur-sm">
-                    <div className="aspect-[4/5] relative overflow-hidden">
+                    <div className="aspect-[4.5/5] relative overflow-hidden">
                       <img
                         src={template.imageUrl}
                         alt={template.title}

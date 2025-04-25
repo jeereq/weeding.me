@@ -24,7 +24,6 @@ export default function Hero() {
   return (
     <section className="relative overflow-hidden bg-gradient-to-b from-background to-secondary/20 py-24 md:py-32">
       <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/7149165/pexels-photo-7149165.jpeg?auto=compress&cs=tinysrgb&w=1600')] bg-cover bg-center opacity-10"></div>
-
       <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <motion.div
