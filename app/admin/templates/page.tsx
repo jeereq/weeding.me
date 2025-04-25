@@ -254,8 +254,10 @@ export default function TemplatesPage() {
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Gestion des templates</h1>
         <Button onClick={() => setCreateDialogOpen(true)}>
-          <Plus className="h-4 w-4 mr-2" />
-          Nouveau template
+          <Plus className="h-4 w-4 lg:mr-2" />
+          <span className="w-fit lg:block hidden">
+            Nouveau template
+          </span>
         </Button>
       </div>
 
@@ -264,7 +266,7 @@ export default function TemplatesPage() {
           <CardTitle>Liste des templates</CardTitle>
         </CardHeader>
         <CardContent>
-          <div className="flex gap-4 mb-6">
+          <div className="flex gap-2 mb-6">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
