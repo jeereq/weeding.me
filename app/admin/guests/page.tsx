@@ -237,7 +237,7 @@ const GuestsPage: FC = () => {
   };
 
   return (
-    <div className="space-y-6">
+    <div className="space-y-6 overflow-scroll">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Invités</h1>
         <div className="flex gap-4">
@@ -258,7 +258,6 @@ const GuestsPage: FC = () => {
           </Button>
         </div>
       </div>
-
       <Card>
         <CardHeader>
           <CardTitle>Liste des invités</CardTitle>
@@ -385,7 +384,6 @@ const GuestsPage: FC = () => {
           </Table>
         </CardContent>
       </Card>
-
       <Dialog open={messageDialogOpen} onOpenChange={setMessageDialogOpen}>
         <DialogContent>
           <DialogHeader>

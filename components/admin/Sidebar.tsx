@@ -42,7 +42,7 @@ export function Sidebar() {
   );
 
   return (
-    <div className="lg:w-64 bg-card h-[calc(100vh-4rem)] lg:p-4 p-1 border-r">
+    <div className="lg:w-64 bg-card h-full lg:p-4 p-1 border-r">
       <nav className="space-y-2">
         {filteredNavigation.map((item) => (
           <Link
