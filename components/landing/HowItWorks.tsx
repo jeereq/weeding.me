@@ -58,19 +58,21 @@ export default function HowItWorks() {
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true, margin: "-100px" }}
                 transition={{ duration: 0.5, delay: idx * 0.1 }}
-                className={`relative ${idx % 2 === 1 ? "md:translate-y-12" : ""}`}
               >
-                <div className="flex flex-col items-center md:items-start text-center md:text-left">
-                  <div className="bg-primary text-primary-foreground rounded-full p-4 z-10 mb-6">
-                    <step.icon className="h-6 w-6" />
+                <div className={`relative ${idx % 2 === 1 ? "md:translate-y-12" : ""}`}>
+
+                  <div className="flex flex-col items-center md:items-start text-center md:text-left">
+                    <div className="bg-primary text-primary-foreground rounded-full p-4 z-10 mb-6">
+                      <step.icon className="h-6 w-6" />
+                    </div>
+                    <h3 className="text-xl font-semibold mb-3">
+                      <span className="inline-block bg-muted px-2.5 py-0.5 rounded-full text-sm font-medium mr-2">
+                        {idx + 1}
+                      </span>
+                      {step.title}
+                    </h3>
+                    <p className="text-muted-foreground">{step.description}</p>
                   </div>
-                  <h3 className="text-xl font-semibold mb-3">
-                    <span className="inline-block bg-muted px-2.5 py-0.5 rounded-full text-sm font-medium mr-2">
-                      {idx + 1}
-                    </span>
-                    {step.title}
-                  </h3>
-                  <p className="text-muted-foreground">{step.description}</p>
                 </div>
               </motion.div>
             ))}

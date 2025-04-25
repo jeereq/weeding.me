@@ -12,7 +12,6 @@ import { Textarea } from '@/components/ui/textarea';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { MapModal } from '@/components/ui/map-modal';
-import dynamic from 'next/dynamic';
 
 interface Location {
   latitude: number | null;

@@ -1,4 +1,3 @@
-import { Suspense } from 'react';
 import Hero from '@/components/landing/Hero';
 import Features from '@/components/landing/Features';
 import GallerySection from '@/components/landing/GallerySection';
