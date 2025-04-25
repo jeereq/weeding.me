@@ -64,39 +64,40 @@ export default function Testimonials() {
           </motion.div>
         </div>
 
-        <motion.div 
+        <motion.div
           variants={container}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-3 gap-8"
         >
-          {testimonials.map((testimonial, idx) => (
-            <motion.div key={idx} variants={item} className="h-full">
-              <Card className="h-full bg-background/50 backdrop-blur-sm border-muted">
-                <CardContent className="pt-6">
-                  <div className="flex mb-4">
-                    {[...Array(testimonial.rating)].map((_, i) => (
-                      <StarIcon key={i} className="h-5 w-5 fill-primary text-primary" />
-                    ))}
-                  </div>
-                  <p className="italic text-muted-foreground mb-6">"{testimonial.testimonial}"</p>
-                </CardContent>
-                <CardFooter>
-                  <div className="flex items-center">
-                    <Avatar className="h-12 w-12 mr-4 ring-2 ring-primary/10">
-                      <AvatarImage src={testimonial.image} alt={testimonial.name} />
-                      <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <p className="font-medium">{testimonial.name}</p>
-                      <p className="text-sm text-muted-foreground">{testimonial.event}</p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {testimonials.map((testimonial, idx) => (
+              <motion.div key={idx} variants={item} >
+                <Card className="h-full bg-background/50 backdrop-blur-sm border-muted">
+                  <CardContent className="pt-6">
+                    <div className="flex mb-4">
+                      {[...Array(testimonial.rating)].map((_, i) => (
+                        <StarIcon key={i} className="h-5 w-5 fill-primary text-primary" />
+                      ))}
                     </div>
-                  </div>
-                </CardFooter>
-              </Card>
-            </motion.div>
-          ))}
+                    <p className="italic text-muted-foreground mb-6">"{testimonial.testimonial}"</p>
+                  </CardContent>
+                  <CardFooter>
+                    <div className="flex items-center">
+                      <Avatar className="h-12 w-12 mr-4 ring-2 ring-primary/10">
+                        <AvatarImage src={testimonial.image} alt={testimonial.name} />
+                        <AvatarFallback>{testimonial.name.charAt(0)}</AvatarFallback>
+                      </Avatar>
+                      <div>
+                        <p className="font-medium">{testimonial.name}</p>
+                        <p className="text-sm text-muted-foreground">{testimonial.event}</p>
+                      </div>
+                    </div>
+                  </CardFooter>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>

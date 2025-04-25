@@ -55,28 +55,30 @@ export default function Features() {
           </p>
         </div>
 
-        <motion.div 
+        <motion.div
           variants={container}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-100px" }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-8"
         >
-          {features.map((feature, idx) => (
-            <motion.div key={idx} variants={item} className="h-full">
-              <Card className="h-full transition-all duration-300 hover:shadow-lg">
-                <CardHeader>
-                  <div className="bg-primary/10 p-3 rounded-full w-fit mb-4">
-                    <feature.icon className="h-6 w-6 text-primary" />
-                  </div>
-                  <CardTitle>{feature.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <CardDescription className="text-base">{feature.description}</CardDescription>
-                </CardContent>
-              </Card>
-            </motion.div>
-          ))}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            {features.map((feature, idx) => (
+              <motion.div key={idx} variants={item} >
+                <Card className="h-full transition-all duration-300 hover:shadow-lg">
+                  <CardHeader>
+                    <div className="bg-primary/10 p-3 rounded-full w-fit mb-4">
+                      <feature.icon className="h-6 w-6 text-primary" />
+                    </div>
+                    <CardTitle>{feature.title}</CardTitle>
+                  </CardHeader>
+                  <CardContent>
+                    <CardDescription className="text-base">{feature.description}</CardDescription>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
         </motion.div>
       </div>
     </section>

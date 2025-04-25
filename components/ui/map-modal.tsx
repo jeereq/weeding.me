@@ -23,15 +23,21 @@ function MapEvents({ onLocationSelect }: { onLocationSelect: (location: { lat: n
   return null;
 }
 
-export function MapModal({ isOpen, onClose, onLocationSelect, initialLocation }: MapModalProps) {
+export default function MapModal({ isOpen, onClose, onLocationSelect, initialLocation }: MapModalProps) {
   useEffect(() => {
     // Fix Leaflet icon paths
-    delete (window as any).L.Icon.Default.prototype._getIconUrl;
-    (window as any).L.Icon.Default.mergeOptions({
-      iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-      iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-      shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-    });
+    try {
+      if (window != undefined) {
+        delete (window as any).L.Icon.Default.prototype._getIconUrl;
+        (window as any).L.Icon.Default.mergeOptions({
+          iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
+          iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
+          shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
+        });
+      }
+    } catch (error) {
+      console.log(error)
+    }
   }, []);
 
   const defaultCenter = initialLocation || { lat: 48.8566, lng: 2.3522 }; // Paris by default

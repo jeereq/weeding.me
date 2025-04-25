@@ -100,9 +100,8 @@ export default function GallerySection() {
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: idx * 0.1 }}
-                    className="group"
                   >
-                    <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] bg-background/50 backdrop-blur-sm">
+                    <Card className="overflow-hidden group h-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] bg-background/50 backdrop-blur-sm">
                       <div className="aspect-[4/5] relative overflow-hidden">
                         <img
                           src={design.imageUrl}
