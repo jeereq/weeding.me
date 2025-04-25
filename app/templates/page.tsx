@@ -80,7 +80,6 @@ export default function Templates() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-12"
           >
             <h1 className="text-4xl font-bold tracking-tight mb-4">
               Nos Templates
@@ -107,40 +106,40 @@ export default function Templates() {
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             transition={{ duration: 0.6, delay: 0.2 }}
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
           >
-            {filteredTemplates.map((template) => (
-              <motion.div
-                key={template.id}
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-                className="group"
-              >
-                <Card className="overflow-hidden h-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] bg-background/50 backdrop-blur-sm">
-                  <div className="aspect-[4/5] relative overflow-hidden">
-                    <img
-                      src={template.imageUrl}
-                      alt={template.title}
-                      className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
-                    />
-                    <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                      <Button 
-                        variant="secondary" 
-                        className="w-full backdrop-blur-sm"
-                        onClick={() => handleTemplateSelect(template.id)}
-                      >
-                        Utiliser ce template
-                      </Button>
+            <div className="w-fit grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+              {filteredTemplates.map((template) => (
+                <motion.div
+                  key={template.id}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.6 }}
+                >
+                  <Card className="overflow-hidden group h-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] bg-background/50 backdrop-blur-sm">
+                    <div className="aspect-[4/5] relative overflow-hidden">
+                      <img
+                        src={template.imageUrl}
+                        alt={template.title}
+                        className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
+                      />
+                      <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                        <Button
+                          variant="secondary"
+                          className="w-full backdrop-blur-sm"
+                          onClick={() => handleTemplateSelect(template.id)}
+                        >
+                          Utiliser ce template
+                        </Button>
+                      </div>
                     </div>
-                  </div>
-                  <CardContent className="p-6">
-                    <h3 className="font-medium text-lg">{template.title}</h3>
-                    <p className="text-muted-foreground text-sm">{template.style}</p>
-                  </CardContent>
-                </Card>
-              </motion.div>
-            ))}
+                    <CardContent className="p-6">
+                      <h3 className="font-medium text-lg">{template.title}</h3>
+                      <p className="text-muted-foreground text-sm">{template.style}</p>
+                    </CardContent>
+                  </Card>
+                </motion.div>
+              ))}
+            </div>
           </motion.div>
         </div>
       </section>

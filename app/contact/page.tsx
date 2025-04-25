@@ -58,7 +58,6 @@ export default function Contact() {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
-            className="max-w-4xl mx-auto"
           >
             <div className="text-center mb-12">
               <h1 className="text-4xl font-bold tracking-tight mb-4">Contactez-nous</h1>
