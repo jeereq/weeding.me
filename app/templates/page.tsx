@@ -116,7 +116,7 @@ export default function Templates() {
                   transition={{ duration: 0.6 }}
                 >
                   <Card className="overflow-hidden group h-full transition-all duration-300 hover:shadow-xl hover:scale-[1.02] bg-background/50 backdrop-blur-sm">
-                    <div className="aspect-[4/5] relative overflow-hidden">
+                    <div className="aspect-[4.5/5] relative overflow-hidden">
                       <img
                         src={template.imageUrl}
                         alt={template.title}
