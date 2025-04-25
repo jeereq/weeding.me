@@ -393,8 +393,10 @@ export default function InvitationsPage() {
         <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
           <DialogTrigger asChild>
             <Button>
-              <Plus className="h-4 w-4 mr-2" />
-              Nouvelle invitation
+              <Plus className="h-4 w-4 lg:mr-2" />
+              <span className="lg:block hidden">
+                Nouvelle invitation
+              </span>
             </Button>
           </DialogTrigger>
           <DialogContent>
@@ -406,7 +408,7 @@ export default function InvitationsPage() {
         </Dialog>
       </div>
 
-      <div className="grid gap-6">
+      <div className="grid gap-2">
         {invitations.map((invitation) => (
           <Card key={invitation.id}>
             <CardContent className="p-6">
@@ -426,10 +428,11 @@ export default function InvitationsPage() {
                     Lieu: {invitation.location.address}
                   </p>
                 </div>
-                <div className="flex items-center space-x-4">
+                <div className="grid lg:grid-cols-2 space-x-4">
                   <Button
                     variant="outline"
                     size="sm"
+                    className='mb-1 lg:mb-0'
                     onClick={() => openGuestsModal(invitation)}
                   >
                     <Users className="h-4 w-4 mr-2" />

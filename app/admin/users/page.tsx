@@ -106,8 +106,10 @@ export default function UsersPage() {
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Gestion des utilisateurs</h1>
         <Button onClick={() => setCreateDialogOpen(true)}>
-          <UserPlus className="h-4 w-4 mr-2" />
-          Nouvel utilisateur
+          <UserPlus className="h-4 w-4 lg:mr-2" />
+          <span className="w-fit lg:block hidden">
+            Nouvel utilisateur
+          </span>
         </Button>
       </div>
 

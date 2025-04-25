@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowRight } from "lucide-react";
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import { useRouter } from "next/navigation";
 
 const headlines = [
   "Des invitations qui captiveront vos invités",
@@ -13,7 +14,7 @@ const headlines = [
 
 export default function Hero() {
   const [currentHeadline, setCurrentHeadline] = useState(0);
-
+  const router = useRouter()
   useEffect(() => {
     const interval = setInterval(() => {
       setCurrentHeadline((prev) => (prev + 1) % headlines.length);
@@ -22,7 +23,7 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-background to-secondary/20 py-24 md:py-32">
+    <section className="relative overflow-hidden bg-gradient-to-b from-background to-secondary/10 py-24 md:py-32">
       <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/7149165/pexels-photo-7149165.jpeg?auto=compress&cs=tinysrgb&w=1600')] bg-cover bg-center opacity-10"></div>
       <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
@@ -53,11 +54,18 @@ export default function Hero() {
             transition={{ duration: 0.6, delay: 0.4 }}
           >
             <div className="flex flex-col space-y-4 sm:flex-row sm:space-x-4 sm:space-y-0 justify-center">
-              <Button size="lg" className="rounded-full text-md px-8">
+              <Button size="lg"
+                onClick={function () {
+                  router.push("/contact")
+                }}
+                className="rounded-full text-md px-8">
                 Créer mon invitation
                 <ArrowRight className="ml-2 h-4 w-4" />
               </Button>
-              <Button variant="outline" size="lg" className="rounded-full text-md px-8">
+              <Button onClick={function () {
+                router.push("/templates")
+
+              }} variant="outline" size="lg" className="rounded-full text-md px-8">
                 Découvrir nos designs
               </Button>
             </div>

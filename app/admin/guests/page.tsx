@@ -59,11 +59,11 @@ const mockInvitations: Record<string, Invitation> = {
 };
 
 const mockGuests: Guest[] = [
-  { 
-    id: '1', 
-    name: 'Famille Dubois', 
-    email: 'dubois@example.com', 
-    status: 'attending', 
+  {
+    id: '1',
+    name: 'Famille Dubois',
+    email: 'dubois@example.com',
+    status: 'attending',
     rsvpDate: '2025-01-15',
     type: 'family',
     invitationId: 'inv1',
@@ -73,11 +73,11 @@ const mockGuests: Guest[] = [
       { name: 'Lucas Dubois', relation: 'Fils' }
     ]
   },
-  { 
-    id: '2', 
-    name: 'Tech Solutions SA', 
-    email: 'contact@techsolutions.com', 
-    status: 'pending', 
+  {
+    id: '2',
+    name: 'Tech Solutions SA',
+    email: 'contact@techsolutions.com',
+    status: 'pending',
     rsvpDate: '-',
     type: 'company',
     invitationId: 'inv2',
@@ -87,11 +87,11 @@ const mockGuests: Guest[] = [
       { name: 'Service Marketing' }
     ]
   },
-  { 
-    id: '3', 
-    name: 'Club de Tennis', 
-    email: 'tennis.club@example.com', 
-    status: 'attending', 
+  {
+    id: '3',
+    name: 'Club de Tennis',
+    email: 'tennis.club@example.com',
+    status: 'attending',
     rsvpDate: '2025-01-10',
     type: 'group',
     invitationId: 'inv1',
@@ -100,11 +100,11 @@ const mockGuests: Guest[] = [
       { name: 'Équipe Loisirs' }
     ]
   },
-  { 
-    id: '4', 
-    name: 'Sophie Martin', 
-    email: 'sophie@example.com', 
-    status: 'attending', 
+  {
+    id: '4',
+    name: 'Sophie Martin',
+    email: 'sophie@example.com',
+    status: 'attending',
     rsvpDate: '2025-01-12',
     type: 'individual',
     invitationId: 'inv1'
@@ -138,7 +138,7 @@ const GuestsPage: FC = () => {
 
   const filteredGuests = guests.filter(guest => {
     const matchesSearch = guest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         guest.email.toLowerCase().includes(searchTerm.toLowerCase());
+      guest.email.toLowerCase().includes(searchTerm.toLowerCase());
     const matchesStatus = statusFilter === 'all' || guest.status === statusFilter;
     const matchesType = typeFilter === 'all' || guest.type === typeFilter;
     return matchesSearch && matchesStatus && matchesType;
@@ -245,12 +245,16 @@ const GuestsPage: FC = () => {
             onClick={() => setMessageDialogOpen(true)}
             disabled={selectedGuests.length === 0}
           >
-            <Mail className="h-4 w-4 mr-2" />
-            Message groupé ({selectedGuests.length})
+            <Mail className="h-4 w-4 lg:mr-2" />
+            <span className="w-fit lg:block hidden">
+              Message groupé ({selectedGuests.length})
+            </span>
           </Button>
           <Button onClick={() => setCreateDialogOpen(true)}>
-            <Plus className="h-4 w-4 mr-2" />
-            Nouvel invité
+            <Plus className="h-4 w-4 lg:mr-2" />
+            <span className="w-fit lg:block hidden">
+              Nouvel invité
+            </span>
           </Button>
         </div>
       </div>
