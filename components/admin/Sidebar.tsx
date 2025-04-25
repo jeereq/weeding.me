@@ -10,7 +10,7 @@ import {
   Settings,
   LogOut,
   Shield,
-  Palette,
+  Palette
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/lib/auth';
@@ -42,7 +42,7 @@ export function Sidebar() {
   );
 
   return (
-    <div className="w-64 bg-card h-[calc(100vh-4rem)] p-4 border-r">
+    <div className="lg:w-64 bg-card h-[calc(100vh-4rem)] lg:p-4 p-1 border-r">
       <nav className="space-y-2">
         {filteredNavigation.map((item) => (
           <Link
@@ -56,16 +56,15 @@ export function Sidebar() {
             )}
           >
             <item.icon className="h-5 w-5" />
-            <span>{item.name}</span>
+            <span className='hidden lg:block'>{item.name}</span>
           </Link>
         ))}
-        
         <button
           onClick={handleSignOut}
           className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors"
         >
           <LogOut className="h-5 w-5" />
-          <span>Déconnexion</span>
+          <span className='hidden lg:block'>Déconnexion</span>
         </button>
       </nav>
     </div>
