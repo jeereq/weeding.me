@@ -23,10 +23,10 @@ export default function AdminLayout({
   }
 
   return (
-    <div className="min-h-screen bg-background">
-      <div className="flex">
+    <div className="h-screen bg-background">
+      <div className="flex h-full">
         <Sidebar />
-        <main className="flex-1 p-8">
+        <main className="flex-1 p-8 h-full overflow-scroll">
           {children}
         </main>
       </div>
