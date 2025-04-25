@@ -35,11 +35,11 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <a href="/#gallery" className="text-muted-foreground hover:text-foreground transition-colors">
                   Designs
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                   Tarifs
                 </a>
@@ -48,7 +48,7 @@ export default function Footer() {
                 <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                   Blog
                 </a>
-              </li>
+              </li> */}
               <li>
                 <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
                   Contact
@@ -61,27 +61,17 @@ export default function Footer() {
             <h4 className="font-medium mb-4">Informations</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <a href="/#how-it-works" className="text-muted-foreground hover:text-foreground transition-colors">
                   À propos
                 </a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Confidentialité
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
-                  Conditions d'utilisation
-                </a>
-              </li>
-              <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <a href="/#faq" className="text-muted-foreground hover:text-foreground transition-colors">
                   FAQ
                 </a>
               </li>
               <li>
-                <a href="#" className="text-muted-foreground hover:text-foreground transition-colors">
+                <a href="mailto:mingandajeereq@gmail.com" target="_blank" className="text-muted-foreground hover:text-foreground transition-colors">
                   Support
                 </a>
               </li>

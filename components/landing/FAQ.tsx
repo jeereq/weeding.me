@@ -33,7 +33,7 @@ const faqs = [
 export default function FAQ() {
   return (
     <section id="faq" className="py-20 bg-background">
-      <div className="container mx-auto px-4 sm:px-6 lg:px-8">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -50,7 +50,7 @@ export default function FAQ() {
           </motion.div>
         </div>
 
-        <div className="max-w-3xl mx-auto">
+        <div className="w-full mx-auto">
           <Accordion type="single" collapsible className="w-full">
             {faqs.map((faq, idx) => (
               <motion.div

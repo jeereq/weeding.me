@@ -5,6 +5,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
+import Link from "next/link";
 
 const designs = {
   wedding: [
@@ -106,7 +107,7 @@ export default function GallerySection() {
                         <img
                           src={design.imageUrl}
                           alt={design.title}
-                          className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
+                          className="object-cover bg-grey-100 h-full w-full transition-transform duration-500 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                           <Button variant="secondary" className="w-full backdrop-blur-sm">
@@ -127,9 +128,9 @@ export default function GallerySection() {
         </Tabs>
 
         <div className="text-center mt-12">
-          <Button variant="outline" size="lg" className="rounded-full">
+          <Link href={"/templates"} className=" border px-4 hover:scale-110 hover:bg-black hover:text-white py-3 rounded-lg">
             Voir tous nos designs
-          </Button>
+          </Link>
         </div>
       </div>
     </section>

@@ -68,7 +68,7 @@ export default function Templates() {
   const handleTemplateSelect = (templateId: number) => {
     // In a real application, this would create a new invitation with the selected template
     // For now, we'll just navigate to the admin invitations page
-    router.push(`/admin/invitations?template=${templateId}`);
+    router.push(`/contact?template=${templateId}`);
   };
 
   return (
@@ -81,10 +81,10 @@ export default function Templates() {
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.6 }}
           >
-            <h1 className="text-4xl font-bold tracking-tight mb-4">
+            <h1 className="text-4xl font-bold text-center tracking-tight mb-4">
               Nos Templates
             </h1>
-            <p className="text-lg text-muted-foreground max-w-2xl mx-auto">
+            <p className="text-lg text-center text-muted-foreground max-w-2xl mx-auto">
               Découvrez notre collection de templates élégants et personnalisables pour tous vos événements.
             </p>
           </motion.div>
