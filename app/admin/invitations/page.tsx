@@ -16,7 +16,7 @@ import dynamic from 'next/dynamic';
 
 interface Location {
   latitude: number | null;
-  longitude: null;
+  longitude: number | null;
   address: string;
 }
 
@@ -28,7 +28,7 @@ interface Guest {
   status: 'pending' | 'confirmed' | 'declined';
 }
 
-type InvitationType = 
+type InvitationType =
   | 'mariage_civil'
   | 'mariage_religieux'
   | 'pacs'
@@ -204,17 +204,17 @@ export default function InvitationsPage() {
   const handleEdit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!selectedInvitation) return;
-    
-    const updatedInvitations = invitations.map(inv => 
-      inv.id === selectedInvitation.id 
+
+    const updatedInvitations = invitations.map(inv =>
+      inv.id === selectedInvitation.id
         ? {
-            ...inv,
-            title: formData.title,
-            event_date: formData.event_date,
-            type: formData.type,
-            location: formData.location,
-            template: { title: templates.find(t => t.id === formData.template_id)?.title || inv.template.title }
-          }
+          ...inv,
+          title: formData.title,
+          event_date: formData.event_date,
+          type: formData.type,
+          location: formData.location,
+          template: { title: templates.find(t => t.id === formData.template_id)?.title || inv.template.title }
+        }
         : inv
     );
     setInvitations(updatedInvitations);
@@ -456,7 +456,7 @@ export default function InvitationsPage() {
           <DialogHeader>
             <DialogTitle>Gérer les invités - {selectedInvitation?.title}</DialogTitle>
           </DialogHeader>
-          
+
           <form onSubmit={handleAddGuest} className="flex gap-4 items-end mb-6">
             <div className="flex-1 space-y-2">
               <Label htmlFor="guest-name">Nom de l'invité</Label>
@@ -514,11 +514,10 @@ export default function InvitationsPage() {
                     <TableCell>{guest.email}</TableCell>
                     <TableCell>{guest.phone}</TableCell>
                     <TableCell>
-                      <span className={`capitalize ${
-                        guest.status === 'confirmed' ? 'text-green-600' :
-                        guest.status === 'declined' ? 'text-red-600' :
-                        'text-yellow-600'
-                      }`}>
+                      <span className={`capitalize ${guest.status === 'confirmed' ? 'text-green-600' :
+                          guest.status === 'declined' ? 'text-red-600' :
+                            'text-yellow-600'
+                        }`}>
                         {guest.status}
                       </span>
                     </TableCell>
