@@ -129,7 +129,7 @@ export default function TemplatesPage() {
 
   const handleUpdateTemplate = () => {
     if (!selectedTemplate) return;
-    
+
     const updatedTemplates = templates.map(template =>
       template.id === selectedTemplate.id ? { ...selectedTemplate } : template
     );
@@ -138,19 +138,13 @@ export default function TemplatesPage() {
     setSelectedTemplate(null);
   };
 
-  const TemplateForm = ({ 
-    data, 
-    onChange, 
-    onSubmit, 
+  const TemplateForm = ({
+    data,
+    onChange,
+    onSubmit,
     submitText,
     isEditing = false
-  }: { 
-    data: typeof newTemplate, 
-    onChange: (data: typeof newTemplate) => void,
-    onSubmit: () => void,
-    submitText: string,
-    isEditing?: boolean
-  }) => (
+  }: any) => (
     <div className="space-y-4">
       <div className="space-y-2">
         <Label htmlFor="title">Titre</Label>
