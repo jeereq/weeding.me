@@ -15,7 +15,7 @@ interface User {
   id: string;
   email: string;
   name: string;
-  role: 'admin' | 'editor';
+  role?: 'admin' | 'editor';
   lastLogin: string;
   createdAt: string;
 }
@@ -46,10 +46,10 @@ export default function UsersPage() {
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
-  const [newUser, setNewUser] = useState({
+  const [newUser, setNewUser] = useState<any>({
     email: '',
     name: '',
-    role: 'editor' as const
+    role: 'editor'
   });
 
   const filteredUsers = users.filter(user =>
@@ -60,9 +60,9 @@ export default function UsersPage() {
   const handleCreateUser = () => {
     const user: User = {
       id: Math.random().toString(),
-      ...newUser,
       lastLogin: '-',
-      createdAt: new Date().toISOString()
+      createdAt: new Date().toISOString(),
+      ...newUser
     };
     setUsers([user, ...users]);
     setCreateDialogOpen(false);
@@ -71,7 +71,7 @@ export default function UsersPage() {
 
   const handleUpdateUser = () => {
     if (!selectedUser) return;
-    
+
     const updatedUsers = users.map(user =>
       user.id === selectedUser.id ? { ...selectedUser } : user
     );
@@ -80,7 +80,7 @@ export default function UsersPage() {
     setSelectedUser(null);
   };
 
-  const getRoleBadge = (role: string) => {
+  const getRoleBadge = (role: string = "editor") => {
     switch (role) {
       case 'admin':
         return (
