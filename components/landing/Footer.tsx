@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 mb-16">
           <div className="md:col-span-2">
             <h3 className="text-xl font-bold mb-4 flex items-center">
-              <Heart className="h-5 w-5 mr-2 text-primary" /> InviteVite
+              <Heart className="h-5 w-5 mr-2 text-primary" /> Weeding.me
             </h3>
             <p className="text-muted-foreground mb-4 max-w-md">
               Créez des invitations électroniques élégantes, écologiques et personnalisables pour tous vos événements spéciaux.

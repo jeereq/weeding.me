@@ -64,7 +64,7 @@ export default function GallerySection() {
   const [activeCategory, setActiveCategory] = useState("wedding");
 
   return (
-    <section className="py-20 bg-secondary/20">
+    <section id="gallery" className="py-20 bg-secondary/20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12">
           <motion.div

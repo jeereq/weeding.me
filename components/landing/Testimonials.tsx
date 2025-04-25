@@ -46,7 +46,7 @@ export default function Testimonials() {
   };
 
   return (
-    <section className="py-20 bg-muted/30">
+    <section id="testimonials" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-16">
           <motion.div
