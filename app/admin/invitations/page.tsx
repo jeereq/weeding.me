@@ -1,5 +1,4 @@
 "use client";
-
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -11,7 +10,13 @@ import { Plus, MapPin, Loader2, UserPlus, Users } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import { MapModal } from '@/components/ui/map-modal';
+import dynamic from 'next/dynamic'
+ 
+const MapModal = dynamic(
+  () => import('@/components/ui/map-modal'),
+  { ssr: false }
+)
+ 
 
 interface Location {
   latitude: number | null;
@@ -514,8 +519,8 @@ export default function InvitationsPage() {
                     <TableCell>{guest.phone}</TableCell>
                     <TableCell>
                       <span className={`capitalize ${guest.status === 'confirmed' ? 'text-green-600' :
-                          guest.status === 'declined' ? 'text-red-600' :
-                            'text-yellow-600'
+                        guest.status === 'declined' ? 'text-red-600' :
+                          'text-yellow-600'
                         }`}>
                         {guest.status}
                       </span>
