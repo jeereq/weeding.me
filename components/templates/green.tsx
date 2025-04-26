@@ -1,9 +1,13 @@
 "use client";
 
 import { Heart, MapPinned } from "lucide-react";
-import MapModal from "../ui/map-modal";
 import { useState } from "react";
+import dynamic from 'next/dynamic'
 
+const MapModal = dynamic(
+    () => import('@/components/ui/map-modal'),
+    { ssr: false }
+)
 export default function TemplateGreen({ template }: any) {
     const [isMapOpen, setIsMapOpen] = useState(false);
     const [formData, setFormData] = useState<any>({
