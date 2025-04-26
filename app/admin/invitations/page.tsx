@@ -19,8 +19,8 @@ const MapModal = dynamic(
 
 
 interface Location {
-  latitude: number | null;
-  longitude: number | null;
+  lat: number | null;
+  lng: number | null;
   address: string;
 }
 
@@ -70,8 +70,8 @@ const mockInvitations: Invitation[] = [
     status: 'active',
     type: 'mariage_civil',
     location: {
-      latitude: 48.8566,
-      longitude: 2.3522,
+      lat: 48.8566,
+      lng: 2.3522,
       address: '1 Place Charles de Gaulle, 75008 Paris'
     },
     template: { title: 'Élégance Florale' },
@@ -87,8 +87,8 @@ const mockInvitations: Invitation[] = [
     status: 'draft',
     type: 'autre',
     location: {
-      latitude: 45.7640,
-      longitude: 4.8357,
+      lat: 45.7640,
+      lng: 4.8357,
       address: '20 Place Bellecour, 69002 Lyon'
     },
     template: { title: 'Célébration Festive' },
@@ -133,8 +133,8 @@ export default function InvitationsPage() {
     template_id: '',
     type: 'autre',
     location: {
-      latitude: null,
-      longitude: null,
+      lat: 4.323554693688447,
+      lng: 15.27127504348755,
       address: '',
     },
   });
@@ -152,13 +152,13 @@ export default function InvitationsPage() {
     setIsLocating(true);
     if ('geolocation' in navigator) {
       navigator.geolocation.getCurrentPosition(
-        (position) => {
+        (position: any) => {
           setFormData({
             ...formData,
             location: {
               ...formData.location,
-              latitude: position.coords.latitude,
-              longitude: position.coords.longitude,
+              lat: position.coords.lat,
+              lng: position.coords.lng
             },
           });
           setIsLocating(false);
@@ -176,8 +176,8 @@ export default function InvitationsPage() {
       ...formData,
       location: {
         ...formData.location,
-        latitude: location.lat,
-        longitude: location.lng,
+        lat: location.lat,
+        lng: location.lng,
       },
     });
   };
@@ -201,7 +201,7 @@ export default function InvitationsPage() {
       event_date: '',
       template_id: '',
       type: 'autre',
-      location: { latitude: null, longitude: null, address: '' },
+      location: { lat: null, lng: null, address: '' },
     });
   };
 
@@ -229,7 +229,7 @@ export default function InvitationsPage() {
       event_date: '',
       template_id: '',
       type: 'autre',
-      location: { latitude: null, longitude: null, address: '' },
+      location: { lat: null, lng: null, address: '' },
     });
   };
 
@@ -354,9 +354,9 @@ export default function InvitationsPage() {
           })}
           required
         />
-        {formData.location.latitude && formData.location.longitude && (
+        {formData.location.lat && formData.location.lng && (
           <p className="text-sm text-muted-foreground mt-2">
-            Coordonnées : {formData.location.latitude}, {formData.location.longitude}
+            Coordonnées : {formData.location.lat}, {formData.location.lng}
           </p>
         )}
       </div>
@@ -550,8 +550,8 @@ export default function InvitationsPage() {
         onClose={() => setIsMapOpen(false)}
         onLocationSelect={handleMapLocationSelect}
         initialLocation={
-          formData.location.latitude && formData.location.longitude
-            ? { lat: formData.location.latitude, lng: formData.location.longitude }
+          formData.location.lat && formData.location.lng
+            ? { lat: formData.location.lat, lng: formData.location.lng }
             : { lat: 4.323554693688447, lng: 15.27127504348755 }
         }
       />
