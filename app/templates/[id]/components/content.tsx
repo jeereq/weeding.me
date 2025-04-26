@@ -10,7 +10,7 @@ export default function TemplateContent({ template }: any) {
 
 
     return (
-        <main className="min-h-screen bg-background">
+        <main className="min-h-screen bg-gray-100">
             <Header />
             <section className="pt-32 pb-20 container mx-auto">
                 <CardContent className="p-6">
