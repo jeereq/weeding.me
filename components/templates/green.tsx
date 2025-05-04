@@ -173,7 +173,7 @@ export default function TemplateGreen({ template }: any) {
                     </p>
                 </div>
             </div>
-            <div className={`w-full -translate-y-[40%] z-10 text-xs lg:text-sm relative ${colors[currentColor]} h-[600px]`}>
+            <div className={`w-full -translate-y-[40%] z-10 text-xs lg:text-sm relative ${colors[currentColor]} h-[700px]`}>
                 <img
                     src={image || template.imageUrl}
                     alt={template.title}
