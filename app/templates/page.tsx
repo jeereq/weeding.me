@@ -15,10 +15,10 @@ export default function Templates() {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 
-  const filteredTemplates = templates.filter((template) =>
+  const filteredTemplates = templates.filter((template) => (
     template.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     template.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    template.style.toLowerCase().includes(searchTerm.toLowerCase())
+    template.style.toLowerCase().includes(searchTerm.toLowerCase())) && template.active
   );
 
   const viewTemplateSelect = (templateId: number) => {
