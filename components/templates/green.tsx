@@ -37,6 +37,7 @@ export default function TemplateGreen({ template }: any) {
         11: 'novembre',
         12: 'décembre',
     })
+    const [image, setImage] = useState<any>(null);
     const [state, setState] = useState<any>({
         dateDay: 18,
         dateMonth: 6,
@@ -62,8 +63,14 @@ export default function TemplateGreen({ template }: any) {
             address: '',
         },
     });
-    const closeModalForm = () => {
 
+    const onChange = (e: any) => {
+        const { files } = e.target;
+        if (files && files.length > 0) {
+            setImage(URL.createObjectURL(files[0]))
+        }
+    }
+    const closeModalForm = () => {
         setOpenForm(false);
     }
     return <>
@@ -115,11 +122,13 @@ export default function TemplateGreen({ template }: any) {
                     </span>
                 </div>
                 <img
-                    src={template.imageUrl}
+                    src={image || template.imageUrl}
                     alt={template.title}
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className={`absolute top-0 bottom-0 left-0 right-0 ${colors[currentColor]} bg-opacity-50`}></div>
+                <div className={`absolute top-0 bottom-0 left-0 right-0 ${colors[currentColor]} group flex items-center justify-center bg-opacity-50`}>
+                    <input type="file" className="group-hover:block hidden" accept="image/*" onChange={onChange} />
+                </div>
                 <div className="absolute bottom-[90px] z-20 text-4xl lg:text-6xl text-white text-center w-full p-5">
                     {state.men}
                     <br />
@@ -166,7 +175,7 @@ export default function TemplateGreen({ template }: any) {
             </div>
             <div className={`w-full -translate-y-[38%] z-10 text-xs lg:text-sm relative ${colors[currentColor]} h-[600px]`}>
                 <img
-                    src={template.imageUrl}
+                    src={image || template.imageUrl}
                     alt={template.title}
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
