@@ -68,7 +68,6 @@ export default function TemplateYellow({ template }: any) {
     }
     return <>
         <div className="w-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
-
             <div className="w-full px-5">
                 <div
                     onClick={function () {
@@ -105,31 +104,34 @@ export default function TemplateYellow({ template }: any) {
                     </button>
                 </div>
             </div>
-            <div className="aspect-[3.5/5] z-30 relative rounded-b-full overflow-hidden">
-                <div className="absolute top-[30px] z-20 text-3xl lg:text-4xl font-bold text-white text-center w-full p-5">
-                    <div className={`w-fit px-5 py-3 ${colors[currentColor]} mx-auto`}>
-                        Save the date
-                    </div>
-                    <span className="mt-5 w-fit mx-auto block">
-                        {state.dateDay} / {state.dateMonth}
-                    </span>
-                </div>
+            <div className="aspect-[3.5/5] z-30 relative overflow-hidden">
                 <img
                     src={template.imageUrl}
                     alt={template.title}
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className={`absolute top-0 bottom-0 left-0 right-0 ${colors[currentColor]} bg-opacity-50`}></div>
-                <div className="absolute bottom-[90px] z-20 text-4xl lg:text-6xl text-white text-center w-full p-5">
-                    {state.men}
-                    <br />
-                    &
-                    <br />
-                    {state.women}
+                <div className="absolute bottom-0 z-20 text-4xl lg:text-6xl text-white text-center w-full p-5">
+                    <div className="w-full font-bold ">
+                        {state.men}
+                        <span className="w-fit px-2">&</span>
+                        {state.women}
+                    </div>
+                    <div className="w-full text-2xl flex justify-center pt-5">
+                        <div className="w-fit px-1">
+                            {state.dateDay}
+                        </div>
+                        <div className="w-fit px-1">
+                            {months[state.dateMonth]}
+                        </div>
+                        <div className="w-fit px-1">
+                            {state.dateYear}
+                        </div>
+                    </div>
                 </div>
             </div>
-            <div className="w-full -translate-y-[17.5%] relative z-20 text-xs lg:text-sm overflow-hidden p-5 h-fit rounded-t-full">
-                <div className={`w-full text-white p-10 pt-[150px] h-full ${colors[currentColor]} rounded-t-full`}>
+            <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit ">
+                <div className={`w-full text-white p-10 h-full ${colors[currentColor]}`}>
                     <p className="text-center text-sm px-5">
                         Deux âmes qui se sont trouvées, deux chemins qui n'en feront plus qu'un... C'est avec des étoiles plein les yeux et le cœur débordant d'amour que <b>Jeereq</b> et <b>Médine</b> vous convient à la célébration de leur union.
                     </p>
@@ -164,7 +166,7 @@ export default function TemplateYellow({ template }: any) {
                     </p>
                 </div>
             </div>
-            <div className={`w-full -translate-y-[38%] z-10 text-xs lg:text-sm relative ${colors[currentColor]} h-[600px]`}>
+            <div className={`w-full z-10 text-xs lg:text-sm relative ${colors[currentColor]} h-[600px]`}>
                 <img
                     src={template.imageUrl}
                     alt={template.title}
