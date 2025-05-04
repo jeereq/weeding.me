@@ -1,9 +1,8 @@
 "use client";
 import { motion } from "framer-motion";
-import { Card, CardContent } from "@/components/ui/card";
+import { CardContent } from "@/components/ui/card";
 import Header from "@/components/landing/Header";
 import Footer from "@/components/landing/Footer";
-import { useRouter } from "next/navigation";
 import TemplateGreen from "@/components/templates/green";
 
 export default function TemplateContent({ template }: any) {
