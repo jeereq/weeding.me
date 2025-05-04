@@ -78,7 +78,7 @@ export default function TemplateYellow({ template }: any) {
                     Tester
                 </div>
             </div>
-            <div className="w-full flex justify-between items-center px-5">
+            <div className="w-full flex justify-between items-center text-xs lg:text-md px-5">
                 <div
                     className={`text-white w-fit px-5 py-3 cursor-pointer  rounded-full bg-black`}
                     onClick={function () {
@@ -106,7 +106,7 @@ export default function TemplateYellow({ template }: any) {
                 </div>
             </div>
             <div className="aspect-[3.5/5] z-30 relative rounded-b-full overflow-hidden">
-                <div className="absolute top-[30px] z-20 text-4xl font-bold text-white text-center w-full p-5">
+                <div className="absolute top-[30px] z-20 text-3xl lg:text-4xl font-bold text-white text-center w-full p-5">
                     <div className={`w-fit px-5 py-3 ${colors[currentColor]} mx-auto`}>
                         Save the date
                     </div>
@@ -120,7 +120,7 @@ export default function TemplateYellow({ template }: any) {
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className={`absolute top-0 bottom-0 left-0 right-0 ${colors[currentColor]} bg-opacity-50`}></div>
-                <div className="absolute bottom-[90px] z-20 text-6xl text-white text-center w-full p-5">
+                <div className="absolute bottom-[90px] z-20 text-4xl lg:text-6xl text-white text-center w-full p-5">
                     {state.men}
                     <br />
                     &
@@ -128,7 +128,7 @@ export default function TemplateYellow({ template }: any) {
                     {state.women}
                 </div>
             </div>
-            <div className="w-full -translate-y-[17.5%] relative z-20  overflow-hidden p-5 h-fit rounded-t-full">
+            <div className="w-full -translate-y-[17.5%] relative z-20 text-xs lg:text-sm overflow-hidden p-5 h-fit rounded-t-full">
                 <div className={`w-full text-white p-10 pt-[150px] h-full ${colors[currentColor]} rounded-t-full`}>
                     <p className="text-center text-sm px-5">
                         Deux âmes qui se sont trouvées, deux chemins qui n'en feront plus qu'un... C'est avec des étoiles plein les yeux et le cœur débordant d'amour que <b>Jeereq</b> et <b>Médine</b> vous convient à la célébration de leur union.
@@ -164,7 +164,7 @@ export default function TemplateYellow({ template }: any) {
                     </p>
                 </div>
             </div>
-            <div className={`w-full -translate-y-[38%] z-10 relative ${colors[currentColor]} h-[600px]`}>
+            <div className={`w-full -translate-y-[38%] z-10 text-xs lg:text-sm relative ${colors[currentColor]} h-[600px]`}>
                 <img
                     src={template.imageUrl}
                     alt={template.title}

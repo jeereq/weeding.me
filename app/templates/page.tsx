@@ -80,21 +80,23 @@ export default function Templates() {
                         alt={template.title}
                         className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                       />
-                      <div className="absolute inset-0 grid lg:grid-cols-2 gap-2 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                        <Button
-                          variant="secondary"
-                          className="w-full backdrop-blur-sm"
-                          onClick={() => handleTemplateSelect(template.id)}
-                        >
-                          Utiliser ce template
-                        </Button>
-                        <Button
-                          variant="secondary"
-                          className="w-full backdrop-blur-sm"
-                          onClick={() => viewTemplateSelect(template.id)}
-                        >
-                          Tester le model
-                        </Button>
+                      <div className="absolute h-full inset-0  bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                        <div className="w-full h-fit grid lg:grid-cols-2 gap-2">
+                          <Button
+                            variant="secondary"
+                            className="w-full backdrop-blur-sm"
+                            onClick={() => handleTemplateSelect(template.id)}
+                          >
+                            Utiliser ce template
+                          </Button>
+                          <Button
+                            variant="secondary"
+                            className="w-full backdrop-blur-sm"
+                            onClick={() => viewTemplateSelect(template.id)}
+                          >
+                            Tester le model
+                          </Button>
+                        </div>
                       </div>
                     </div>
                     <CardContent className="p-6">
