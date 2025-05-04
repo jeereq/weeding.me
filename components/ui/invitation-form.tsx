@@ -66,8 +66,8 @@ const InvitationFormInvitation = ({ onSubmit, title, formData, setFormData, invi
     if (!openModal) return <div className="w-fit"></div>
     return (<>
         <div className="w-full fixed top-0 bottom-0 left-0 right-0 flex items-center bg-black bg-opacity-50 justify-center z-50">
-            <div className="w-fit bg-white relative shadow-lg rounded-xl p-5">
-                <form onSubmit={onSubmit} className="space-y-4">
+            <div className="w-11/12 md:w-[500px] bg-white relative shadow-lg rounded-xl p-5">
+                <form onSubmit={onSubmit} className="space-y-4 w-full">
                     <div onClick={closeModalForm} className="w-fit bg-white rounded-xl -translate-y-[115%] absolute cursor-pointer top-0 right-0 px-4 py-2 mb-2">
                         x
                     </div>
@@ -159,7 +159,9 @@ const InvitationFormInvitation = ({ onSubmit, title, formData, setFormData, invi
                                 <SelectValue placeholder="Sélectionner un template" />
                             </SelectTrigger>
                             <SelectContent>
-                                {templates.map((template) => (
+                                {templates.filter(function ({ active }) {
+                                    return active
+                                }).map((template) => (
                                     <SelectItem key={template.id} value={template.id}>
                                         {template.title}
                                     </SelectItem>
