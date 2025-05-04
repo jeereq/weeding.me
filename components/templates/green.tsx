@@ -112,7 +112,7 @@ export default function TemplateGreen({ template }: any) {
                     </button>
                 </div>
             </div>
-            <div className="aspect-[3.5/5] z-30 relative rounded-b-full overflow-hidden">
+            <div className="aspect-[3/5] lg:aspect-[3.5/5] z-30 relative rounded-b-full overflow-hidden">
                 <div className="absolute top-[30px] z-20 text-3xl lg:text-4xl font-bold text-white text-center w-full p-5">
                     <div className={`w-fit px-5 py-3 ${colors[currentColor]} mx-auto`}>
                         Save the date
@@ -138,7 +138,7 @@ export default function TemplateGreen({ template }: any) {
                 </div>
             </div>
             <div className="w-full -translate-y-[17.5%] relative z-20 text-xs lg:text-sm overflow-hidden p-5 h-fit rounded-t-full">
-                <div className={`w-full text-white p-10 pt-[150px] h-full ${colors[currentColor]} rounded-t-full`}>
+                <div className={`w-full text-white p-10 pt-[170px] lg:pt-[150px] h-full ${colors[currentColor]} rounded-t-full`}>
                     <p className="text-center text-sm px-5">
                         Deux âmes qui se sont trouvées, deux chemins qui n'en feront plus qu'un... C'est avec des étoiles plein les yeux et le cœur débordant d'amour que <b>Jeereq</b> et <b>Médine</b> vous convient à la célébration de leur union.
                     </p>
