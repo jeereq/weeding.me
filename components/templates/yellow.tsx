@@ -75,7 +75,7 @@ export default function TemplateYellow({ template }: any) {
         setOpenForm(false);
     }
     return <>
-        <div className="w-fit relative shadow-lg mx-auto rounded-xl bg-white">
+        <div className="w-fit relative shadow-lg mx-auto rounded-xl bg-white py-5">
             <div className="w-full px-5">
                 <div
                     onClick={function () {
@@ -119,7 +119,7 @@ export default function TemplateYellow({ template }: any) {
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className={`absolute top-0 -bottom-[10px] left-0 right-0 bg-white bg-opacity-40 `}></div>
-                <div className={`absolute bg-[url('/bgYellow.png')] ${colorsText[currentColor]} bg-cover bg-no-repeat h-[150px] bottom-0 z-20 text-4xl lg:text-6xl text-center w-full p-5 pt-10`}>
+                <div className={`absolute  -bottom-[50px] left-0 right-0 pb-[150px] ${colorsText[currentColor]} text-4xl lg:text-6xl text-center`}>
                     <div className="w-full font-bold ">
                         {state.men}
                         <span className="w-fit px-2">&</span>
@@ -138,14 +138,19 @@ export default function TemplateYellow({ template }: any) {
                         </div>
                     </div>
                 </div>
+                <div className={`absolute bg-[url('/bgYellow.png')] bg-cover bg-no-repeat h-[150px] -bottom-[5px] left-0 right-0 z-20 p-5 pt-10`}>
+                </div>
             </div>
             <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit ">
-                <div className={`w-full p-10 h-full ${colorsText[currentColor]}`}>
+                <div className={`w-full p-10 pt-5 h-full ${colorsText[currentColor]}`}>
+                    <div className="w-full font-bold text-center text-3xl pb-10">
+                        Save the date
+                    </div>
                     <p className="text-center text-sm px-5">
                         Deux âmes qui se sont trouvées, deux chemins qui n'en feront plus qu'un... C'est avec des étoiles plein les yeux et le cœur débordant d'amour que <b>Jeereq</b> et <b>Médine</b> vous convient à la célébration de leur union.
                     </p>
                     <div className="w-full flex items-center text-2xl  justify-center my-7">
-                        <div className="w-fit font-bold px-1">
+                        <div className="w-fit px-1">
                             {state.dateDay}
                         </div>
                         <div className="w-fit px-1 py-2">
@@ -173,9 +178,8 @@ export default function TemplateYellow({ template }: any) {
                 </div>
             </div>
             <div className={`w-full z-10 text-xs lg:text-sm relative bg-white`}>
-
                 <div className="w-full p-5">
-                    <div className={`w-full text-center font-bold h-fit p-5 mt-5 rounded-lg ${colors[currentColor]} text-white`}>
+                    <div className={`w-full text-center font-bold h-fit p-5 mt-5 rounded-full ${colors[currentColor]} text-white`}>
                         Commander
                     </div>
                 </div>
