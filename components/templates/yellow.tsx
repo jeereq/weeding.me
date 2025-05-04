@@ -75,7 +75,7 @@ export default function TemplateYellow({ template }: any) {
         setOpenForm(false);
     }
     return <>
-        <div className="w-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
+        <div className="w-fit relative shadow-lg mx-auto rounded-xl bg-white">
             <div className="w-full px-5">
                 <div
                     onClick={function () {
