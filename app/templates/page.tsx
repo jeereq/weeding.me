@@ -15,22 +15,17 @@ export default function Templates() {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
 
-  const filteredTemplates = templates.filter((template) =>
+  const filteredTemplates = templates.filter((template) => (
     template.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
     template.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    template.style.toLowerCase().includes(searchTerm.toLowerCase())
+    template.style.toLowerCase().includes(searchTerm.toLowerCase())) && template.active
   );
 
   const viewTemplateSelect = (templateId: number) => {
-    // In a real application, this would create a new invitation with the selected template
-    // For now, we'll just navigate to the admin invitations page
     router.push(`/templates/${templateId}?title=${encodeURIComponent(templates.find(t => t.id === templateId)?.title || '')}`);
-    // This will navigate to the template page with the selected template ID
   };
 
   const handleTemplateSelect = (templateId: number) => {
-    // In a real application, this would create a new invitation with the selected template
-    // For now, we'll just navigate to the admin invitations page
     router.push(`/contact?template=${templateId}`);
   };
 

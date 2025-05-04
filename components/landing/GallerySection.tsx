@@ -8,20 +8,26 @@ import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-const designs = {
+const designs: any = {
   wedding: [
     {
       title: "Élégance Florale",
-      imageUrl: "https://images.pexels.com/photos/1589216/pexels-photo-1589216.jpeg",
+      id: 1,
+      active: true,
+      imageUrl: "https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg",
       style: "Élégant & Romantique"
     },
     {
       title: "Minimaliste Moderne",
+      id: 2,
+      active: false,
       imageUrl: "https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg",
       style: "Contemporain & Épuré"
     },
     {
       title: "Champêtre Vintage",
+      id: 3,
+      active: false,
       imageUrl: "https://images.pexels.com/photos/2959192/pexels-photo-2959192.jpeg",
       style: "Rustique & Chaleureux"
     },
@@ -29,16 +35,19 @@ const designs = {
   birthday: [
     {
       title: "Célébration Festive",
+      active: false,
       imageUrl: "https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg",
       style: "Coloré & Joyeux"
     },
     {
       title: "Sophistication Élégante",
+      active: false,
       imageUrl: "https://images.pexels.com/photos/3875080/pexels-photo-3875080.jpeg",
       style: "Chic & Raffiné"
     },
     {
       title: "Thématique Ludique",
+      active: false,
       imageUrl: "https://images.pexels.com/photos/5428836/pexels-photo-5428836.jpeg",
       style: "Amusant & Personnalisé"
     },
@@ -46,16 +55,19 @@ const designs = {
   other: [
     {
       title: "Réception Élégante",
+      active: false,
       imageUrl: "https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg",
       style: "Formel & Distingué"
     },
     {
       title: "Fête Saisonnière",
+      active: false,
       imageUrl: "https://images.pexels.com/photos/5905492/pexels-photo-5905492.jpeg",
       style: "Thématique & Festif"
     },
     {
       title: "Événement Professionnel",
+      active: false,
       imageUrl: "https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg",
       style: "Business & Structuré"
     },
@@ -71,6 +83,13 @@ export default function GallerySection() {
     // For now, we'll just navigate to the admin invitations page
     router.push(`/contact?template=${templateId}`);
   };
+  const viewTemplateSelect = (templateId: number, category: string) => {
+    // In a real application, this would create a new invitation with the selected template
+    // For now, we'll just navigate to the admin invitations page
+    router.push(`/templates/${templateId}?title=${encodeURIComponent(designs[category].find((t: any) => t.id === templateId)?.title || '')}`);
+    // This will navigate to the template page with the selected template ID
+  };
+
   return (
     <section id="gallery" className="py-20 bg-secondary/20">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
@@ -94,15 +113,15 @@ export default function GallerySection() {
           <div className="flex justify-center mb-10">
             <TabsList className="bg-background/80 backdrop-blur-sm">
               <TabsTrigger value="wedding">Mariages</TabsTrigger>
-              <TabsTrigger value="birthday">Anniversaires</TabsTrigger>
-              <TabsTrigger value="other">Autres Événements</TabsTrigger>
+              {/* <TabsTrigger value="birthday">Anniversaires</TabsTrigger>
+              <TabsTrigger value="other">Autres Événements</TabsTrigger> */}
             </TabsList>
           </div>
 
-          {Object.entries(designs).map(([category, items]) => (
+          {Object.entries(designs).map(([category, items]: any) => (
             <TabsContent key={category} value={category}>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {items.map((design, idx) => (
+                {items.filter(function (template: any) { return template.active }).map((design: any, idx: number) => (
                   <motion.div
                     key={idx}
                     initial={{ opacity: 0, y: 20 }}
@@ -116,11 +135,20 @@ export default function GallerySection() {
                           alt={design.title}
                           className="object-cover bg-grey-100 h-full w-full transition-transform duration-500 group-hover:scale-110"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                          <Button variant="secondary"
-                            onClick={() => handleTemplateSelect(design.style)}
-                            className="w-full backdrop-blur-sm">
-                            Utiliser ce design
+                        <div className="absolute inset-0 grid lg:grid-cols-2 gap-2 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                          <Button
+                            variant="secondary"
+                            className="w-full backdrop-blur-sm"
+                            onClick={() => handleTemplateSelect(design.id)}
+                          >
+                            Utiliser ce template
+                          </Button>
+                          <Button
+                            variant="secondary"
+                            className="w-full backdrop-blur-sm"
+                            onClick={() => viewTemplateSelect(design.id, category)}
+                          >
+                            Tester le model
                           </Button>
                         </div>
                       </div>

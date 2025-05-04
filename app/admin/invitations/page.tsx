@@ -62,7 +62,7 @@ const invitationTypes = [
   { value: 'autre', label: 'Autre Célébration' },
 ] as const;
 
-export const mockInvitations: Invitation[] = [
+const mockInvitations: Invitation[] = [
   {
     id: '1',
     title: 'Mariage Été 2025',
@@ -98,7 +98,7 @@ export const mockInvitations: Invitation[] = [
   }
 ];
 
-export const templates = [
+const templates = [
   { id: '1', title: 'Élégance Florale' },
   { id: '2', title: 'Célébration Festive' },
   { id: '3', title: 'Minimaliste Moderne' },
