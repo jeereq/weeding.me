@@ -143,7 +143,7 @@ export default function TemplateYellow({ template }: any) {
             </div>
             <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit ">
                 <div className={`w-full p-10 pt-5 h-full ${colorsText[currentColor]}`}>
-                    <div className="w-full font-bold text-center text-3xl pb-10">
+                    <div className={`w-full font-bold  ${colors[currentColor]} text-center text-3xl py-3 rounded-full text-white mb-10`}>
                         Save the date
                     </div>
                     <p className="text-center text-sm px-5">
