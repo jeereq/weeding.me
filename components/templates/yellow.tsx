@@ -75,7 +75,7 @@ export default function TemplateYellow({ template }: any) {
         setOpenForm(false);
     }
     return <>
-        <div className="w-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
+        <div className="w-fit relative shadow-lg mx-auto rounded-xl bg-white">
             <div className="w-full px-5">
                 <div
                     onClick={function () {
@@ -140,7 +140,7 @@ export default function TemplateYellow({ template }: any) {
                 </div>
             </div>
             <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit ">
-                <div className={`w-full text-white p-10 h-full ${colorsText[currentColor]}`}>
+                <div className={`w-full p-10 h-full ${colorsText[currentColor]}`}>
                     <p className="text-center text-sm px-5">
                         Deux âmes qui se sont trouvées, deux chemins qui n'en feront plus qu'un... C'est avec des étoiles plein les yeux et le cœur débordant d'amour que <b>Jeereq</b> et <b>Médine</b> vous convient à la célébration de leur union.
                     </p>
@@ -172,15 +172,9 @@ export default function TemplateYellow({ template }: any) {
                     </p>
                 </div>
             </div>
-            <div className={`w-full z-10 text-xs lg:text-sm relative ${colors[currentColor]} h-[600px]`}>
-                <img
-                    src={template.imageUrl}
-                    alt={template.title}
-                    className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className="absolute top-0 bottom-0 left-0 right-0 bg-green-900 bg-opacity-10"></div>
+            <div className={`w-full z-10 text-xs lg:text-sm relative bg-white`}>
 
-                <div className="w-full px-5">
+                <div className="w-full p-5">
                     <div className={`w-full text-center font-bold h-fit p-5 mt-5 rounded-lg ${colors[currentColor]} text-white`}>
                         Commander
                     </div>
