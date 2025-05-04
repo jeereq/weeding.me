@@ -32,7 +32,7 @@ interface Guest {
   status: 'pending' | 'confirmed' | 'declined';
 }
 
-type InvitationType =
+export type InvitationType =
   | 'mariage_civil'
   | 'mariage_religieux'
   | 'pacs'
@@ -62,7 +62,7 @@ const invitationTypes = [
   { value: 'autre', label: 'Autre Célébration' },
 ] as const;
 
-const mockInvitations: Invitation[] = [
+export const mockInvitations: Invitation[] = [
   {
     id: '1',
     title: 'Mariage Été 2025',
@@ -98,7 +98,7 @@ const mockInvitations: Invitation[] = [
   }
 ];
 
-const templates = [
+export const templates = [
   { id: '1', title: 'Élégance Florale' },
   { id: '2', title: 'Célébration Festive' },
   { id: '3', title: 'Minimaliste Moderne' },
