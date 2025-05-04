@@ -173,12 +173,14 @@ export default function TemplateGreen({ template }: any) {
                     </p>
                 </div>
             </div>
-            <div className={`w-full -translate-y-[38%] z-10 text-xs lg:text-sm relative ${colors[currentColor]} h-[600px]`}>
+            <div className={`w-full -translate-y-[40%] z-10 text-xs lg:text-sm relative ${colors[currentColor]} h-[600px]`}>
                 <img
                     src={image || template.imageUrl}
                     alt={template.title}
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
+                <div className={`absolute bg-[url('/bgYellow.png')] bg-cover bg-no-repeat h-[150px] -bottom-[5px] left-0 right-0 z-20 p-5 pt-10`}>
+                </div>
                 <div className="absolute top-0 bottom-0 left-0 right-0 bg-green-900 bg-opacity-10"></div>
 
                 <div className="w-full px-5">
