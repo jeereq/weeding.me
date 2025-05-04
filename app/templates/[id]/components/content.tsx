@@ -4,9 +4,10 @@ import { CardContent } from "@/components/ui/card";
 import Header from "@/components/landing/Header";
 import Footer from "@/components/landing/Footer";
 import TemplateGreen from "@/components/templates/green";
+import TemplateYellow from "@/components/templates/yellow";
+import TemplateRed from "@/components/templates/red";
 
-export default function TemplateContent({ template }: any) {
-
+export default function TemplateContent({ template, id }: any) {
 
     return (
         <main className="min-h-screen bg-gray-100">
@@ -24,7 +25,9 @@ export default function TemplateContent({ template }: any) {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
                         >
-                            <TemplateGreen template={template} />
+                            {id == 1 && <TemplateGreen template={template} />}
+                            {id == 2 && <TemplateYellow template={template} />}
+                            {id == 3 && <TemplateRed template={template} />}
                         </motion.div>
                     </div>
                 </div>

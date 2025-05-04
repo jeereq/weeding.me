@@ -19,6 +19,6 @@ export default function Template({ params }: { params: { id: string } }) {
         );
     }
     return (
-        <TemplateContent template={template} />
+        <TemplateContent template={template} id={params.id} />
     );
 }

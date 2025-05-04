@@ -9,28 +9,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import Header from "@/components/landing/Header";
 import Footer from "@/components/landing/Footer";
 import { Card, CardContent } from "@/components/ui/card";
+import { templates } from "@/lib/utils";
 
-// Mock templates data - Replace with Supabase data
-const templates = [
-  {
-    id: '1',
-    title: 'Élégance Florale',
-    description: 'Un design élégant avec des motifs floraux délicats',
-    imageUrl: 'https://images.pexels.com/photos/1589216/pexels-photo-1589216.jpeg',
-  },
-  {
-    id: '2',
-    title: 'Corporate Classic',
-    description: 'Design professionnel pour événements d\'entreprise',
-    imageUrl: 'https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg',
-  },
-  {
-    id: '3',
-    title: 'Célébration Festive',
-    description: 'Design coloré et joyeux pour les célébrations',
-    imageUrl: 'https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg',
-  }
-];
 
 export default function Contact() {
   const [formState, setFormState] = useState({
@@ -47,7 +27,9 @@ export default function Contact() {
     console.log(formState);
   };
 
-  const selectedTemplate = templates.find(t => t.id === formState.templateId);
+  const selectedTemplate = templates.filter(function ({ active }) {
+    return active
+  }).find(t => t.id === formState.templateId);
 
   return (
     <main className="min-h-screen bg-background">
@@ -118,7 +100,9 @@ export default function Contact() {
                         <SelectValue placeholder="Choisir un template" />
                       </SelectTrigger>
                       <SelectContent>
-                        {templates.map((template) => (
+                        {templates.filter(function ({ active }) {
+                          return active
+                        }).map((template) => (
                           <SelectItem key={template.id} value={template.id}>
                             {template.title}
                           </SelectItem>
@@ -167,7 +151,9 @@ export default function Contact() {
                     </Card>
                   ) : (
                     <div className="grid grid-cols-2 gap-4">
-                      {templates.map((template) => (
+                      {templates.filter(function ({ active }) {
+                        return active
+                      }).map((template) => (
                         <Card
                           key={template.id}
                           className="overflow-hidden cursor-pointer transition-transform hover:scale-105"

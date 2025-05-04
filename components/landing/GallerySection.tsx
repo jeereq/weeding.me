@@ -11,25 +11,28 @@ import { useRouter } from "next/navigation";
 const designs: any = {
   wedding: [
     {
-      title: "Élégance Florale",
       id: 1,
+      title: "Mariage Élégant",
+      category: "wedding",
       active: true,
+      style: "Classique & Raffiné",
       imageUrl: "https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg",
-      style: "Élégant & Romantique"
     },
     {
-      title: "Minimaliste Moderne",
       id: 2,
-      active: false,
-      imageUrl: "https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg",
-      style: "Contemporain & Épuré"
+      title: "Anniversaire Festif",
+      category: "birthday",
+      active: true,
+      style: "Moderne & Coloré",
+      imageUrl: "https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg",
     },
     {
-      title: "Champêtre Vintage",
       id: 3,
-      active: false,
-      imageUrl: "https://images.pexels.com/photos/2959192/pexels-photo-2959192.jpeg",
-      style: "Rustique & Chaleureux"
+      title: "Baptême Délicat",
+      category: "baptism",
+      active: true,
+      style: "Doux & Poétique",
+      imageUrl: "https://images.pexels.com/photos/5428836/pexels-photo-5428836.jpeg",
     },
   ],
   birthday: [
