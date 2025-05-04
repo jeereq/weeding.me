@@ -59,6 +59,7 @@ export default function TemplateYellow({ template }: any) {
         women: "Medine",
     })
     const [currentColor, setCurrentColor] = useState<string>('green');
+    const [image, setImage] = useState<any>(null);
     const [formData, setFormData] = useState<any>({
         title: '',
         event_date: '',
@@ -70,10 +71,17 @@ export default function TemplateYellow({ template }: any) {
             address: '',
         },
     });
+    const onChange = (e: any) => {
+        const { files } = e.target;
+        if (files && files.length > 0) {
+            setImage(URL.createObjectURL(files[0]))
+        }
+    }
+    
     const closeModalForm = () => {
-
         setOpenForm(false);
     }
+
     return <>
         <div className="w-fit relative shadow-lg mx-auto rounded-xl bg-white py-5">
             <div className="w-full px-5">
@@ -114,11 +122,13 @@ export default function TemplateYellow({ template }: any) {
             </div>
             <div className="aspect-[3.5/5] z-30 relative">
                 <img
-                    src={template.imageUrl}
+                    src={image || template.imageUrl}
                     alt={template.title}
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className={`absolute top-0 -bottom-[10px] left-0 right-0 bg-white bg-opacity-40 `}></div>
+                <div className={`absolute top-0 -bottom-[10px] left-0 right-0 bg-white bg-opacity-40 flex group items-center justify-center`}>
+                    <input type="file" className="group-hover:block hidden" accept="image/*" onChange={onChange} />
+                </div>
                 <div className={`absolute  -bottom-[50px] left-0 right-0 pb-[150px] ${colorsText[currentColor]} text-4xl lg:text-6xl text-center`}>
                     <div className="w-full font-bold ">
                         {state.men}

@@ -46,7 +46,6 @@ export default function Templates() {
               Découvrez notre collection de templates élégants et personnalisables pour tous vos événements.
             </p>
           </motion.div>
-
           <div className="max-w-md mx-auto mb-12">
             <div className="relative">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-5 w-5" />
