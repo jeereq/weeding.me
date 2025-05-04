@@ -118,20 +118,21 @@ export default function TemplateYellow({ template }: any) {
                     alt={template.title}
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className={`absolute top-0 bottom-0 left-0 right-0 bg-white bg-opacity-40 `}></div>
+                <div className={`absolute top-0 -bottom-[10px] left-0 right-0 bg-white bg-opacity-40 `}></div>
                 <div className={`absolute bg-[url('/bgYellow.png')] ${colorsText[currentColor]} bg-cover bg-no-repeat h-[150px] bottom-0 z-20 text-4xl lg:text-6xl text-center w-full p-5 pt-10`}>
                     <div className="w-full font-bold ">
                         {state.men}
                         <span className="w-fit px-2">&</span>
                         {state.women}
                     </div>
-                    <div className="w-full text-2xl flex justify-center">
+                    <div className="w-full text-2xl mt-2 flex justify-center">
                         <div className="w-fit px-1">
                             {state.dateDay}
-                        </div>
+                        </div>  /
                         <div className="w-fit px-1">
-                            {months[state.dateMonth]}
+                            {state.dateMonth}
                         </div>
+                        /
                         <div className="w-fit px-1">
                             {state.dateYear}
                         </div>
@@ -143,19 +144,16 @@ export default function TemplateYellow({ template }: any) {
                     <p className="text-center text-sm px-5">
                         Deux âmes qui se sont trouvées, deux chemins qui n'en feront plus qu'un... C'est avec des étoiles plein les yeux et le cœur débordant d'amour que <b>Jeereq</b> et <b>Médine</b> vous convient à la célébration de leur union.
                     </p>
-                    <div className="w-full flex items-center justify-center mt-10">
-                        <div className="w-fit border-t-2  border-dashed border-b-2 px-5 py-2">
-                            le
-                        </div>
-                        <div className="w-fit font-bold border-dashed text-5xl px-5">
+                    <div className="w-full flex items-center text-2xl  justify-center my-7">
+                        <div className="w-fit font-bold px-1">
                             {state.dateDay}
                         </div>
-                        <div className="w-fit border-t-2 border-b-2 border-dashed px-5 py-2">
+                        <div className="w-fit px-1 py-2">
                             {months[state.dateMonth]}
                         </div>
-                    </div>
-                    <div className="w-full text-center mb-10">
-                        {state.dateYear}
+                        <div className="w-fit px-1 py-2">
+                            {state.dateYear}
+                        </div>
                     </div>
                     <p className="text-center text-sm px-5">
                         Rendez-vous le <b>{state.dateDay}/{state.dateMonth}/{state.dateYear}</b> à <b>{state.dateTime}</b> sur le(l') {state.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
