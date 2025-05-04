@@ -23,6 +23,14 @@ export default function TemplateYellow({ template }: any) {
         indigo: 'bg-indigo-900',
         pink: 'bg-pink-900'
     })
+    const [colorsText] = useState<any>({
+        green: 'text-green-900',
+        yellow: 'text-yellow-900',
+        red: 'text-red-900',
+        purple: 'text-purple-900',
+        indigo: 'text-indigo-900',
+        pink: 'text-pink-900'
+    })
     const [months] = useState<any>({
         1: 'janvier',
         2: 'février',
@@ -104,20 +112,20 @@ export default function TemplateYellow({ template }: any) {
                     </button>
                 </div>
             </div>
-            <div className="aspect-[3.5/5] z-30 relative overflow-hidden">
+            <div className="aspect-[3.5/5] z-30 relative">
                 <img
                     src={template.imageUrl}
                     alt={template.title}
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className={`absolute top-0 bottom-0 left-0 right-0 ${colors[currentColor]} bg-opacity-50`}></div>
-                <div className="absolute bottom-0 z-20 text-4xl lg:text-6xl text-white text-center w-full p-5">
+                <div className={`absolute top-0 bottom-0 left-0 right-0 bg-white bg-opacity-40 `}></div>
+                <div className={`absolute bg-[url('/bgYellow.png')] ${colorsText[currentColor]} bg-cover bg-no-repeat h-[150px] bottom-0 z-20 text-4xl lg:text-6xl text-center w-full p-5 pt-10`}>
                     <div className="w-full font-bold ">
                         {state.men}
                         <span className="w-fit px-2">&</span>
                         {state.women}
                     </div>
-                    <div className="w-full text-2xl flex justify-center pt-5">
+                    <div className="w-full text-2xl flex justify-center">
                         <div className="w-fit px-1">
                             {state.dateDay}
                         </div>
@@ -131,7 +139,7 @@ export default function TemplateYellow({ template }: any) {
                 </div>
             </div>
             <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit ">
-                <div className={`w-full text-white p-10 h-full ${colors[currentColor]}`}>
+                <div className={`w-full text-white p-10 h-full ${colorsText[currentColor]}`}>
                     <p className="text-center text-sm px-5">
                         Deux âmes qui se sont trouvées, deux chemins qui n'en feront plus qu'un... C'est avec des étoiles plein les yeux et le cœur débordant d'amour que <b>Jeereq</b> et <b>Médine</b> vous convient à la célébration de leur union.
                     </p>
