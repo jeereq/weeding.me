@@ -120,7 +120,7 @@ export default function TemplateYellow({ template }: any) {
                     </button>
                 </div>
             </div>
-            <div className="aspect-[3.5/5] z-30 relative">
+            <div className="aspect-[3/5] z-30 relative">
                 <div className="absolute bg-[url('/bgYellow.png')] rotate-180 z-30 bg-cover bg-no-repeat h-[150px] top-0 left-0 right-0">
 
                 </div>
@@ -129,10 +129,10 @@ export default function TemplateYellow({ template }: any) {
                     alt={template.title}
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className={`absolute top-0 -bottom-[10px] left-0 right-0 bg-white bg-opacity-20 flex group items-center justify-center`}>
+                <div className={`absolute top-0 -bottom-[10px] left-0 right-0 bg-white bg-opacity-30 flex group items-center justify-center`}>
                     <input type="file" className="group-hover:block hidden" accept="image/*" onChange={onChange} />
                 </div>
-                <div className={`absolute  -bottom-[50px] left-0 right-0 pb-[150px] ${colorsText[currentColor]} text-4xl lg:text-6xl text-center`}>
+                <div className={`absolute  -bottom-[50px] left-0 right-0 pb-[170px] ${colorsText[currentColor]} text-4xl lg:text-6xl text-center`}>
                     <div className="w-full font-bold ">
                         {state.men}
                         <span className="w-fit px-2">&</span>
