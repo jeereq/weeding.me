@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, MapPinned } from "lucide-react";
+import { Camera, Heart, MapPinned } from "lucide-react";
 import { useState } from "react";
 import dynamic from 'next/dynamic'
 import { title } from "process";
@@ -59,6 +59,7 @@ export default function TemplateRed({ template }: any) {
         women: "Medine",
     })
     const [currentColor, setCurrentColor] = useState<string>('yellow');
+    const [image, setImage] = useState<any>(null);
     const [formData, setFormData] = useState<any>({
         title: '',
         event_date: '',
@@ -70,6 +71,13 @@ export default function TemplateRed({ template }: any) {
             address: '',
         },
     });
+
+    const onChange = (e: any) => {
+        const { files } = e.target;
+        if (files && files.length > 0) {
+            setImage(URL.createObjectURL(files[0]))
+        }
+    }
     const closeModalForm = () => {
 
         setOpenForm(false);
@@ -136,50 +144,50 @@ export default function TemplateRed({ template }: any) {
                         Rendez-vous le <b>{state.dateDay}/{state.dateMonth}/{state.dateYear}</b> à <b>{state.dateTime}</b> sur le(l') {state.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
                         Votre amour et votre soutien sont les plus beaux cadeaux que nous puissions espérer.
                     </p>
-                    <p
-                        className="text-center cursor-pointer text-sm px-5 mt-10 w-fit mx-auto"
-                    >
-                        <MapPinned className="h-12 w-12" />
-                    </p>
-                    <p className="text-center text-sm px-5 mt-10 w-fit mx-auto text-center">
-                        Vous nous trouverez sur l'avenue de la paix, à Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS).
-                    </p>
-                    <p className="text-center text-sm px-5 mt-10 w-fit mx-auto">
-                        <Heart className="h-12 w-12" />
-                    </p>
+
                 </div>
             </div>
-            <div className="aspect-[3.5/5] z-30 relative overflow-hidden">
+            <div className="aspect-[3/5] z-30 relative group overflow-hidden">
                 <div className="absolute bg-[url('/bgYellow.png')] rotate-180 z-30 bg-cover bg-no-repeat h-[150px] top-0 left-0 right-0">
 
                 </div>
                 <img
-                    src={template.imageUrl}
+                    src={image || template.imageUrl}
                     alt={template.title}
-                    className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
+                    className="object-cover z-10 h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className={`absolute top-0 bottom-0 left-0 right-0 ${colors[currentColor]} bg-opacity-50`}></div>
-
+                <div className={`absolute top-0 bottom-0 left-0 group flex items-center justify-center right-0 z-20 ${colors[currentColor]} bg-opacity-50`}>
+                    <input type="file" hidden id="camera" className="hidden" accept="image/*" onChange={onChange} />
+                    <label htmlFor="camera" className={`group-hover:block text-white hidden cursor-pointer text-3xl`}>
+                        <Camera size={48} className="text-2xl" />
+                    </label>
+                </div>
                 <div className="absolute bg-[url('/reverse.png')] z-30 bg-cover bg-no-repeat h-[150px] bottom-0 left-0 right-0">
 
                 </div>
             </div>
-            <div className={`w-full z-10 text-xs lg:text-sm relative bg-white min-h-[600px]`}>
+            <div className={`w-full z-10 text-xs lg:text-sm relative bg-white min-h-[600px]  ${colorsText[currentColor]} `}>
                 <div className="z-20 text-3xl lg:text-4xl font-bold text-white text-center w-full p-5">
                     <div className={`w-fit px-7 py-3 ${colors[currentColor]} rounded-full mx-auto`}>
                         Save the date
                     </div>
-                    <span className="mt-5 w-fit mx-auto block">
-                        {state.dateDay} / {state.dateMonth}
-                    </span>
                 </div>
-                <div className={`text-4xl lg:text-6xl ${colorsText[currentColor]} text-center w-full p-5`}>
+                <div className={`text-3xl lg:text-5xl font-bold mt-5 text-center w-full p-5`}>
                     {state.men}
-                    <br />
-                    &
-                    <br />
+                    <span className="w-fit px-2"> & </span>
                     {state.women}
                 </div>
+                <p
+                    className="text-center cursor-pointer text-sm px-5 mt-5 w-fit mx-auto"
+                >
+                    <MapPinned className="h-12 w-12" />
+                </p>
+                <p className="text-center text-sm px-5 mt-5 w-fit mx-auto text-center">
+                    Vous nous trouverez sur l'avenue de la paix, à Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS).
+                </p>
+                <p className="text-center text-sm px-5 mt-5 w-fit mx-auto">
+                    <Heart className="h-12 w-12" />
+                </p>
                 <div className="w-full px-5">
                     <div className={`w-full text-center font-bold h-fit p-5 mt-5 rounded-lg ${colors[currentColor]} text-white`}>
                         Commander
