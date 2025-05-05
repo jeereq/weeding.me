@@ -77,7 +77,7 @@ export default function TemplateYellow({ template }: any) {
             setImage(URL.createObjectURL(files[0]))
         }
     }
-    
+
     const closeModalForm = () => {
         setOpenForm(false);
     }
@@ -121,6 +121,9 @@ export default function TemplateYellow({ template }: any) {
                 </div>
             </div>
             <div className="aspect-[3.5/5] z-30 relative">
+                <div className="absolute bg-[url('/bgYellow.png')] rotate-180 z-30 bg-cover bg-no-repeat h-[150px] top-0 left-0 right-0">
+
+                </div>
                 <img
                     src={image || template.imageUrl}
                     alt={template.title}
