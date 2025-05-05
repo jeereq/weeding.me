@@ -139,14 +139,7 @@ export default function GallerySection() {
                           className="object-cover bg-grey-100 h-full w-full transition-transform duration-500 group-hover:scale-110"
                         />
                         <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                          <div className="w-full grid lg:grid-cols-2 gap-2">
-                            <Button
-                              variant="secondary"
-                              className="w-full backdrop-blur-sm"
-                              onClick={() => handleTemplateSelect(design.id)}
-                            >
-                              Utiliser ce template
-                            </Button>
+                          <div className="w-full grid gap-2">
                             <Button
                               variant="secondary"
                               className="w-full backdrop-blur-sm"

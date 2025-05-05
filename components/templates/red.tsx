@@ -23,6 +23,14 @@ export default function TemplateRed({ template }: any) {
         indigo: 'bg-indigo-900',
         pink: 'bg-pink-900'
     })
+    const [colorsText] = useState<any>({
+        green: 'text-green-900',
+        yellow: 'text-yellow-900',
+        red: 'text-red-900',
+        purple: 'text-purple-900',
+        indigo: 'text-indigo-900',
+        pink: 'text-pink-900'
+    })
     const [months] = useState<any>({
         1: 'janvier',
         2: 'février',
@@ -50,7 +58,7 @@ export default function TemplateRed({ template }: any) {
         men: "Jeereq",
         women: "Medine",
     })
-    const [currentColor, setCurrentColor] = useState<string>('green');
+    const [currentColor, setCurrentColor] = useState<string>('yellow');
     const [formData, setFormData] = useState<any>({
         title: '',
         event_date: '',
@@ -105,31 +113,8 @@ export default function TemplateRed({ template }: any) {
                     </button>
                 </div>
             </div>
-            <div className="aspect-[3.5/5] z-30 relative rounded-b-full overflow-hidden">
-                <div className="absolute top-[30px] z-20 text-3xl lg:text-4xl font-bold text-white text-center w-full p-5">
-                    <div className={`w-fit px-5 py-3 ${colors[currentColor]} mx-auto`}>
-                        Save the date
-                    </div>
-                    <span className="mt-5 w-fit mx-auto block">
-                        {state.dateDay} / {state.dateMonth}
-                    </span>
-                </div>
-                <img
-                    src={template.imageUrl}
-                    alt={template.title}
-                    className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
-                />
-                <div className={`absolute top-0 bottom-0 left-0 right-0 ${colors[currentColor]} bg-opacity-50`}></div>
-                <div className="absolute bottom-[90px] z-20 text-4xl lg:text-6xl text-white text-center w-full p-5">
-                    {state.men}
-                    <br />
-                    &
-                    <br />
-                    {state.women}
-                </div>
-            </div>
-            <div className="w-full -translate-y-[17.5%] relative z-20 text-xs lg:text-sm overflow-hidden p-5 h-fit rounded-t-full">
-                <div className={`w-full text-white p-10 pt-[150px] h-full ${colors[currentColor]} rounded-t-full`}>
+            <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit">
+                <div className={`w-full text-white p-10 pt-[150px] h-full ${colorsText[currentColor]}`}>
                     <p className="text-center text-sm px-5">
                         Deux âmes qui se sont trouvées, deux chemins qui n'en feront plus qu'un... C'est avec des étoiles plein les yeux et le cœur débordant d'amour que <b>Jeereq</b> et <b>Médine</b> vous convient à la célébration de leur union.
                     </p>
@@ -164,14 +149,37 @@ export default function TemplateRed({ template }: any) {
                     </p>
                 </div>
             </div>
-            <div className={`w-full -translate-y-[38%] z-10 text-xs lg:text-sm relative ${colors[currentColor]} h-[600px]`}>
+            <div className="aspect-[3.5/5] z-30 relative overflow-hidden">
+                <div className="absolute bg-[url('/bgYellow.png')] rotate-180 z-30 bg-cover bg-no-repeat h-[150px] top-0 left-0 right-0">
+
+                </div>
                 <img
                     src={template.imageUrl}
                     alt={template.title}
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className="absolute top-0 bottom-0 left-0 right-0 bg-green-900 bg-opacity-10"></div>
+                <div className={`absolute top-0 bottom-0 left-0 right-0 ${colors[currentColor]} bg-opacity-50`}></div>
 
+                <div className="absolute bg-[url('/reverse.png')] z-30 bg-cover bg-no-repeat h-[150px] bottom-0 left-0 right-0">
+
+                </div>
+            </div>
+            <div className={`w-full z-10 text-xs lg:text-sm relative bg-white min-h-[600px]`}>
+                <div className="z-20 text-3xl lg:text-4xl font-bold text-white text-center w-full p-5">
+                    <div className={`w-fit px-7 py-3 ${colors[currentColor]} rounded-full mx-auto`}>
+                        Save the date
+                    </div>
+                    <span className="mt-5 w-fit mx-auto block">
+                        {state.dateDay} / {state.dateMonth}
+                    </span>
+                </div>
+                <div className={`text-4xl lg:text-6xl ${colorsText[currentColor]} text-center w-full p-5`}>
+                    {state.men}
+                    <br />
+                    &
+                    <br />
+                    {state.women}
+                </div>
                 <div className="w-full px-5">
                     <div className={`w-full text-center font-bold h-fit p-5 mt-5 rounded-lg ${colors[currentColor]} text-white`}>
                         Commander

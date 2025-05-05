@@ -25,10 +25,6 @@ export default function Templates() {
     router.push(`/templates/${templateId}?title=${encodeURIComponent(templates.find(t => t.id === templateId)?.title || '')}`);
   };
 
-  const handleTemplateSelect = (templateId: number) => {
-    router.push(`/contact?template=${templateId}`);
-  };
-
   return (
     <main className="min-h-screen bg-background">
       <Header />
@@ -80,14 +76,8 @@ export default function Templates() {
                         className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                       />
                       <div className="absolute h-full inset-0  bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
-                        <div className="w-full h-fit grid lg:grid-cols-2 gap-2">
-                          <Button
-                            variant="secondary"
-                            className="w-full backdrop-blur-sm"
-                            onClick={() => handleTemplateSelect(template.id)}
-                          >
-                            Utiliser ce template
-                          </Button>
+                        <div className="w-full h-fit grid gap-2">
+                   
                           <Button
                             variant="secondary"
                             className="w-full backdrop-blur-sm"
