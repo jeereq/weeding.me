@@ -58,7 +58,7 @@ export default function TemplateYellow({ template }: any) {
         men: "Jeereq",
         women: "Medine",
     })
-    const [currentColor, setCurrentColor] = useState<string>('green');
+    const [currentColor, setCurrentColor] = useState<string>('yellow');
     const [image, setImage] = useState<any>(null);
     const [formData, setFormData] = useState<any>({
         title: '',

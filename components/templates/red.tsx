@@ -50,7 +50,7 @@ export default function TemplateRed({ template }: any) {
         men: "Jeereq",
         women: "Medine",
     })
-    const [currentColor, setCurrentColor] = useState<string>('green');
+    const [currentColor, setCurrentColor] = useState<string>('yellow');
     const [formData, setFormData] = useState<any>({
         title: '',
         event_date: '',
