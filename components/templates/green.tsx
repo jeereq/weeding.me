@@ -1,6 +1,6 @@
 "use client";
 
-import { Heart, MapPinned } from "lucide-react";
+import { Camera, Heart, MapPinned } from "lucide-react";
 import { useState } from "react";
 import dynamic from 'next/dynamic'
 import { title } from "process";
@@ -127,7 +127,10 @@ export default function TemplateGreen({ template }: any) {
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className={`absolute top-0 bottom-0 left-0 right-0 ${colors[currentColor]} group flex items-center justify-center bg-opacity-50`}>
-                    <input type="file" className="group-hover:block hidden" accept="image/*" onChange={onChange} />
+                    <input type="file" hidden id="camera" className="hidden" accept="image/*" onChange={onChange} />
+                    <label htmlFor="camera" className={`group-hover:block text-white hidden cursor-pointer text-3xl`}>
+                        <Camera size={48} className="text-2xl" />
+                    </label>
                 </div>
                 <div className="absolute bottom-[90px] z-20 text-4xl lg:text-6xl text-white text-center w-full p-5">
                     {state.men}
