@@ -198,7 +198,7 @@ export default function TemplateRed({ template }: any) {
                     <Heart className="h-12 w-12" />
                 </p>
                 <div className="w-full px-5">
-                    <div className={`w-full text-center font-bold h-fit p-5 mt-5 rounded-lg text-white`} style={{
+                    <div className={`w-full text-center font-bold  h-fit p-5 mt-5 rounded-full text-white`} style={{
                         background: colors[currentColor]
                     }}>
                         Commander
