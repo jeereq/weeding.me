@@ -73,7 +73,7 @@ export default function TemplateRed({ template }: any) {
             setImage(URL.createObjectURL(files[0]))
         }
     }
-    
+
     const closeModalForm = () => {
         setOpenForm(false);
     }
@@ -174,8 +174,8 @@ export default function TemplateRed({ template }: any) {
             <div className={`w-full z-10 text-xs lg:text-sm relative bg-white min-h-[600px]  ${colorsText[currentColor]} `} style={{
                 color: colors[currentColor]
             }}>
-                <div className="z-20 text-3xl lg:text-4xl font-bold text-white text-center w-full p-5">
-                    <div className={`w-fit px-7 py-3  rounded-full mx-auto`} style={{
+                <div className="z-20 text-2xl lg:text-3xl font-bold text-white text-center w-full p-5">
+                    <div className={`w-fit px-10 py-3  rounded-full mx-auto`} style={{
                         background: colors[currentColor]
                     }}>
                         Save the date
