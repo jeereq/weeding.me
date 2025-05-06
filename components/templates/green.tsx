@@ -23,6 +23,14 @@ export default function TemplateGreen({ template }: any) {
         indigo: 'bg-indigo-900',
         pink: 'bg-pink-900'
     })
+    const [colorsText] = useState<any>({
+        green: 'text-green-900',
+        yellow: 'text-yellow-900',
+        red: 'text-red-900',
+        purple: 'text-purple-900',
+        indigo: 'text-indigo-900',
+        pink: 'text-pink-900'
+    })
     const [months] = useState<any>({
         1: 'janvier',
         2: 'février',
