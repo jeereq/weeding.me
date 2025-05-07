@@ -63,7 +63,12 @@ export default function TemplateYellow({ template }: any) {
         women: "Medine",
         typeInvitation: "couple",
         nameInvitation: "Jeereq et Medine",
-        heart: false
+        heart: false,
+        initiateurDeLaDemande: "",
+        phone: "",
+        invitations: 0,
+        city: "",
+        country: ""
     });
     const onChange = (e: any) => {
         const { files } = e.target;

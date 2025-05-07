@@ -63,7 +63,12 @@ export default function TemplateGreen({ template }: any) {
         women: "Medine",
         typeInvitation: "couple",
         nameInvitation: "Percy et Merveille",
-        heart: false
+        heart: false,
+        initiateurDeLaDemande: "",
+        phone: "",
+        invitations: 0,
+        city: "",
+        country: ""
     });
 
     const onChange = (e: any) => {
