@@ -9,7 +9,7 @@ export function cn(...inputs: ClassValue[]) {
 export const templates: any[] = [
   {
     id: 1,
-    title: "Mariage Élégant",
+    title: "Mariage 1",
     category: "wedding",
     active: true,
     style: "Classique & Raffiné",
@@ -17,19 +17,19 @@ export const templates: any[] = [
   },
   {
     id: 2,
-    title: "Anniversaire Festif",
-    category: "birthday",
+    title: "Mariage 2",
+    category: "wedding",
     active: true,
     style: "Moderne & Coloré",
-    imageUrl: "https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg",
+    imageUrl: "https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg",
   },
   {
     id: 3,
-    title: "Baptême Délicat",
-    category: "baptism",
+    title: "Mariage 3",
+    category: "wedding",
     active: true,
     style: "Doux & Poétique",
-    imageUrl: "https://images.pexels.com/photos/5428836/pexels-photo-5428836.jpeg",
+    imageUrl: "https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg",
   },
   {
     id: 4,

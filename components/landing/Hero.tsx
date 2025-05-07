@@ -36,7 +36,6 @@ export default function Hero() {
               {headlines[currentHeadline]}
             </h1>
           </motion.div>
-
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -47,7 +46,6 @@ export default function Hero() {
               anniversaires et tous vos événements spéciaux. Simple, écologique et mémorable.
             </p>
           </motion.div>
-
           <motion.div
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}

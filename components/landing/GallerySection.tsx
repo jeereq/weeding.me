@@ -12,7 +12,7 @@ const designs: any = {
   wedding: [
     {
       id: 1,
-      title: "Mariage Élégant",
+      title: "Mariage 1",
       category: "wedding",
       active: true,
       style: "Classique & Raffiné",
@@ -20,19 +20,19 @@ const designs: any = {
     },
     {
       id: 2,
-      title: "Anniversaire Festif",
-      category: "birthday",
+      title: "Mariage 2",
+      category: "wedding",
       active: true,
       style: "Moderne & Coloré",
-      imageUrl: "https://images.pexels.com/photos/3171837/pexels-photo-3171837.jpeg",
+      imageUrl: "https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg",
     },
     {
       id: 3,
-      title: "Baptême Délicat",
-      category: "baptism",
+      title: "Mariage 3",
+      category: "wedding",
       active: true,
       style: "Doux & Poétique",
-      imageUrl: "https://images.pexels.com/photos/5428836/pexels-photo-5428836.jpeg",
+      imageUrl: "https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg",
     },
   ],
   birthday: [
@@ -138,7 +138,7 @@ export default function GallerySection() {
                           alt={design.title}
                           className="object-cover bg-grey-100 h-full w-full transition-transform duration-500 group-hover:scale-110"
                         />
-                        <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
+                        <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent lg:opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                           <div className="w-full grid gap-2">
                             <Button
                               variant="secondary"

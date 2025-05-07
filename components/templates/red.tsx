@@ -2,34 +2,29 @@
 
 import { Camera, Heart, MapPinned } from "lucide-react";
 import { useState } from "react";
-import dynamic from 'next/dynamic'
-import { title } from "process";
 import { useRouter } from "next/navigation";
 import InvitationFormInvitation from "../ui/invitation-form";
-
-const MapModal = dynamic(
-    () => import('@/components/ui/map-modal'),
-    { ssr: false }
-)
 
 export default function TemplateRed({ template }: any) {
     const router = useRouter();
     const [openForm, setOpenForm] = useState(false);
-    const [colors] = useState<any>({
+    const [colors, setColors] = useState<any>({
         green: 'bg-green-900',
         yellow: 'bg-yellow-900',
         red: 'bg-red-900',
         purple: 'bg-purple-900',
         indigo: 'bg-indigo-900',
-        pink: 'bg-pink-900'
+        pink: 'bg-pink-900',
+        custome: "black"
     })
-    const [colorsText] = useState<any>({
+    const [colorsText, setTextColors] = useState<any>({
         green: 'text-green-900',
         yellow: 'text-yellow-900',
         red: 'text-red-900',
         purple: 'text-purple-900',
         indigo: 'text-indigo-900',
-        pink: 'text-pink-900'
+        pink: 'text-pink-900',
+        custome: "black"
     })
     const [months] = useState<any>({
         1: 'janvier',
@@ -45,7 +40,10 @@ export default function TemplateRed({ template }: any) {
         11: 'novembre',
         12: 'décembre',
     })
-    const [state, setState] = useState<any>({
+
+    const [currentColor] = useState<string>('custome');
+    const [image, setImage] = useState<any>(null);
+    const [formData, setFormData] = useState<any>({
         dateDay: 18,
         dateMonth: 6,
         dateYear: 2025,
@@ -57,19 +55,6 @@ export default function TemplateRed({ template }: any) {
         title: "Jeereq & Medine",
         men: "Jeereq",
         women: "Medine",
-    })
-    const [currentColor, setCurrentColor] = useState<string>('yellow');
-    const [image, setImage] = useState<any>(null);
-    const [formData, setFormData] = useState<any>({
-        title: '',
-        event_date: '',
-        template_id: '',
-        type: 'autre',
-        location: {
-            lat: 4.323554693688447,
-            lng: 15.27127504348755,
-            address: '',
-        },
     });
 
     const onChange = (e: any) => {
@@ -78,10 +63,11 @@ export default function TemplateRed({ template }: any) {
             setImage(URL.createObjectURL(files[0]))
         }
     }
-    const closeModalForm = () => {
 
+    const closeModalForm = () => {
         setOpenForm(false);
     }
+
     return <>
         <div className="w-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
 
@@ -104,25 +90,34 @@ export default function TemplateRed({ template }: any) {
                     Retour
                 </div>
                 <div className="w-fit flex items-center justify-center p-5  rounded-full">
-                    <div className={`w-fit px-5 py-3 ${colors[currentColor]}  rounded-full text-white uppercase`}>
-                        {currentColor}
+                    <div style={{
+                        background: colors[currentColor]
+                    }} className={`w-fit px-5 py-3 rounded-full text-white uppercase font-bold`}>
+                        {colors[currentColor]}
                     </div>
                 </div>
-                <div className="w-fit flex items-center justify-center">
-                    <button
-                        onClick={() => {
-                            const colorKeys = Object.keys(colors);
-                            const nextColorIndex = (colorKeys.indexOf(currentColor) + 1) % colorKeys.length;
-                            setCurrentColor(colorKeys[nextColorIndex]);
-                        }}
-                        className={`w-fit px-5 py-3 ${colors[currentColor]} text-white rounded-full`}
-                    >
-                        Change Color
-                    </button>
-                </div>
+                <input type="color" name="custome"
+                    onChange={function (e) {
+                        setTextColors(function (state: any) {
+                            return {
+                                ...state,
+                                custome: e.target.value
+                            }
+                        })
+                        setColors(function (state: any) {
+                            return {
+                                ...state,
+                                custome: e.target.value
+                            }
+                        })
+                    }}
+                    className="h-[40px] w-[80px] border-2 border-black rounded-lg" placeholder="Couleur"
+                />
             </div>
             <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit">
-                <div className={`w-full text-white p-10 pt-[150px] h-full ${colorsText[currentColor]}`}>
+                <div className={`w-full p-10 pt-[150px] h-full `} style={{
+                    color: colors[currentColor],
+                }}>
                     <p className="text-center text-sm px-5">
                         Deux âmes qui se sont trouvées, deux chemins qui n'en feront plus qu'un... C'est avec des étoiles plein les yeux et le cœur débordant d'amour que <b>Jeereq</b> et <b>Médine</b> vous convient à la célébration de leur union.
                     </p>
@@ -131,17 +126,17 @@ export default function TemplateRed({ template }: any) {
                             le
                         </div>
                         <div className="w-fit font-bold border-dashed text-5xl px-5">
-                            {state.dateDay}
+                            {formData.dateDay}
                         </div>
                         <div className="w-fit border-t-2 border-b-2 border-dashed px-5 py-2">
-                            {months[state.dateMonth]}
+                            {months[formData.dateMonth]}
                         </div>
                     </div>
                     <div className="w-full text-center mb-10">
-                        {state.dateYear}
+                        {formData.dateYear}
                     </div>
                     <p className="text-center text-sm px-5">
-                        Rendez-vous le <b>{state.dateDay}/{state.dateMonth}/{state.dateYear}</b> à <b>{state.dateTime}</b> sur le(l') {state.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
+                        Rendez-vous le <b>{formData.dateDay}/{formData.dateMonth}/{formData.dateYear}</b> à <b>{formData.dateTime}</b> sur le(l') {formData.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
                         Votre amour et votre soutien sont les plus beaux cadeaux que nous puissions espérer.
                     </p>
 
@@ -166,16 +161,20 @@ export default function TemplateRed({ template }: any) {
 
                 </div>
             </div>
-            <div className={`w-full z-10 text-xs lg:text-sm relative bg-white min-h-[600px]  ${colorsText[currentColor]} `}>
-                <div className="z-20 text-3xl lg:text-4xl font-bold text-white text-center w-full p-5">
-                    <div className={`w-fit px-7 py-3 ${colors[currentColor]} rounded-full mx-auto`}>
+            <div className={`w-full z-10 text-xs lg:text-sm relative bg-white min-h-[600px]  ${colorsText[currentColor]} `} style={{
+                color: colors[currentColor]
+            }}>
+                <div className="z-20 text-2xl lg:text-3xl font-bold text-white text-center w-full p-5">
+                    <div className={`w-fit px-10 py-3  rounded-full mx-auto`} style={{
+                        background: colors[currentColor]
+                    }}>
                         Save the date
                     </div>
                 </div>
                 <div className={`text-3xl lg:text-5xl font-bold mt-5 text-center w-full p-5`}>
-                    {state.men}
+                    {formData.men}
                     <span className="w-fit px-2"> & </span>
-                    {state.women}
+                    {formData.women}
                 </div>
                 <p
                     className="text-center cursor-pointer text-sm px-5 mt-5 w-fit mx-auto"
@@ -189,7 +188,10 @@ export default function TemplateRed({ template }: any) {
                     <Heart className="h-12 w-12" />
                 </p>
                 <div className="w-full px-5">
-                    <div className={`w-full text-center font-bold h-fit p-5 mt-5 rounded-lg ${colors[currentColor]} text-white`}>
+                    <div className={`w-full text-center font-bold  h-fit p-5 mt-5 rounded-full text-white`}
+                        style={{
+                            background: colors[currentColor]
+                        }}>
                         Commander
                     </div>
                 </div>
