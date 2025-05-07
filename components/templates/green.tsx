@@ -72,24 +72,25 @@ export default function TemplateGreen({ template }: any) {
         console.log(formData)
     }, [formData])
     return <>
-        <div className="w-full relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
-            <div className="w-full px-5">
+        <div className="w-full grid grid-cols-1 py-5 gap-2 relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
+            <div className="w-full px-5 grid grid-cols-1 gap-2">
                 <div
                     onClick={function () {
                         setOpenForm(true)
                     }}
-                    className={`w-full cursor-pointer text-center font-bold h-fit py-3 mt-5 rounded-lg bg-black text-white`}>
+                    className={`w-full cursor-pointer text-center font-bold h-fit py-2 rounded-lg bg-black text-white`}>
                     Tester
                 </div>
+
                 <div
                     onClick={function () {
                         reactToPrintFn()
                     }}
-                    className={`w-full cursor-pointer text-center font-bold h-fit py-3 mt-2 rounded-lg bg-black text-white`}>
+                    className={`w-full cursor-pointer text-center font-bold h-fit py-2 rounded-lg bg-black text-white`}>
                     Imprimer
                 </div>
             </div>
-            <div className="w-full grid lg:grid-cols-3 gap-2 flex items-center text-xs lg:text-md py-5 px-5">
+            <div className="w-full grid lg:grid-cols-3 gap-2 flex items-center text-xs lg:text-md px-5">
                 <div
                     className={`text-white w-full text-center px-5 py-3 cursor-pointer  rounded-lg bg-black`}
                     onClick={function () {
@@ -100,7 +101,7 @@ export default function TemplateGreen({ template }: any) {
                 </div>
                 <div className="w-full flex items-center justify-center  rounded-lg">
                     <div style={{
-                        background: colors[currentColor]
+                        color: colors[currentColor]
                     }} className={`w-fit text-center w-full py-3 rounded-lg text-white uppercase font-bold`}>
                         {colors[currentColor]}
                     </div>
@@ -225,6 +226,9 @@ export default function TemplateGreen({ template }: any) {
             onLocationSelect={() => { }}
             initialLocation={{ lat: formData.dateLocationLat, lng: formData.dateLocationLng }}
         />
-        <InvitationFormInvitation openModal={openForm} closeModalForm={closeModalForm} formData={formData} setFormData={setFormData} title="" onSubmit={function () { }} invitationTypes={[]} />
+        <InvitationFormInvitation openModal={openForm} closeModalForm={closeModalForm} formData={formData} setFormData={setFormData} onSubmit={function (e) {
+            e.preventDefault()
+            e.stopPropagation()
+        }} invitationTypes={[]} />
     </>
 }
