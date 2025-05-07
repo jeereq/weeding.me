@@ -33,11 +33,9 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
     if (!openModal) return <div className="w-fit"></div>
     return (<>
         <div className="w-full fixed top-0 bottom-0 left-0 right-0 flex items-center bg-black bg-opacity-30 justify-center z-50">
-            <div className="w-11/12 md:w-[500px] h-[80vh] bg-white relative shadow-lg rounded-xl p-5">
-                <form onSubmit={onSubmit} className="space-y-4 w-full h-full overflow-y-scroll">
-                    <div onClick={closeModalForm} className="w-fit bg-white rounded-xl -translate-y-[115%] absolute cursor-pointer top-0 right-0 px-4 py-2 mb-2">
-                        x
-                    </div>
+            <div className="w-11/12 md:w-[500px] h-fit bg-white relative shadow-lg rounded-xl p-5">
+                <form onSubmit={onSubmit} className="space-y-4 w-full h-[70vh] overflow-y-scroll">
+                
                     <div className="space-y-2">
                         <Label htmlFor="title">Titre de l'invitation</Label>
                         <Input
@@ -156,10 +154,15 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                             </p>
                         )}
                     </div>
-                    <Button type="submit" className="w-full">
+                </form>
+                <div className="w-full gap-2 grid grid-cols-2 mt-2 border-t">
+                    <Button onClick={closeModalForm} type="submit" className="w-full">
+                        Voir le restultat
+                    </Button>
+                    <Button type="submit" className="w-full bg-green-900">
                         Commander
                     </Button>
-                </form>
+                </div>
                 <MapModal
                     isOpen={isMapOpen}
                     onClose={() => setIsMapOpen(false)}
