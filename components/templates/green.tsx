@@ -54,12 +54,14 @@ export default function TemplateGreen({ template }: any) {
         dateTime: "18:00",
         template: template.id,
         dateLocation: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
-        dateLocationLat: 4.323554693688447,
-        dateLocationLng: 15.27127504348755,
+        dateLocationLat: -4.3276,
+        dateLocationLng: 15.3136,
         dateLocationAddress: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
         title: "Jeereq & Medine",
         men: "Jeereq",
         women: "Medine",
+        typeInvitation: "couple",
+        nameInvitation: "Percy et Merveille"
     });
 
     const onChange = (e: any) => {
@@ -87,13 +89,13 @@ export default function TemplateGreen({ template }: any) {
                     onClick={function () {
                         reactToPrintFn()
                     }}
-                    className={`w-full lg:block hidden cursor-pointer text-center font-bold h-fit py-2 rounded-lg bg-black text-white`}>
+                    className={`w-full hidden cursor-pointer text-center font-bold h-fit py-2 rounded-lg bg-black text-white`}>
                     Imprimer
                 </div>
             </div>
             <div className="w-full grid lg:grid-cols-3 gap-2 flex items-center text-xs lg:text-md px-5">
                 <div
-                    className={`text-white w-full text-center px-5 py-3 cursor-pointer  rounded-lg bg-black`}
+                    className={`text-white w-full font-bold text-center px-5 py-3 cursor-pointer  rounded-lg bg-black`}
                     onClick={function () {
                         router.push('/templates')
                     }}
@@ -108,6 +110,7 @@ export default function TemplateGreen({ template }: any) {
                     </div>
                 </div>
                 <input type="color" name="custome"
+                    value={colors[currentColor]}
                     onChange={function (e) {
                         setColors(function (state: any) {
                             return {
@@ -154,7 +157,7 @@ export default function TemplateGreen({ template }: any) {
                     {formData.women}
                 </div>
             </div>
-            <div className="w-full -translate-y-[17.5%] relative z-20 text-xs lg:text-sm overflow-hidden p-5 h-fit rounded-t-full">
+            <div className="w-full -translate-y-[15%] relative z-20 text-xs lg:text-sm overflow-hidden p-5 h-fit rounded-t-full">
                 <div style={{
                     background: colors[currentColor],
 
@@ -186,10 +189,10 @@ export default function TemplateGreen({ template }: any) {
                         className="text-center cursor-pointer text-sm px-5 mt-10 w-fit mx-auto"
                     >
 
-                        <MapPinned className="h-12 w-12 mx-auto" />
+                        <MapPinned className="h-12 w-12 mx-auto " />
                         <div className="w-full">
                             {formData.dateLocationLat && formData.dateLocationLng && (
-                                <p className="text-sm text-muted-foreground mt-2">
+                                <p className="text-sm text-white mt-2">
                                     Coordonnées : {formData.dateLocationLat}, {formData.dateLocationLng}
                                 </p>
                             )}
@@ -200,6 +203,12 @@ export default function TemplateGreen({ template }: any) {
                     </p>
                     <p className="text-center text-sm px-5 mt-10 w-fit mx-auto">
                         <Heart className="h-12 w-12" />
+                    </p>
+                    <div className={`text-lg lg:text-xl font-bold mt-5 pb-2 text-center w-full p-5 pb-0`}>
+                        {formData.nameInvitation}
+                    </div>
+                    <p className="text-center text-sm px-5 w-fit mx-auto text-center">
+                        Préparez-vous à célébrer l'amour ! <span className="font-bold">{formData.men}</span> & <span className="font-bold">{formData.women}</span> vont se dire "oui" pour la vie.
                     </p>
                 </div>
             </div>
@@ -212,13 +221,7 @@ export default function TemplateGreen({ template }: any) {
                 <div className={`absolute bg-[url('/bgYellow.png')] bg-cover bg-no-repeat h-[150px] -bottom-[5px] left-0 right-0 z-20 p-5 pt-10`}>
                 </div>
                 <div className="absolute top-0 bottom-0 left-0 right-0 "></div>
-                {/* <div className="w-full px-5">
-                    <div style={{
-                        background: colors[currentColor]
-                    }} className={`w-full text-center font-bold h-fit p-5 mt-5 rounded-lg text-white`}>
-                        Commander
-                    </div>
-                </div> */}
+
             </div>
         </div>
         <MapModal

@@ -23,9 +23,9 @@ export default function Hero() {
   }, []);
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-b from-background to-secondary/10 py-24 md:py-32">
-      <div className="absolute inset-0 bg-[url('https://images.pexels.com/photos/7149165/pexels-photo-7149165.jpeg?auto=compress&cs=tinysrgb&w=1600')] bg-cover bg-center opacity-10"></div>
-      <div className="container relative mx-auto px-4 sm:px-6 lg:px-8">
+    <section className="relative h-[80vh] overflow-hidden bg-gradient-to-b from-background to-secondary/5 py-24 md:py-32">
+      <div className="absolute inset-0 bg-[url('https://i.pinimg.com/736x/63/51/15/635115e5184e4f00ba682e9791a6c0f9.jpg')] bg-cover bg-center opacity-10"></div>
+      <div className="container h-full relative mx-auto px-4 sm:px-6 lg:px-8">
         <div className="mx-auto max-w-3xl text-center">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

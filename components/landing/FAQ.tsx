@@ -6,7 +6,7 @@ import { motion } from "framer-motion";
 const faqs = [
   {
     question: "Combien coûtent vos invitations électroniques ?",
-    answer: "Nous proposons plusieurs formules adaptées à vos besoins. Notre formule de base commence à 19,99€ et vous permet de créer et d'envoyer jusqu'à 50 invitations. Des forfaits plus importants sont disponibles pour les événements avec plus d'invités."
+    answer: "Nous proposons plusieurs formules adaptées à vos besoins. Notre formule de base commence à 35$ et vous permet de créer et d'envoyer jusqu'à 50 invitations. Des forfaits plus importants sont disponibles pour les événements avec plus d'invités."
   },
   {
     question: "Comment mes invités recevront-ils l'invitation ?",

@@ -98,23 +98,41 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                             />
                         </div>
                     </div>
+                    <div className="w-full space-y-2">
+                        <Label htmlFor="typeInvitation">Type d'invitation</Label>
+                        <select name="typeInvitation" id="typeInvitation" className='w-full py-2'
+                            value={formData.typeInvitation}
+                            onChange={(e) => setFormData({
+                                ...formData,
+                                typeInvitation: e.target.value,
 
+                            })}>
+                            <option value="couple">
+                                Couple
+                            </option>
+                            <option value="singel">
+                                Célibataire
+                            </option>
+                        </select>
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="nameInvitation">Nom(s) sur l'invitation</Label>
+                        <Input
+                            id="nameInvitation"
+                            type="text"
+                            value={formData.nameInvitation}
+                            onChange={(e) => setFormData({
+                                ...formData,
+                                nameInvitation: e.target.value,
+
+                            })}
+                            required
+                        />
+                    </div>
                     <div className="space-y-2">
                         <Label htmlFor="location">Localisation</Label>
                         <div className="flex gap-2 grid-cols-1 grid  mb-2">
-                            {/* <Button
-                                type="button"
-                                variant="outline"
-                                onClick={handleGeolocation}
-                                disabled={isLocating}
-                            >
-                                {isLocating ? (
-                                    <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                                ) : (
-                                    <MapPin className="h-4 w-4 mr-2" />
-                                )}
-                                Utiliser ma position
-                            </Button> */}
                             <Button
                                 type="button"
                                 variant="outline"
