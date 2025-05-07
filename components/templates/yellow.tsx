@@ -33,10 +33,10 @@ export default function TemplateYellow({ template }: any) {
     const [currentColor] = useState<string>('custome');
     const [image, setImage] = useState<any>(null);
     const [formData, setFormData] = useState<any>({
-        dateDay: 18,
-        dateMonth: 6,
-        dateYear: 2025,
-        date: '18/06/2025',
+        dateDay: new Date().getDate(),
+        dateMonth: new Date().getMonth() + 1,
+        dateYear: new Date().getFullYear(),
+        date: new Date().toString(),
         template: template.id,
         dateTime: "18:00",
         dateLocation: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
@@ -66,7 +66,7 @@ export default function TemplateYellow({ template }: any) {
                         setOpenForm(true)
                     }}
                     className={`w-full cursor-pointer text-center font-bold h-fit py-3 mt-5 rounded-lg bg-black text-white`}>
-                    Tester
+                    Personnaliser le model
                 </div>
             </div>
             <div className="w-full flex justify-between items-center text-xs lg:text-md px-5">

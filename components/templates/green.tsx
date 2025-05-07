@@ -79,7 +79,7 @@ export default function TemplateGreen({ template }: any) {
                         router.push('/templates')
                     }}
                 >
-                    Retour
+                     Personnaliser le model
                 </div>
                 <div className="w-fit flex items-center justify-center p-5  rounded-full">
                     <div style={{
