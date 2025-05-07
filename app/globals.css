@@ -13,22 +13,22 @@
   height: 50px; /* Couleur du "cœur" */
   border-radius: 50%; /* Pour le rendre rond */
   transform-origin: center center; /* Le centre de l'animation */
-  animation: battement 2.5s infinite alternate; /* Nom de l'animation, durée, répétition, direction */
+  animation: battement 1.9s infinite alternate; /* Nom de l'animation, durée, répétition, direction */
 }
 
 @keyframes battement {
   0% {
-    transform: scale(1);
+    transform: scale(0.8);
      /* Taille normale */
-     color: inherit;
+     opacity: 0.2;
   }
   50% {
     transform: scale(1.2); /* Légèrement plus grand */
-    color: red;
+    opacity:1;
   }
   100% {
-    transform: scale(1); /* Retour à la taille normale */
-    color: inherit;
+    transform: scale(0.8); /* Retour à la taille normale */
+    opacity: 0.2;
   }
 }
 .heart {
