@@ -6,6 +6,7 @@ import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import InvitationFormInvitation from "../ui/invitation-form";
 import dynamic from 'next/dynamic'
+import TemplateImages from "../ui/templateImages";
 const MapModal = dynamic(
     () => import('@/components/ui/map-modal'),
     { ssr: false }
@@ -72,6 +73,7 @@ export default function TemplateYellow({ template }: any) {
     }
 
     return <>
+        <TemplateImages setImage={setImage} />
         <div className="w-full grid grid-cols-1 py-5 gap-2 relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
             <div className="w-full px-5 grid grid-cols-1 gap-2">
                 <div
