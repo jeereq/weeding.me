@@ -94,7 +94,7 @@ export default function TemplateGreen({ template }: any) {
                             }
                         })
                     }}
-                    className="h-[40px] w-[40px] border-2 border-black rounded-full" placeholder="Couleur"
+                    className="h-[40px] w-[80px] border-2 border-black rounded-lg" placeholder="Couleur"
                 />
             </div>
             <div className="aspect-[3/5] lg:aspect-[3.5/5] z-30 relative rounded-b-full overflow-hidden">
@@ -169,7 +169,7 @@ export default function TemplateGreen({ template }: any) {
                     </p>
                 </div>
             </div>
-            <div className={`w-full -translate-y-[40%] z-10 text-xs lg:text-sm relative ${colors[currentColor]} h-[700px]`}>
+            <div  className={`w-full -translate-y-[40%] z-10 text-xs lg:text-sm relative  h-[700px]`}>
                 <img
                     src={image || template.imageUrl}
                     alt={template.title}
@@ -177,10 +177,11 @@ export default function TemplateGreen({ template }: any) {
                 />
                 <div className={`absolute bg-[url('/bgYellow.png')] bg-cover bg-no-repeat h-[150px] -bottom-[5px] left-0 right-0 z-20 p-5 pt-10`}>
                 </div>
-                <div className="absolute top-0 bottom-0 left-0 right-0 bg-green-900 bg-opacity-10"></div>
-
+                <div className="absolute top-0 bottom-0 left-0 right-0 "></div>
                 <div className="w-full px-5">
-                    <div className={`w-full text-center font-bold h-fit p-5 mt-5 rounded-lg ${colors[currentColor]} text-white`}>
+                    <div style={{
+                        background: colors[currentColor]
+                    }} className={`w-full text-center font-bold h-fit p-5 mt-5 rounded-lg text-white`}>
                         Commander
                     </div>
                 </div>

@@ -94,7 +94,7 @@ export default function TemplateYellow({ template }: any) {
                             }
                         })
                     }}
-                    className="h-[40px] w-[40px] border-2 border-black rounded-full" placeholder="Couleur"
+                    className="h-[40px] w-[80px] border-2 border-black rounded-lg" placeholder="Couleur"
                 />
             </div>
             <div className="aspect-[3/5] z-30 relative">
@@ -113,8 +113,8 @@ export default function TemplateYellow({ template }: any) {
                     </label>
                 </div>
                 <div style={{
-                        color: colors[currentColor]
-                    }} className={`absolute  -bottom-[50px] left-0 right-0 pb-[170px]  text-4xl lg:text-6xl text-center`}>
+                    color: colors[currentColor]
+                }} className={`absolute  -bottom-[50px] left-0 right-0 pb-[170px]  text-4xl lg:text-6xl text-center`}>
                     <div className="w-full font-bold ">
                         {formData.men}
                         <span className="w-fit px-2">&</span>
@@ -138,9 +138,11 @@ export default function TemplateYellow({ template }: any) {
             </div>
             <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit ">
                 <div style={{
-                        color: colors[currentColor]
-                    }} className={`w-full p-10 pt-5 h-full `}>
-                    <div className={`w-full font-bold  text-center text-3xl py-3 rounded-full text-white mb-10`}>
+                    color: colors[currentColor]
+                }} className={`w-full p-10 pt-5 h-full `}>
+                    <div style={{
+                        background: colors[currentColor]
+                    }} className={`w-full font-bold  text-center text-3xl py-3 rounded-full text-white mb-10`}>
                         Save the date
                     </div>
                     <p className="text-center text-sm px-5">

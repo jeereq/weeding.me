@@ -111,7 +111,7 @@ export default function TemplateRed({ template }: any) {
                             }
                         })
                     }}
-                    className="h-[40px] w-[40px] border-2 border-black rounded-full" placeholder="Couleur"
+                    className="h-[40px] w-[80px] border-2 border-black rounded-lg" placeholder="Couleur"
                 />
             </div>
             <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit">
