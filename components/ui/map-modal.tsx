@@ -40,8 +40,6 @@ export default function MapModal({ isOpen, onClose, onLocationSelect, initialLoc
     }
   }, []);
 
-  console.log("current", current)
-
   // const defaultCenter = initialLocation || { lat: -4.3322097, lng: 15.2780097 }; // Paris by default
 
   const handleLocationSelect = (location: { lat: number; lng: number }) => {
@@ -49,15 +47,12 @@ export default function MapModal({ isOpen, onClose, onLocationSelect, initialLoc
     setCurrent(location);
     onClose();
   };
-  useEffect(function () {
-    // initialLocation && setCurrent(initialLocation)
-  }, [initialLocation])
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[800px] h-fit p-0">
         <DialogHeader className="p-6">
-          <DialogTitle>Sélectionner un emplacement</DialogTitle>
+          <DialogTitle>Emplacement de la fete</DialogTitle>
         </DialogHeader>
         <div className="h-fit">
           <MapContainer

@@ -160,9 +160,8 @@ const InvitationFormInvitation = ({ onSubmit, title, formData, setFormData, invi
                             </p>
                         )}
                     </div>
-
                     <Button type="submit" className="w-full">
-                        {title}
+                        Commander
                     </Button>
                 </form>
                 <MapModal

@@ -1,6 +1,6 @@
 "use client";
 import { Camera, Heart, MapPinned } from "lucide-react";
-import { use, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import InvitationFormInvitation from "../ui/invitation-form";
 import { useRouter } from "next/navigation";
 import dynamic from 'next/dynamic'
@@ -57,12 +57,11 @@ export default function TemplateGreen({ template }: any) {
     const closeModalForm = () => {
         setOpenForm(false);
     }
-    useEffect(function () { 
+    useEffect(function () {
         console.log(formData)
     }, [formData])
     return <>
-        <div className="w-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
-
+        <div className="w-full relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
             <div className="w-full px-5">
                 <div
                     onClick={function () {
@@ -71,20 +70,27 @@ export default function TemplateGreen({ template }: any) {
                     className={`w-full cursor-pointer text-center font-bold h-fit py-3 mt-5 rounded-lg bg-black text-white`}>
                     Tester
                 </div>
-            </div>
-            <div className="w-full flex justify-between items-center text-xs lg:text-md px-5">
                 <div
-                    className={`text-white w-fit px-5 py-3 cursor-pointer  rounded-full bg-black`}
+                    onClick={function () {
+                        setOpenForm(true)
+                    }}
+                    className={`w-full cursor-pointer text-center font-bold h-fit py-3 mt-2 rounded-lg bg-black text-white`}>
+                    Imprimer
+                </div>
+            </div>
+            <div className="w-full grid lg:grid-cols-3 gap-2 flex items-center text-xs lg:text-md py-5 px-5">
+                <div
+                    className={`text-white w-full text-center px-5 py-3 cursor-pointer  rounded-lg bg-black`}
                     onClick={function () {
                         router.push('/templates')
                     }}
                 >
-                     Personnaliser le model
+                    Retour
                 </div>
-                <div className="w-fit flex items-center justify-center p-5  rounded-full">
+                <div className="w-full flex items-center justify-center  rounded-lg">
                     <div style={{
                         background: colors[currentColor]
-                    }} className={`w-fit px-5 py-3 rounded-full text-white uppercase font-bold`}>
+                    }} className={`w-fit text-center w-full py-3 rounded-lg text-white uppercase font-bold`}>
                         {colors[currentColor]}
                     </div>
                 </div>
@@ -97,9 +103,11 @@ export default function TemplateGreen({ template }: any) {
                             }
                         })
                     }}
-                    className="h-[40px] w-[80px] cursor-pointer border-2 border-black rounded-lg" placeholder="Couleur"
+                    className="h-[40px] w-full cursor-pointer border-2 border-black rounded-lg" placeholder="Couleur"
                 />
             </div>
+        </div>
+        <div className="w-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
             <div className="aspect-[3/5] lg:aspect-[3.5/5] z-30 relative rounded-b-full overflow-hidden">
                 <div className="absolute top-[30px] z-20 text-3xl lg:text-4xl font-bold text-white text-center w-full p-5">
                     <div style={{
@@ -191,13 +199,13 @@ export default function TemplateGreen({ template }: any) {
                 <div className={`absolute bg-[url('/bgYellow.png')] bg-cover bg-no-repeat h-[150px] -bottom-[5px] left-0 right-0 z-20 p-5 pt-10`}>
                 </div>
                 <div className="absolute top-0 bottom-0 left-0 right-0 "></div>
-                <div className="w-full px-5">
+                {/* <div className="w-full px-5">
                     <div style={{
                         background: colors[currentColor]
                     }} className={`w-full text-center font-bold h-fit p-5 mt-5 rounded-lg text-white`}>
                         Commander
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
         <MapModal
