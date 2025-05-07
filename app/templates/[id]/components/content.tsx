@@ -32,7 +32,6 @@ export default function TemplateContent({ template, id }: any) {
                     </div>
                 </div>
             </section>
-            <Footer />
         </main >
     );
 }

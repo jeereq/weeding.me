@@ -76,41 +76,41 @@ export default function TemplateRed({ template }: any) {
     }
 
     return <>
-        <div className="w-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
-
+        <div className="w-full relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
             <div className="w-full px-5">
                 <div
                     onClick={function () {
                         setOpenForm(true)
                     }}
                     className={`w-full cursor-pointer text-center font-bold h-fit py-3 mt-5 rounded-lg bg-black text-white`}>
-                    Personnaliser le model
+                    Tester
+                </div>
+                <div
+                    onClick={function () {
+                        setOpenForm(true)
+                    }}
+                    className={`w-full cursor-pointer text-center font-bold h-fit py-3 mt-2 rounded-lg bg-black text-white`}>
+                    Imprimer
                 </div>
             </div>
-            <div className="w-full flex justify-between items-center text-xs lg:text-md px-5">
+            <div className="w-full grid lg:grid-cols-3 gap-2 flex items-center text-xs lg:text-md py-5 px-5">
                 <div
-                    className={`text-white w-fit px-5 py-3 cursor-pointer  rounded-full bg-black`}
+                    className={`text-white w-full text-center px-5 py-3 cursor-pointer  rounded-lg bg-black`}
                     onClick={function () {
                         router.push('/templates')
                     }}
                 >
                     Retour
                 </div>
-                <div className="w-fit flex items-center justify-center p-5  rounded-full">
+                <div className="w-full flex items-center justify-center  rounded-lg">
                     <div style={{
                         background: colors[currentColor]
-                    }} className={`w-fit px-5 py-3 rounded-full text-white uppercase font-bold`}>
+                    }} className={`w-fit text-center w-full py-3 rounded-lg text-white uppercase font-bold`}>
                         {colors[currentColor]}
                     </div>
                 </div>
                 <input type="color" name="custome"
                     onChange={function (e) {
-                        setTextColors(function (state: any) {
-                            return {
-                                ...state,
-                                custome: e.target.value
-                            }
-                        })
                         setColors(function (state: any) {
                             return {
                                 ...state,
@@ -118,11 +118,13 @@ export default function TemplateRed({ template }: any) {
                             }
                         })
                     }}
-                    className="h-[40px] w-[80px] cursor-pointer border-2 border-black rounded-lg" placeholder="Couleur"
+                    className="h-[40px] w-full cursor-pointer border-2 border-black rounded-lg" placeholder="Couleur"
                 />
             </div>
+        </div>
+        <div className="w-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
             <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit">
-                <div className={`w-full p-10 pt-[150px] h-full `} style={{
+                <div className={`w-full p-10 h-full `} style={{
                     color: colors[currentColor],
                 }}>
                     <p className="text-center text-sm px-5">
