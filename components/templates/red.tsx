@@ -207,7 +207,7 @@ export default function TemplateRed({ template }: any) {
                     Vous nous trouverez sur l'avenue de la paix, à Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS).
                 </p>
                 <p className="text-center text-sm px-5 mt-5 w-fit mx-auto">
-                    <Heart className="h-12 w-12" />
+                    <Heart className="h-12 w-12 coeur-battant" />
                 </p>
                 <div className={`text-lg lg:text-xl font-bold mt-5 pb-2 text-center w-full p-5 pb-0`}>
                     {formData.nameInvitation}

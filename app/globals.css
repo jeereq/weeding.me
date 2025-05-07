@@ -7,6 +7,26 @@
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
 }
+.coeur-battant {
+  display: inline-block; /* Pour que la taille s'adapte au contenu */
+  width: 50px; /* Taille initiale du "cœur" */
+  height: 50px; /* Couleur du "cœur" */
+  border-radius: 50%; /* Pour le rendre rond */
+  transform-origin: center center; /* Le centre de l'animation */
+  animation: battement 2.5s infinite alternate; /* Nom de l'animation, durée, répétition, direction */
+}
+
+@keyframes battement {
+  0% {
+    transform: scale(1); /* Taille normale */
+  }
+  50% {
+    transform: scale(1.2); /* Légèrement plus grand */
+  }
+  100% {
+    transform: scale(1); /* Retour à la taille normale */
+  }
+}
 
 @media (prefers-color-scheme: dark) {
   :root {
