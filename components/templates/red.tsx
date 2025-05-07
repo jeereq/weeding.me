@@ -1,9 +1,13 @@
 "use client";
-
 import { Camera, Heart, MapPinned } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import InvitationFormInvitation from "../ui/invitation-form";
+import dynamic from 'next/dynamic'
+const MapModal = dynamic(
+    () => import('@/components/ui/map-modal'),
+    { ssr: false }
+)
 
 export default function TemplateRed({ template }: any) {
     const router = useRouter();
@@ -17,6 +21,7 @@ export default function TemplateRed({ template }: any) {
         pink: 'bg-pink-900',
         custome: "black"
     })
+    const [isMapOpen, setIsMapOpen] = useState(false);
     const [colorsText, setTextColors] = useState<any>({
         green: 'text-green-900',
         yellow: 'text-yellow-900',
@@ -47,7 +52,9 @@ export default function TemplateRed({ template }: any) {
         dateDay: 18,
         dateMonth: 6,
         dateYear: 2025,
+        date: '18/06/2025',
         dateTime: "18:00",
+        template: template.id,
         dateLocation: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
         dateLocationLat: 4.323554693688447,
         dateLocationLng: 15.27127504348755,
@@ -111,7 +118,7 @@ export default function TemplateRed({ template }: any) {
                             }
                         })
                     }}
-                    className="h-[40px] w-[80px] border-2 border-black rounded-lg" placeholder="Couleur"
+                    className="h-[40px] w-[80px] cursor-pointer border-2 border-black rounded-lg" placeholder="Couleur"
                 />
             </div>
             <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit">
@@ -176,10 +183,19 @@ export default function TemplateRed({ template }: any) {
                     <span className="w-fit px-2"> & </span>
                     {formData.women}
                 </div>
-                <p
+                <p onClick={function () {
+                    setIsMapOpen(true)
+                }}
                     className="text-center cursor-pointer text-sm px-5 mt-5 w-fit mx-auto"
                 >
                     <MapPinned className="h-12 w-12" />
+                    <div className="w-full">
+                        {formData.dateLocationLat && formData.dateLocationLng && (
+                            <p className="text-sm text-muted-foreground mt-2">
+                                Coordonnées : {formData.dateLocationLat}, {formData.dateLocationLng}
+                            </p>
+                        )}
+                    </div>
                 </p>
                 <p className="text-center text-sm px-5 mt-5 w-fit mx-auto text-center">
                     Vous nous trouverez sur l'avenue de la paix, à Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS).
@@ -197,6 +213,12 @@ export default function TemplateRed({ template }: any) {
                 </div>
             </div>
         </div>
+        <MapModal
+            isOpen={isMapOpen}
+            onClose={() => setIsMapOpen(false)}
+            onLocationSelect={() => { }}
+            initialLocation={{ lat: formData.dateLocationLat, lng: formData.dateLocationLng }}
+        />
         <InvitationFormInvitation openModal={openForm} closeModalForm={closeModalForm} formData={formData} setFormData={setFormData} title="" onSubmit={function () { }} invitationTypes={[]} />
     </>
 }
