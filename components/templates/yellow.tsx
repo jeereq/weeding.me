@@ -1,5 +1,4 @@
 "use client";
-
 import { Camera, Heart, MapPinned } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -38,7 +37,7 @@ export default function TemplateYellow({ template }: any) {
         dateMonth: 6,
         dateYear: 2025,
         date: '18/06/2025',
-        template: "",
+        template: template.id,
         dateTime: "18:00",
         dateLocation: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
         dateLocationLat: 4.323554693688447,
@@ -165,8 +164,8 @@ export default function TemplateYellow({ template }: any) {
                         Votre amour et votre soutien sont les plus beaux cadeaux que nous puissions espérer.
                     </p>
                     <p onClick={function () {
-                    setIsMapOpen(true)
-                }}
+                        setIsMapOpen(true)
+                    }}
                         className="text-center cursor-pointer text-sm px-5 mt-10 w-fit mx-auto"
                     >
                         <MapPinned className="h-12 w-12" />

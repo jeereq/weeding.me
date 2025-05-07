@@ -1,5 +1,4 @@
 "use client";
-
 import { Camera, Heart, MapPinned } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
@@ -55,7 +54,7 @@ export default function TemplateRed({ template }: any) {
         dateYear: 2025,
         date: '18/06/2025',
         dateTime: "18:00",
-        template: "",
+        template: template.id,
         dateLocation: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
         dateLocationLat: 4.323554693688447,
         dateLocationLng: 15.27127504348755,
