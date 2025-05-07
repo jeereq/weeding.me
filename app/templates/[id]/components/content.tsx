@@ -2,7 +2,6 @@
 import { motion } from "framer-motion";
 import { CardContent } from "@/components/ui/card";
 import Header from "@/components/landing/Header";
-import Footer from "@/components/landing/Footer";
 import TemplateGreen from "@/components/templates/green";
 import TemplateYellow from "@/components/templates/yellow";
 import TemplateRed from "@/components/templates/red";

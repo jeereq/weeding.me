@@ -21,6 +21,7 @@ export default function TemplateYellow({ template }: any) {
     const contentRef = useRef<HTMLDivElement>(null);
     const reactToPrintFn = useReactToPrint({
         contentRef,
+        documentTitle: template.style,
         pageStyle: `
             @page {
                 size: 500px;   /* auto is the initial value */

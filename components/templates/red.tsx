@@ -20,6 +20,7 @@ export default function TemplateRed({ template }: any) {
     const contentRef = useRef<HTMLDivElement>(null);
     const reactToPrintFn = useReactToPrint({
         contentRef,
+        documentTitle: template.style,
         pageStyle: `
             @page {
                 size: 500px;   /* auto is the initial value */
@@ -27,9 +28,7 @@ export default function TemplateRed({ template }: any) {
             }
         `});
     const [isMapOpen, setIsMapOpen] = useState(false);
-    const [colorsText,] = useState<any>({
-        custome: "black"
-    })
+   
     const [months] = useState<any>({
         1: 'janvier',
         2: 'février',

@@ -7,6 +7,7 @@ import { Button } from "@/components/ui/button";
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { templates } from "@/lib/utils";
 
 const designs: any = {
   wedding: [
@@ -81,11 +82,7 @@ export default function GallerySection() {
   const [activeCategory, setActiveCategory] = useState("wedding");
 
   const router = useRouter();
-  const handleTemplateSelect = (templateId: any) => {
-    // In a real application, this would create a new invitation with the selected template
-    // For now, we'll just navigate to the admin invitations page
-    router.push(`/contact?template=${templateId}`);
-  };
+
   const viewTemplateSelect = (templateId: number, category: string) => {
     // In a real application, this would create a new invitation with the selected template
     // For now, we'll just navigate to the admin invitations page
@@ -121,10 +118,10 @@ export default function GallerySection() {
             </TabsList>
           </div>
 
-          {Object.entries(designs).map(([category, items]: any) => (
+          {Object.entries(designs).map(([category]: any) => (
             <TabsContent key={category} value={category}>
               <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-                {items.filter(function (template: any) { return template.active }).map((design: any, idx: number) => (
+                {templates.filter(function (template: any) { return template.active && category == template.category }).map((design: any, idx: number) => (
                   <motion.div
                     key={idx}
                     initial={{ opacity: 0, y: 20 }}

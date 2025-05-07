@@ -13,7 +13,7 @@ export const templates: any[] = [
     category: "wedding",
     active: true,
     style: "Classique & Raffiné",
-    imageUrl: "https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg",
+    imageUrl: "https://i.pinimg.com/736x/63/de/3a/63de3a93ad459acf7e6d9ee0d5102aac.jpg",
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ export const templates: any[] = [
     category: "wedding",
     active: true,
     style: "Moderne & Coloré",
-    imageUrl: "https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg",
+    imageUrl: "https://i.pinimg.com/736x/a5/b6/14/a5b614c1975ed48ad4f4927194cc0d03.jpg",
   },
   {
     id: 3,
@@ -29,7 +29,7 @@ export const templates: any[] = [
     category: "wedding",
     active: true,
     style: "Doux & Poétique",
-    imageUrl: "https://images.pexels.com/photos/3014856/pexels-photo-3014856.jpeg",
+    imageUrl: "https://i.pinimg.com/736x/d9/3f/1f/d93f1f8cbe0aa03820c4af9e0c159554.jpg",
   },
   {
     id: 4,
@@ -45,7 +45,7 @@ export const templates: any[] = [
     category: "baby-shower",
     active: false,
     style: "Doux & Chaleureux",
-    imageUrl: "https://images.pexels.com/photos/3875080/pexels-photo-3875080.jpeg",
+    imageUrl: "https://i.pinimg.com/736x/63/de/3a/63de3a93ad459acf7e6d9ee0d5102aac.jpg",
   },
   {
     id: 6,
