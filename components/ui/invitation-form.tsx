@@ -6,6 +6,7 @@ import { Label } from "@/components/ui/label";
 import { Textarea } from '@/components/ui/textarea';
 import dynamic from 'next/dynamic'
 import { InvitationType } from '@/app/admin/invitations/page';
+import CommandFormInvitation from './command-form';
 
 const MapModal = dynamic(
     () => import('@/components/ui/map-modal'),
@@ -21,8 +22,13 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
     closeModalForm: any
 }) => {
     const [isMapOpen, setIsMapOpen] = useState(false);
-
-
+    const [isCommandOpen, setIsCommandOpen] = useState(false);
+    const openCommandForm = () => {
+        setIsCommandOpen(true)
+    }
+    const closeCommandForm = () => {
+        setIsCommandOpen(false)
+    }
     const handleMapLocationSelect = (location: { lat: number; lng: number }) => {
         setFormData({
             ...formData,
@@ -175,7 +181,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                     <Button onClick={closeModalForm} type="submit" className="w-full">
                         Voir le restultat
                     </Button>
-                    <Button type="submit" className="w-full bg-green-900">
+                    <Button onClick={openCommandForm} type="submit" className="w-full bg-green-900">
                         Commander
                     </Button>
                 </div>
@@ -187,6 +193,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                 />
             </div>
         </div>
+        <CommandFormInvitation onSubmit={onSubmit} formData={formData} setFormData={setFormData} openModal={isCommandOpen} closeModalForm={closeCommandForm} />
     </>
     );
 }
