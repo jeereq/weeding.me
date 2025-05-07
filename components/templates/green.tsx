@@ -15,21 +15,8 @@ const MapModal = dynamic(
 export default function TemplateGreen({ template }: any) {
     const router = useRouter();
     const [openForm, setOpenForm] = useState(false);
-    const [colors] = useState<any>({
-        green: 'bg-green-900',
-        yellow: 'bg-yellow-900',
-        red: 'bg-red-900',
-        purple: 'bg-purple-900',
-        indigo: 'bg-indigo-900',
-        pink: 'bg-pink-900'
-    })
-    const [colorsText] = useState<any>({
-        green: 'text-green-900',
-        yellow: 'text-yellow-900',
-        red: 'text-red-900',
-        purple: 'text-purple-900',
-        indigo: 'text-indigo-900',
-        pink: 'text-pink-900'
+    const [colors, setColors] = useState<any>({
+        custome: "black"
     })
     const [months] = useState<any>({
         1: 'janvier',
@@ -46,7 +33,8 @@ export default function TemplateGreen({ template }: any) {
         12: 'décembre',
     })
     const [image, setImage] = useState<any>(null);
-    const [state, setState] = useState<any>({
+    const [currentColor] = useState<string>('custome');
+    const [formData, setFormData] = useState<any>({
         dateDay: 18,
         dateMonth: 6,
         dateYear: 2025,
@@ -58,18 +46,6 @@ export default function TemplateGreen({ template }: any) {
         title: "Jeereq & Medine",
         men: "Jeereq",
         women: "Medine",
-    })
-    const [currentColor, setCurrentColor] = useState<string>('yellow');
-    const [formData, setFormData] = useState<any>({
-        title: '',
-        event_date: '',
-        template_id: '',
-        type: 'autre',
-        location: {
-            lat: 4.323554693688447,
-            lng: 15.27127504348755,
-            address: '',
-        },
     });
 
     const onChange = (e: any) => {
@@ -103,30 +79,33 @@ export default function TemplateGreen({ template }: any) {
                     Retour
                 </div>
                 <div className="w-fit flex items-center justify-center p-5  rounded-full">
-                    <div className={`w-fit px-5 py-3 ${colors[currentColor]}  rounded-full text-white uppercase`}>
-                        {currentColor}
+                    <div style={{
+                        background: colors[currentColor]
+                    }} className={`w-fit px-5 py-3 rounded-full text-white uppercase font-bold`}>
+                        {colors[currentColor]}
                     </div>
                 </div>
-                <div className="w-fit flex items-center justify-center">
-                    <button
-                        onClick={() => {
-                            const colorKeys = Object.keys(colors);
-                            const nextColorIndex = (colorKeys.indexOf(currentColor) + 1) % colorKeys.length;
-                            setCurrentColor(colorKeys[nextColorIndex]);
-                        }}
-                        className={`w-fit px-5 py-3 ${colors[currentColor]} text-white rounded-full`}
-                    >
-                        Change Color
-                    </button>
-                </div>
+                <input type="color" name="custome"
+                    onChange={function (e) {
+                        setColors(function (state: any) {
+                            return {
+                                ...state,
+                                custome: e.target.value
+                            }
+                        })
+                    }}
+                    className="h-[40px] w-[40px] border-2 border-black rounded-full" placeholder="Couleur"
+                />
             </div>
             <div className="aspect-[3/5] lg:aspect-[3.5/5] z-30 relative rounded-b-full overflow-hidden">
                 <div className="absolute top-[30px] z-20 text-3xl lg:text-4xl font-bold text-white text-center w-full p-5">
-                    <div className={`w-fit px-5 py-3 ${colors[currentColor]} mx-auto`}>
+                    <div style={{
+                        background: colors[currentColor]
+                    }} className={`w-fit px-5 py-3  mx-auto`}>
                         Save the date
                     </div>
                     <span className="mt-5 w-fit mx-auto block">
-                        {state.dateDay} / {state.dateMonth}
+                        {formData.dateDay} / {formData.dateMonth}
                     </span>
                 </div>
                 <img
@@ -134,22 +113,28 @@ export default function TemplateGreen({ template }: any) {
                     alt={template.title}
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className={`absolute top-0 bottom-0 left-0 right-0 ${colors[currentColor]} group flex items-center justify-center bg-opacity-50`}>
+                <div style={{
+                    background: colors[currentColor],
+                    opacity: 0.30
+                }} className={`absolute top-0 bottom-0 left-0 right-0 group flex items-center justify-center bg-opacity-50`}>
                     <input type="file" hidden id="camera" className="hidden" accept="image/*" onChange={onChange} />
                     <label htmlFor="camera" className={`group-hover:block text-white hidden cursor-pointer text-3xl`}>
                         <Camera size={48} className="text-2xl" />
                     </label>
                 </div>
                 <div className="absolute bottom-[90px] z-20 text-4xl lg:text-6xl text-white text-center w-full p-5">
-                    {state.men}
+                    {formData.men}
                     <br />
                     &
                     <br />
-                    {state.women}
+                    {formData.women}
                 </div>
             </div>
             <div className="w-full -translate-y-[17.5%] relative z-20 text-xs lg:text-sm overflow-hidden p-5 h-fit rounded-t-full">
-                <div className={`w-full text-white p-10 pt-[170px] lg:pt-[150px] h-full ${colors[currentColor]} rounded-t-full`}>
+                <div style={{
+                    background: colors[currentColor],
+
+                }} className={`w-full text-white p-10 pt-[170px] lg:pt-[150px] h-full rounded-t-full`}>
                     <p className="text-center text-sm px-5">
                         Deux âmes qui se sont trouvées, deux chemins qui n'en feront plus qu'un... C'est avec des étoiles plein les yeux et le cœur débordant d'amour que <b>Jeereq</b> et <b>Médine</b> vous convient à la célébration de leur union.
                     </p>
@@ -158,17 +143,17 @@ export default function TemplateGreen({ template }: any) {
                             le
                         </div>
                         <div className="w-fit font-bold border-dashed text-5xl px-5">
-                            {state.dateDay}
+                            {formData.dateDay}
                         </div>
                         <div className="w-fit border-t-2 border-b-2 border-dashed px-5 py-2">
-                            {months[state.dateMonth]}
+                            {months[formData.dateMonth]}
                         </div>
                     </div>
                     <div className="w-full text-center mb-10">
-                        {state.dateYear}
+                        {formData.dateYear}
                     </div>
                     <p className="text-center text-sm px-5">
-                        Rendez-vous le <b>{state.dateDay}/{state.dateMonth}/{state.dateYear}</b> à <b>{state.dateTime}</b> sur le(l') {state.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
+                        Rendez-vous le <b>{formData.dateDay}/{formData.dateMonth}/{formData.dateYear}</b> à <b>{formData.dateTime}</b> sur le(l') {formData.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
                         Votre amour et votre soutien sont les plus beaux cadeaux que nous puissions espérer.
                     </p>
                     <p

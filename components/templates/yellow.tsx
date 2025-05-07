@@ -15,21 +15,8 @@ const MapModal = dynamic(
 export default function TemplateYellow({ template }: any) {
     const router = useRouter();
     const [openForm, setOpenForm] = useState(false);
-    const [colors] = useState<any>({
-        green: 'bg-green-900',
-        yellow: 'bg-yellow-900',
-        red: 'bg-red-900',
-        purple: 'bg-purple-900',
-        indigo: 'bg-indigo-900',
-        pink: 'bg-pink-900'
-    })
-    const [colorsText] = useState<any>({
-        green: 'text-green-900',
-        yellow: 'text-yellow-900',
-        red: 'text-red-900',
-        purple: 'text-purple-900',
-        indigo: 'text-indigo-900',
-        pink: 'text-pink-900'
+    const [colors, setColors] = useState<any>({
+        custome: "black"
     })
     const [months] = useState<any>({
         1: 'janvier',
@@ -45,7 +32,9 @@ export default function TemplateYellow({ template }: any) {
         11: 'novembre',
         12: 'décembre',
     })
-    const [state, setState] = useState<any>({
+    const [currentColor] = useState<string>('custome');
+    const [image, setImage] = useState<any>(null);
+    const [formData, setFormData] = useState<any>({
         dateDay: 18,
         dateMonth: 6,
         dateYear: 2025,
@@ -57,19 +46,6 @@ export default function TemplateYellow({ template }: any) {
         title: "Jeereq & Medine",
         men: "Jeereq",
         women: "Medine",
-    })
-    const [currentColor, setCurrentColor] = useState<string>('yellow');
-    const [image, setImage] = useState<any>(null);
-    const [formData, setFormData] = useState<any>({
-        title: '',
-        event_date: '',
-        template_id: '',
-        type: 'autre',
-        location: {
-            lat: 4.323554693688447,
-            lng: 15.27127504348755,
-            address: '',
-        },
     });
     const onChange = (e: any) => {
         const { files } = e.target;
@@ -103,22 +79,23 @@ export default function TemplateYellow({ template }: any) {
                     Retour
                 </div>
                 <div className="w-fit flex items-center justify-center p-5  rounded-full">
-                    <div className={`w-fit px-5 py-3 ${colors[currentColor]}  rounded-full text-white uppercase`}>
-                        {currentColor}
+                    <div style={{
+                        background: colors[currentColor]
+                    }} className={`w-fit px-5 py-3 rounded-full text-white uppercase font-bold`}>
+                        {colors[currentColor]}
                     </div>
                 </div>
-                <div className="w-fit flex items-center justify-center">
-                    <button
-                        onClick={() => {
-                            const colorKeys = Object.keys(colors);
-                            const nextColorIndex = (colorKeys.indexOf(currentColor) + 1) % colorKeys.length;
-                            setCurrentColor(colorKeys[nextColorIndex]);
-                        }}
-                        className={`w-fit px-5 py-3 ${colors[currentColor]} text-white rounded-full`}
-                    >
-                        Change Color
-                    </button>
-                </div>
+                <input type="color" name="custome"
+                    onChange={function (e) {
+                        setColors(function (state: any) {
+                            return {
+                                ...state,
+                                custome: e.target.value
+                            }
+                        })
+                    }}
+                    className="h-[40px] w-[40px] border-2 border-black rounded-full" placeholder="Couleur"
+                />
             </div>
             <div className="aspect-[3/5] z-30 relative">
                 <div className="absolute bg-[url('/bgYellow.png')] rotate-180 z-30 bg-cover bg-no-repeat h-[150px] top-0 left-0 right-0">
@@ -132,25 +109,27 @@ export default function TemplateYellow({ template }: any) {
                 <div className={`absolute top-0 -bottom-[10px] left-0 right-0 bg-white bg-opacity-30 flex group items-center justify-center`}>
                     <input type="file" hidden id="camera" className="hidden" accept="image/*" onChange={onChange} />
                     <label htmlFor="camera" className={`group-hover:block text-white hidden cursor-pointer text-3xl`}>
-                        <Camera size={48} className="text-2xl"/>
+                        <Camera size={48} className="text-2xl" />
                     </label>
                 </div>
-                <div className={`absolute  -bottom-[50px] left-0 right-0 pb-[170px] ${colorsText[currentColor]} text-4xl lg:text-6xl text-center`}>
+                <div style={{
+                        color: colors[currentColor]
+                    }} className={`absolute  -bottom-[50px] left-0 right-0 pb-[170px]  text-4xl lg:text-6xl text-center`}>
                     <div className="w-full font-bold ">
-                        {state.men}
+                        {formData.men}
                         <span className="w-fit px-2">&</span>
-                        {state.women}
+                        {formData.women}
                     </div>
                     <div className="w-full text-2xl mt-2 flex justify-center">
                         <div className="w-fit px-1">
-                            {state.dateDay}
+                            {formData.dateDay}
                         </div>  /
                         <div className="w-fit px-1">
-                            {state.dateMonth}
+                            {formData.dateMonth}
                         </div>
                         /
                         <div className="w-fit px-1">
-                            {state.dateYear}
+                            {formData.dateYear}
                         </div>
                     </div>
                 </div>
@@ -158,8 +137,10 @@ export default function TemplateYellow({ template }: any) {
                 </div>
             </div>
             <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit ">
-                <div className={`w-full p-10 pt-5 h-full ${colorsText[currentColor]}`}>
-                    <div className={`w-full font-bold  ${colors[currentColor]} text-center text-3xl py-3 rounded-full text-white mb-10`}>
+                <div style={{
+                        color: colors[currentColor]
+                    }} className={`w-full p-10 pt-5 h-full `}>
+                    <div className={`w-full font-bold  text-center text-3xl py-3 rounded-full text-white mb-10`}>
                         Save the date
                     </div>
                     <p className="text-center text-sm px-5">
@@ -167,17 +148,17 @@ export default function TemplateYellow({ template }: any) {
                     </p>
                     <div className="w-full flex items-center text-2xl  justify-center my-7">
                         <div className="w-fit px-1">
-                            {state.dateDay}
+                            {formData.dateDay}
                         </div>
                         <div className="w-fit px-1 py-2">
-                            {months[state.dateMonth]}
+                            {months[formData.dateMonth]}
                         </div>
                         <div className="w-fit px-1 py-2">
-                            {state.dateYear}
+                            {formData.dateYear}
                         </div>
                     </div>
                     <p className="text-center text-sm px-5">
-                        Rendez-vous le <b>{state.dateDay}/{state.dateMonth}/{state.dateYear}</b> à <b>{state.dateTime}</b> sur le(l') {state.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
+                        Rendez-vous le <b>{formData.dateDay}/{formData.dateMonth}/{formData.dateYear}</b> à <b>{formData.dateTime}</b> sur le(l') {formData.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
                         Votre amour et votre soutien sont les plus beaux cadeaux que nous puissions espérer.
                     </p>
                     <p
@@ -195,7 +176,9 @@ export default function TemplateYellow({ template }: any) {
             </div>
             <div className={`w-full z-10 text-xs lg:text-sm relative bg-white`}>
                 <div className="w-full p-5">
-                    <div className={`w-full text-center font-bold h-fit p-5 mt-5 rounded-full ${colors[currentColor]} text-white`}>
+                    <div style={{
+                        background: colors[currentColor]
+                    }} className={`w-full text-center font-bold h-fit p-5 mt-5 rounded-full text-white`}>
                         Commander
                     </div>
                 </div>

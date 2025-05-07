@@ -40,7 +40,10 @@ export default function TemplateRed({ template }: any) {
         11: 'novembre',
         12: 'décembre',
     })
-    const [state, setState] = useState<any>({
+
+    const [currentColor] = useState<string>('custome');
+    const [image, setImage] = useState<any>(null);
+    const [formData, setFormData] = useState<any>({
         dateDay: 18,
         dateMonth: 6,
         dateYear: 2025,
@@ -52,19 +55,6 @@ export default function TemplateRed({ template }: any) {
         title: "Jeereq & Medine",
         men: "Jeereq",
         women: "Medine",
-    })
-    const [currentColor] = useState<string>('custome');
-    const [image, setImage] = useState<any>(null);
-    const [formData, setFormData] = useState<any>({
-        title: '',
-        event_date: '',
-        template_id: '',
-        type: 'autre',
-        location: {
-            lat: 4.323554693688447,
-            lng: 15.27127504348755,
-            address: '',
-        },
     });
 
     const onChange = (e: any) => {
@@ -136,17 +126,17 @@ export default function TemplateRed({ template }: any) {
                             le
                         </div>
                         <div className="w-fit font-bold border-dashed text-5xl px-5">
-                            {state.dateDay}
+                            {formData.dateDay}
                         </div>
                         <div className="w-fit border-t-2 border-b-2 border-dashed px-5 py-2">
-                            {months[state.dateMonth]}
+                            {months[formData.dateMonth]}
                         </div>
                     </div>
                     <div className="w-full text-center mb-10">
-                        {state.dateYear}
+                        {formData.dateYear}
                     </div>
                     <p className="text-center text-sm px-5">
-                        Rendez-vous le <b>{state.dateDay}/{state.dateMonth}/{state.dateYear}</b> à <b>{state.dateTime}</b> sur le(l') {state.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
+                        Rendez-vous le <b>{formData.dateDay}/{formData.dateMonth}/{formData.dateYear}</b> à <b>{formData.dateTime}</b> sur le(l') {formData.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
                         Votre amour et votre soutien sont les plus beaux cadeaux que nous puissions espérer.
                     </p>
 
@@ -182,9 +172,9 @@ export default function TemplateRed({ template }: any) {
                     </div>
                 </div>
                 <div className={`text-3xl lg:text-5xl font-bold mt-5 text-center w-full p-5`}>
-                    {state.men}
+                    {formData.men}
                     <span className="w-fit px-2"> & </span>
-                    {state.women}
+                    {formData.women}
                 </div>
                 <p
                     className="text-center cursor-pointer text-sm px-5 mt-5 w-fit mx-auto"
@@ -198,9 +188,10 @@ export default function TemplateRed({ template }: any) {
                     <Heart className="h-12 w-12" />
                 </p>
                 <div className="w-full px-5">
-                    <div className={`w-full text-center font-bold  h-fit p-5 mt-5 rounded-full text-white`} style={{
-                        background: colors[currentColor]
-                    }}>
+                    <div className={`w-full text-center font-bold  h-fit p-5 mt-5 rounded-full text-white`}
+                        style={{
+                            background: colors[currentColor]
+                        }}>
                         Commander
                     </div>
                 </div>
