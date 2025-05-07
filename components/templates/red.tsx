@@ -2,6 +2,8 @@
 import { Camera, Heart, MapPinned } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useReactToPrint } from "react-to-print";
+import { useRef } from "react";
 import InvitationFormInvitation from "../ui/invitation-form";
 import dynamic from 'next/dynamic'
 const MapModal = dynamic(
@@ -21,8 +23,10 @@ export default function TemplateRed({ template }: any) {
         pink: 'bg-pink-900',
         custome: "black"
     })
+    const contentRef = useRef<HTMLDivElement>(null);
+    const reactToPrintFn = useReactToPrint({ contentRef });
     const [isMapOpen, setIsMapOpen] = useState(false);
-    const [colorsText, setTextColors] = useState<any>({
+    const [colorsText,] = useState<any>({
         green: 'text-green-900',
         yellow: 'text-yellow-900',
         red: 'text-red-900',
@@ -85,9 +89,10 @@ export default function TemplateRed({ template }: any) {
                     className={`w-full cursor-pointer text-center font-bold h-fit py-3 mt-5 rounded-lg bg-black text-white`}>
                     Tester
                 </div>
+
                 <div
                     onClick={function () {
-                        setOpenForm(true)
+                        reactToPrintFn()
                     }}
                     className={`w-full cursor-pointer text-center font-bold h-fit py-3 mt-2 rounded-lg bg-black text-white`}>
                     Imprimer
@@ -122,7 +127,7 @@ export default function TemplateRed({ template }: any) {
                 />
             </div>
         </div>
-        <div className="w-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
+        <div ref={contentRef} className="w-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
             <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit">
                 <div className={`w-full p-10 h-full `} style={{
                     color: colors[currentColor],
