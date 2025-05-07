@@ -15,24 +15,19 @@ export default function TemplateRed({ template }: any) {
     const router = useRouter();
     const [openForm, setOpenForm] = useState(false);
     const [colors, setColors] = useState<any>({
-        green: 'bg-green-900',
-        yellow: 'bg-yellow-900',
-        red: 'bg-red-900',
-        purple: 'bg-purple-900',
-        indigo: 'bg-indigo-900',
-        pink: 'bg-pink-900',
         custome: "black"
     })
     const contentRef = useRef<HTMLDivElement>(null);
-    const reactToPrintFn = useReactToPrint({ contentRef });
+    const reactToPrintFn = useReactToPrint({
+        contentRef,
+        pageStyle: `
+            @page {
+                size: 500px;   /* auto is the initial value */
+                margin: 0;  /* this affects the margin in the printer settings */
+            }
+        `});
     const [isMapOpen, setIsMapOpen] = useState(false);
     const [colorsText,] = useState<any>({
-        green: 'text-green-900',
-        yellow: 'text-yellow-900',
-        red: 'text-red-900',
-        purple: 'text-purple-900',
-        indigo: 'text-indigo-900',
-        pink: 'text-pink-900',
         custome: "black"
     })
     const [months] = useState<any>({

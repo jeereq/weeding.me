@@ -19,7 +19,14 @@ export default function TemplateYellow({ template }: any) {
     })
 
     const contentRef = useRef<HTMLDivElement>(null);
-    const reactToPrintFn = useReactToPrint({ contentRef });
+    const reactToPrintFn = useReactToPrint({
+        contentRef,
+        pageStyle: `
+            @page {
+                size: 500px;   /* auto is the initial value */
+                margin: 0;  /* this affects the margin in the printer settings */
+            }
+        `});
     const [isMapOpen, setIsMapOpen] = useState(false);
     const [months] = useState<any>({
         1: 'janvier',
