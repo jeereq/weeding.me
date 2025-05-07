@@ -4,6 +4,11 @@ import { Camera, Heart, MapPinned } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import InvitationFormInvitation from "../ui/invitation-form";
+import dynamic from 'next/dynamic'
+const MapModal = dynamic(
+    () => import('@/components/ui/map-modal'),
+    { ssr: false }
+)
 
 export default function TemplateRed({ template }: any) {
     const router = useRouter();
@@ -17,6 +22,7 @@ export default function TemplateRed({ template }: any) {
         pink: 'bg-pink-900',
         custome: "black"
     })
+    const [isMapOpen, setIsMapOpen] = useState(false);
     const [colorsText, setTextColors] = useState<any>({
         green: 'text-green-900',
         yellow: 'text-yellow-900',
@@ -47,7 +53,9 @@ export default function TemplateRed({ template }: any) {
         dateDay: 18,
         dateMonth: 6,
         dateYear: 2025,
+        date: '18/06/2025',
         dateTime: "18:00",
+        template: "",
         dateLocation: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
         dateLocationLat: 4.323554693688447,
         dateLocationLng: 15.27127504348755,
@@ -176,7 +184,9 @@ export default function TemplateRed({ template }: any) {
                     <span className="w-fit px-2"> & </span>
                     {formData.women}
                 </div>
-                <p
+                <p onClick={function () {
+                    setIsMapOpen(true)
+                }}
                     className="text-center cursor-pointer text-sm px-5 mt-5 w-fit mx-auto"
                 >
                     <MapPinned className="h-12 w-12" />
@@ -197,6 +207,12 @@ export default function TemplateRed({ template }: any) {
                 </div>
             </div>
         </div>
+        <MapModal
+            isOpen={isMapOpen}
+            onClose={() => setIsMapOpen(false)}
+            onLocationSelect={() => { }}
+            initialLocation={{ lat: formData.dateLocationLat, lng: formData.dateLocationLng }}
+        />
         <InvitationFormInvitation openModal={openForm} closeModalForm={closeModalForm} formData={formData} setFormData={setFormData} title="" onSubmit={function () { }} invitationTypes={[]} />
     </>
 }

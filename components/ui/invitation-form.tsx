@@ -1,18 +1,12 @@
 "use client";
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Plus, MapPin, Loader2, UserPlus, Users } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import dynamic from 'next/dynamic'
 import { InvitationType } from '@/app/admin/invitations/page';
-import { templates } from '@/lib/utils';
 
 const MapModal = dynamic(
     () => import('@/components/ui/map-modal'),
@@ -37,11 +31,9 @@ const InvitationFormInvitation = ({ onSubmit, title, formData, setFormData, invi
                 (position: any) => {
                     setFormData({
                         ...formData,
-                        location: {
-                            ...formData.location,
-                            lat: position.coords.lat,
-                            lng: position.coords.lng
-                        },
+                        dateLocationLat: position.coords.lat,
+                        dateLocationLng: position.coords.lng
+
                     });
                     setIsLocating(false);
                 },
@@ -56,11 +48,8 @@ const InvitationFormInvitation = ({ onSubmit, title, formData, setFormData, invi
     const handleMapLocationSelect = (location: { lat: number; lng: number }) => {
         setFormData({
             ...formData,
-            location: {
-                ...formData.location,
-                lat: location.lat,
-                lng: location.lng,
-            },
+            dateLocationLat: location.lat,
+            dateLocationLng: location.lng
         });
     };
     if (!openModal) return <div className="w-fit"></div>
@@ -71,22 +60,6 @@ const InvitationFormInvitation = ({ onSubmit, title, formData, setFormData, invi
                     <div onClick={closeModalForm} className="w-fit bg-white rounded-xl -translate-y-[115%] absolute cursor-pointer top-0 right-0 px-4 py-2 mb-2">
                         x
                     </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="type">Type d'événement</Label>
-                        <RadioGroup
-                            value={formData.type}
-                            onValueChange={(value) => setFormData({ ...formData, type: value as InvitationType })}
-                            className="grid grid-cols-2 gap-4"
-                        >
-                            {invitationTypes.map((type: any) => (
-                                <div key={type.value} className="flex items-center space-x-2">
-                                    <RadioGroupItem value={type.value} id={type.value} />
-                                    <Label htmlFor={type.value}>{type.label}</Label>
-                                </div>
-                            ))}
-                        </RadioGroup>
-                    </div>
-
                     <div className="space-y-2">
                         <Label htmlFor="title">Titre de l'invitation</Label>
                         <Input
@@ -103,8 +76,8 @@ const InvitationFormInvitation = ({ onSubmit, title, formData, setFormData, invi
                         <Input
                             id="event_date"
                             type="date"
-                            value={formData.event_date}
-                            onChange={(e) => setFormData({ ...formData, event_date: e.target.value })}
+                            value={formData.date}
+                            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
                             required
                         />
                     </div>
@@ -135,39 +108,18 @@ const InvitationFormInvitation = ({ onSubmit, title, formData, setFormData, invi
                         </div>
                         <Textarea
                             placeholder="Adresse complète"
-                            value={formData.location.address}
+                            value={formData.dateLocationAddress}
                             onChange={(e) => setFormData({
                                 ...formData,
-                                location: { ...formData.location, address: e.target.value }
+                                dateLocationAddress: e.target.value
                             })}
                             required
                         />
-                        {formData.location.lat && formData.location.lng && (
+                        {formData.dateLocationLat && formData.dateLocationLng && (
                             <p className="text-sm text-muted-foreground mt-2">
-                                Coordonnées : {formData.location.lat}, {formData.location.lng}
+                                Coordonnées : {formData.dateLocationLat}, {formData.dateLocationLng}
                             </p>
                         )}
-                    </div>
-
-                    <div className="space-y-2">
-                        <Label htmlFor="template">Template</Label>
-                        <Select
-                            value={formData.template_id}
-                            onValueChange={(value) => setFormData({ ...formData, template_id: value })}
-                        >
-                            <SelectTrigger>
-                                <SelectValue placeholder="Sélectionner un template" />
-                            </SelectTrigger>
-                            <SelectContent>
-                                {templates.filter(function ({ active }) {
-                                    return active
-                                }).map((template) => (
-                                    <SelectItem key={template.id} value={template.id}>
-                                        {template.title}
-                                    </SelectItem>
-                                ))}
-                            </SelectContent>
-                        </Select>
                     </div>
 
                     <Button type="submit" className="w-full">
@@ -179,8 +131,8 @@ const InvitationFormInvitation = ({ onSubmit, title, formData, setFormData, invi
                     onClose={() => setIsMapOpen(false)}
                     onLocationSelect={handleMapLocationSelect}
                     initialLocation={
-                        formData.location.lat && formData.location.lng
-                            ? { lat: formData.location.lat, lng: formData.location.lng }
+                        (formData.dateLocationLat && formData.dateLocationLng)
+                            ? { lat: formData.dateLocationLat, lng: formData.dateLocationLng }
                             : { lat: 4.323554693688447, lng: 15.27127504348755 }
                     }
                 />
