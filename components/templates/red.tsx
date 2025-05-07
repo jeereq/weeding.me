@@ -143,7 +143,7 @@ export default function TemplateRed({ template }: any) {
                         {formData.dateYear}
                     </div>
                     <p className="text-center text-sm px-5">
-                        Rendez-vous le <b>{formData.dateDay}/{formData.dateMonth}/{formData.dateYear}</b> à <b>{formData.dateTime}</b> sur le(l') {formData.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
+                        Rendez-vous le <b>{formData.dateDay}/{formData.dateMonth}/{formData.dateYear}</b> à <b>{formData.dateTime}</b> sur le(la)(l') {formData.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
                         Votre amour et votre soutien sont les plus beaux cadeaux que nous puissions espérer.
                     </p>
 
