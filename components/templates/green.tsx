@@ -66,7 +66,7 @@ export default function TemplateGreen({ template }: any) {
         heart: false,
         initiateurDeLaDemande: "",
         phone: "",
-        invitations: 0,
+        invitations: 50,
         city: "",
         country: ""
     });

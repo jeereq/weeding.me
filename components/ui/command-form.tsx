@@ -34,7 +34,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
     if (!openModal) return <div className="w-fit"></div>
     return (<>
         <div className="w-full fixed top-0 bottom-0 left-0 right-0 flex items-center bg-black bg-opacity-30 justify-center z-50">
-            <div className="w-11/12 md:w-[600px] h-fit bg-white relative shadow-lg rounded-xl p-5">
+            <div className="w-11/12 md:w-[600px] h-fit bg-white relative shadow-lg rounded-xl p-3">
                 <form onSubmit={onSubmit} className="space-y-4 w-full h-fit overflow-y-scroll p-2">
                     <h1 className="font-bold text-xl">Commander vos invitations</h1>
                     <div className="space-y-2">
@@ -48,19 +48,21 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="phone">Numero de téléphone</Label>
+                        <Label htmlFor="phone">Numéro de téléphone</Label>
                         <Input
                             type='tel'
                             value={formData.phone}
                             onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                            placeholder="Ex: +243 817125577"
+                            placeholder="Ex: +243 817 125 577"
                             required
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="invitations">Nombre d'invité</Label>
+                        <Label htmlFor="invitations">Nombre d'invitations (Minimum de 50)</Label>
                         <Input
                             id="invitations"
+                            minLength={50}
+                            min={50}
                             type='number'
                             value={formData.invitations}
                             onChange={(e) => setFormData({ ...formData, invitations: e.target.value })}
@@ -71,10 +73,10 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
 
                     <div className="w-full space-y-2">
                         <Label >
-                            Le cout unitaire d'une invitation est de  <b>0.7$</b>
+                            Le coût unitaire d'une invitation est de  <b>0.7$</b>
                         </Label>
                         <p>
-                            <span className="font-bold pr-2">Cout :</span> <b>{Calcule().toFixed(2)}$</b> <span className="px-1 line-through">{CalculeSansReduction().toFixed(2)}$</span>
+                            <span className="font-bold pr-2">Coût :</span> <b>{Calcule().toFixed(2)}$</b> <span className="px-1 line-through">{CalculeSansReduction().toFixed(2)}$</span>
                         </p>
                         {(formData.invitations >= 200 && formData.invitations <= 299) && <Label className='pr-2' >
                             Pour plus de 200 invitations la reduction est de 15%
