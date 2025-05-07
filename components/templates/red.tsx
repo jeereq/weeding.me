@@ -47,7 +47,7 @@ export default function TemplateRed({ template }: any) {
         9: 'septembre',
         10: 'octobre',
         11: 'novembre',
-        12: 'décembre',
+        12: 'décembre'
     })
 
     const [currentColor] = useState<string>('custome');
