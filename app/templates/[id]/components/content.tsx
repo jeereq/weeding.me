@@ -18,7 +18,7 @@ export default function TemplateContent({ template, id }: any) {
                     <p className="text-muted-foreground text-sm text-center">{template.style}</p>
                 </CardContent>
                 <div className="w-full 0 mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="w-full lg:w-[500px] mx-auto">
+                    <div className="w-full lg:w-[500px] mx-auto ">
                         <motion.div
                             key={template.id}
                             initial={{ opacity: 0, y: 20 }}
