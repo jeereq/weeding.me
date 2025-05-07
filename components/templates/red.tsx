@@ -67,7 +67,7 @@ export default function TemplateRed({ template }: any) {
         heart: false,
         initiateurDeLaDemande: "",
         phone: "",
-        invitations: 0,
+        invitations: 50,
         city: "",
         country: ""
     });
@@ -226,7 +226,7 @@ export default function TemplateRed({ template }: any) {
                     {formData.nameInvitation}
                 </div>
                 <p className="text-center text-sm px-5 w-fit mx-auto text-center">
-                    Préparez-vous à célébrer l'amour ! <span className="font-bold">{formData.men}</span> & <span className="font-bold">{formData.women}</span> vont se dire "oui" pour la vie.
+                    Préparez-vous à célébrer l'amour ! <span className="font-bold">{formData.men}</span> & <span className="font-bold">{formData.women}</span> vont se dire <b>"oui"</b> pour la vie.
                 </p>
             </div>
         </div>

@@ -17,7 +17,7 @@ export default function TemplateGreen({ template }: any) {
     const router = useRouter();
     const [openForm, setOpenForm] = useState(false);
     const [colors, setColors] = useState<any>({
-        custome: "#b21515"
+        custome: "black"
     })
     const contentRef = useRef<HTMLDivElement>(null);
     const reactToPrintFn = useReactToPrint({
@@ -66,7 +66,7 @@ export default function TemplateGreen({ template }: any) {
         heart: false,
         initiateurDeLaDemande: "",
         phone: "",
-        invitations: 0,
+        invitations: 50,
         city: "",
         country: ""
     });
@@ -138,7 +138,7 @@ export default function TemplateGreen({ template }: any) {
             </div>
         </div>
         <div ref={contentRef} className="w-fit h-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
-            <div className="aspect-[3/5] lg:aspect-[3.5/5] z-30 relative rounded-b-full overflow-hidden">
+            <div className="aspect-[3/5] lg:aspect-[3.25/5] z-30 relative rounded-b-full overflow-hidden">
                 <div className="absolute top-[30px] z-20 text-3xl lg:text-4xl font-bold text-white text-center w-full p-5">
                     <div style={{
                         background: colors[currentColor]
@@ -163,7 +163,7 @@ export default function TemplateGreen({ template }: any) {
                         <Camera size={48} className="text-2xl" />
                     </label>
                 </div>
-                <div className="absolute bottom-[90px] z-20 text-4xl lg:text-6xl text-white text-center w-full p-5">
+                <div className="absolute bottom-[90px] z-20 text-5xl font-bold lg:text-7xl text-white text-center w-full p-5">
                     {formData.men}
                     <br />
                     &
@@ -222,11 +222,11 @@ export default function TemplateGreen({ template }: any) {
                         {formData.nameInvitation}
                     </div>
                     <p className="text-center text-sm px-5 w-fit mx-auto text-center">
-                        Préparez-vous à célébrer l'amour ! <span className="font-bold">{formData.men}</span> & <span className="font-bold">{formData.women}</span> vont se dire "oui" pour la vie.
+                        Préparez-vous à célébrer l'amour ! <span className="font-bold">{formData.men}</span> & <span className="font-bold">{formData.women}</span> vont se dire  <b>"oui"</b> pour la vie.
                     </p>
                 </div>
             </div>
-            <div className={`w-full -translate-y-[40%] z-10 text-xs lg:text-sm relative  h-[700px]`}>
+            <div className={`w-full -translate-y-[35%] z-10 text-xs lg:text-sm relative  h-[700px]`}>
                 <img
                     src={image || template.imageUrl}
                     alt={template.title}

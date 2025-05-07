@@ -40,8 +40,8 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
     return (<>
         <div className="w-full fixed top-0 bottom-0 left-0 right-0 flex items-center bg-black bg-opacity-30 justify-center z-50">
             <div className="w-11/12 md:w-[500px] h-fit bg-white relative shadow-lg rounded-xl p-5">
+                <h1 className="font-bold text-xl">Personnaliser le model</h1>
                 <form onSubmit={onSubmit} className="space-y-4 w-full h-[70vh] overflow-y-scroll">
-
                     <div className="w-full space-y-2">
                         <Label htmlFor="typeInvitation">Animation</Label>
                         <select name="typeInvitation" id="typeInvitation" className='w-full py-2'
