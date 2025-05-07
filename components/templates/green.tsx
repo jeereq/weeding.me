@@ -82,7 +82,7 @@ export default function TemplateGreen({ template }: any) {
                         setOpenForm(true)
                     }}
                     className={`w-full cursor-pointer text-center font-bold h-fit py-2 rounded-lg bg-black text-white`}>
-                    Tester
+                    Personnaliser le model
                 </div>
 
                 <div
