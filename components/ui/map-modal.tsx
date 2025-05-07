@@ -47,6 +47,9 @@ export default function MapModal({ isOpen, onClose, onLocationSelect, initialLoc
     setCurrent(location);
     onClose();
   };
+  useEffect(function () {
+    setCurrent(initialLocation)
+   }, [initialLocation])
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>

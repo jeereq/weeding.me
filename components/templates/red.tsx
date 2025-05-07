@@ -118,7 +118,7 @@ export default function TemplateRed({ template }: any) {
                             }
                         })
                     }}
-                    className="h-[40px] w-[80px] border-2 border-black rounded-lg" placeholder="Couleur"
+                    className="h-[40px] w-[80px] cursor-pointer border-2 border-black rounded-lg" placeholder="Couleur"
                 />
             </div>
             <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit">
@@ -189,6 +189,13 @@ export default function TemplateRed({ template }: any) {
                     className="text-center cursor-pointer text-sm px-5 mt-5 w-fit mx-auto"
                 >
                     <MapPinned className="h-12 w-12" />
+                    <div className="w-full">
+                        {formData.dateLocationLat && formData.dateLocationLng && (
+                            <p className="text-sm text-muted-foreground mt-2">
+                                Coordonnées : {formData.dateLocationLat}, {formData.dateLocationLng}
+                            </p>
+                        )}
+                    </div>
                 </p>
                 <p className="text-center text-sm px-5 mt-5 w-fit mx-auto text-center">
                     Vous nous trouverez sur l'avenue de la paix, à Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS).
