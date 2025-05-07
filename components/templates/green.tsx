@@ -89,7 +89,7 @@ export default function TemplateGreen({ template }: any) {
                     onClick={function () {
                         reactToPrintFn()
                     }}
-                    className={`w-full lg:block hidden cursor-pointer text-center font-bold h-fit py-2 rounded-lg bg-black text-white`}>
+                    className={`w-full hidden cursor-pointer text-center font-bold h-fit py-2 rounded-lg bg-black text-white`}>
                     Imprimer
                 </div>
             </div>
