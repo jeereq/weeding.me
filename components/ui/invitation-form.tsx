@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Plus, MapPin, Loader2, UserPlus, Users } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import dynamic from 'next/dynamic'
 import { InvitationType } from '@/app/admin/invitations/page';
@@ -13,9 +12,8 @@ const MapModal = dynamic(
     { ssr: false }
 )
 
-const InvitationFormInvitation = ({ onSubmit, title, formData, setFormData, invitationTypes, openModal, closeModalForm }: {
+const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, closeModalForm }: {
     onSubmit: (e: React.FormEvent) => void,
-    title: string,
     formData: any,
     setFormData: (data: any) => void,
     invitationTypes: InvitationType[],
@@ -168,11 +166,7 @@ const InvitationFormInvitation = ({ onSubmit, title, formData, setFormData, invi
                     isOpen={isMapOpen}
                     onClose={() => setIsMapOpen(false)}
                     onLocationSelect={handleMapLocationSelect}
-                    initialLocation={
-                        (formData.dateLocationLat && formData.dateLocationLng)
-                            ? { lat: formData.dateLocationLat, lng: formData.dateLocationLng }
-                            : { lat: 4.323554693688447, lng: 15.27127504348755 }
-                    }
+                    initialLocation={{ lat: formData.dateLocationLat, lng: formData.dateLocationLng }}
                 />
             </div>
         </div>

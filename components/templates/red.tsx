@@ -75,13 +75,13 @@ export default function TemplateRed({ template }: any) {
     }
 
     return <>
-        <div className="w-full relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
-            <div className="w-full px-5">
+        <div className="w-full grid grid-cols-1 py-5 gap-2 relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
+            <div className="w-full px-5 grid grid-cols-1 gap-2">
                 <div
                     onClick={function () {
                         setOpenForm(true)
                     }}
-                    className={`w-full cursor-pointer text-center font-bold h-fit py-3 mt-5 rounded-lg bg-black text-white`}>
+                    className={`w-full cursor-pointer text-center font-bold h-fit py-2 rounded-lg bg-black text-white`}>
                     Tester
                 </div>
 
@@ -89,11 +89,11 @@ export default function TemplateRed({ template }: any) {
                     onClick={function () {
                         reactToPrintFn()
                     }}
-                    className={`w-full cursor-pointer text-center font-bold h-fit py-3 mt-2 rounded-lg bg-black text-white`}>
+                    className={`w-full cursor-pointer text-center font-bold h-fit py-2 rounded-lg bg-black text-white`}>
                     Imprimer
                 </div>
             </div>
-            <div className="w-full grid lg:grid-cols-3 gap-2 flex items-center text-xs lg:text-md py-5 px-5">
+            <div className="w-full grid lg:grid-cols-3 gap-2 flex items-center text-xs lg:text-md px-5">
                 <div
                     className={`text-white w-full text-center px-5 py-3 cursor-pointer  rounded-lg bg-black`}
                     onClick={function () {
@@ -104,7 +104,7 @@ export default function TemplateRed({ template }: any) {
                 </div>
                 <div className="w-full flex items-center justify-center  rounded-lg">
                     <div style={{
-                        background: colors[currentColor]
+                        color: colors[currentColor]
                     }} className={`w-fit text-center w-full py-3 rounded-lg text-white uppercase font-bold`}>
                         {colors[currentColor]}
                     </div>
@@ -122,7 +122,7 @@ export default function TemplateRed({ template }: any) {
                 />
             </div>
         </div>
-        <div ref={contentRef} className="w-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
+        <div ref={contentRef} className="w-fit  pb-5 relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
             <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit">
                 <div className={`w-full p-10 h-full `} style={{
                     color: colors[currentColor],
@@ -151,8 +151,8 @@ export default function TemplateRed({ template }: any) {
 
                 </div>
             </div>
-            <div className="aspect-[3/5] z-30 relative group overflow-hidden">
-                <div className="absolute bg-[url('/bgYellow.png')] rotate-180 z-30 bg-cover bg-no-repeat h-[150px] top-0 left-0 right-0">
+            <div className="aspect-[3/5] z-30 relative group bg-white">
+                <div className="absolute bg-[url('/bgYellow.png')] rotate-180 z-30 bg-cover bg-no-repeat h-[150px] -top-1 left-0 right-0">
 
                 </div>
                 <img
@@ -166,11 +166,11 @@ export default function TemplateRed({ template }: any) {
                         <Camera size={48} className="text-2xl" />
                     </label>
                 </div>
-                <div className="absolute bg-[url('/reverse.png')] z-30 bg-cover bg-no-repeat h-[150px] bottom-0 left-0 right-0">
+                <div className="absolute bg-[url('/reverse.png')] z-30 bg-cover bg-no-repeat h-[150px] -bottom-1 left-0 right-0">
 
                 </div>
             </div>
-            <div className={`w-full z-10 text-xs lg:text-sm relative bg-white min-h-[600px]  ${colorsText[currentColor]} `} style={{
+            <div className={`w-full z-10 text-xs lg:text-sm relative bg-white h-fit `} style={{
                 color: colors[currentColor]
             }}>
                 <div className="z-20 text-2xl lg:text-3xl font-bold text-white text-center w-full p-5">
@@ -221,6 +221,9 @@ export default function TemplateRed({ template }: any) {
             onLocationSelect={() => { }}
             initialLocation={{ lat: formData.dateLocationLat, lng: formData.dateLocationLng }}
         />
-        <InvitationFormInvitation openModal={openForm} closeModalForm={closeModalForm} formData={formData} setFormData={setFormData} title="" onSubmit={function () { }} invitationTypes={[]} />
+        <InvitationFormInvitation openModal={openForm} closeModalForm={closeModalForm} formData={formData} setFormData={setFormData} onSubmit={function (e) {
+            e.preventDefault()
+            e.stopPropagation()
+        }} invitationTypes={[]} />
     </>
 }
