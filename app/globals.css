@@ -18,13 +18,38 @@
 
 @keyframes battement {
   0% {
-    transform: scale(1); /* Taille normale */
+    transform: scale(1);
+     /* Taille normale */
+     color: inherit;
   }
   50% {
     transform: scale(1.2); /* Légèrement plus grand */
+    color: red;
   }
   100% {
     transform: scale(1); /* Retour à la taille normale */
+    color: inherit;
+  }
+}
+.heart {
+  color: red;
+  font-size: 1.5em;
+  position: fixed;
+  z-index: 10000;
+  bottom: -100px; /* Commence en dehors de l'écran en bas */
+  animation: rise 5s linear infinite; /* Animation principale */
+  opacity: 0; /* Commence invisible */
+  user-select: none; /* Empêche la sélection des cœurs */
+}
+
+@keyframes rise {
+  0% {
+      transform: translateY(0) scale(1);
+      opacity: 1;
+  }
+  100% {
+      transform: translateY(-120vh) scale(0.5); /* Monte et rétrécit */
+      opacity: 0;
   }
 }
 

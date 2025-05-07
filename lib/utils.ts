@@ -5,7 +5,33 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 
+export function createHeart() {
+  const heart = document.createElement('div');
+  heart.classList.add('heart');
+  heart.innerHTML = '❤️'; // Vous pouvez utiliser d'autres symboles ou images
+  document.body.appendChild(heart);
 
+  // Positionnement aléatoire horizontal
+  const randomX = Math.random() * window.innerWidth;
+  heart.style.left = `${randomX}px`;
+
+  // Délai aléatoire pour un effet plus naturel
+  const randomDelay = Math.random() * 2;
+  heart.style.animationDelay = `${randomDelay}s`;
+
+  // Durée d'animation légèrement aléatoire
+  const randomDuration = 4 + Math.random() * 2;
+  heart.style.animationDuration = `${randomDuration}s`;
+
+  // Taille aléatoire
+  const randomSize = 1 + Math.random() * 0.5;
+  heart.style.fontSize = `${randomSize}em`;
+
+  // Suppression du cœur une fois l'animation terminée
+  heart.addEventListener('animationiteration', () => {
+    heart.remove();
+  });
+}
 export const templates: any[] = [
   {
     id: 1,
