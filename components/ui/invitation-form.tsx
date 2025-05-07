@@ -70,22 +70,61 @@ const InvitationFormInvitation = ({ onSubmit, title, formData, setFormData, invi
                             required
                         />
                     </div>
-
                     <div className="space-y-2">
-                        <Label htmlFor="event_date">Date de l'événement</Label>
+                        <Label htmlFor="title">Nom du maris</Label>
                         <Input
-                            id="event_date"
-                            type="date"
-                            value={formData.date}
-                            onChange={(e) => setFormData({ ...formData, date: e.target.value })}
+                            id="title"
+                            value={formData.men}
+                            onChange={(e) => setFormData({ ...formData, men: e.target.value })}
+                            placeholder="Ex: Mariage de Thomas"
+                            required
+                        />
+                    </div>
+                    <div className="space-y-2">
+                        <Label htmlFor="title">Nom de la femme</Label>
+                        <Input
+                            id="title"
+                            value={formData.women}
+                            onChange={(e) => setFormData({ ...formData, women: e.target.value })}
+                            placeholder="Ex: Mariage de Sophie"
                             required
                         />
                     </div>
 
                     <div className="space-y-2">
+                        <Label htmlFor="date">Date de l'événement</Label>
+                        <Input
+                            id="date"
+                            type="date"
+                            value={formData.date}
+                            onChange={(e) => setFormData({
+                                ...formData,
+                                date: e.target.value,
+                                dateDay: new Date(e.target.value).getDate(),
+                                dateMonth: new Date(e.target.value).getMonth() + 1,
+                                dateYear: new Date(e.target.value).getFullYear(),
+                            })}
+                            required
+                        />
+                    </div>
+
+                    <div className="space-y-2">
+                        <Label htmlFor="date">Heure et minute</Label>
+                        <div className="w-full gap-1">
+                            <Input
+                                id="date"
+                                type="time"
+                                value={formData.dateTime}
+                                onChange={(e) => setFormData({ ...formData, dateTime: e.target.value })}
+                                required
+                            />
+                        </div>
+                    </div>
+
+                    <div className="space-y-2">
                         <Label htmlFor="location">Localisation</Label>
-                        <div className="flex gap-2 mb-2">
-                            <Button
+                        <div className="flex gap-2 grid-cols-1 grid  mb-2">
+                            {/* <Button
                                 type="button"
                                 variant="outline"
                                 onClick={handleGeolocation}
@@ -97,7 +136,7 @@ const InvitationFormInvitation = ({ onSubmit, title, formData, setFormData, invi
                                     <MapPin className="h-4 w-4 mr-2" />
                                 )}
                                 Utiliser ma position
-                            </Button>
+                            </Button> */}
                             <Button
                                 type="button"
                                 variant="outline"

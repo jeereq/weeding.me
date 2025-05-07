@@ -40,6 +40,8 @@ export default function MapModal({ isOpen, onClose, onLocationSelect, initialLoc
     }
   }, []);
 
+  console.log("current", current)
+
   // const defaultCenter = initialLocation || { lat: -4.3322097, lng: 15.2780097 }; // Paris by default
 
   const handleLocationSelect = (location: { lat: number; lng: number }) => {
@@ -48,8 +50,8 @@ export default function MapModal({ isOpen, onClose, onLocationSelect, initialLoc
     onClose();
   };
   useEffect(function () {
-    setCurrent(initialLocation)
-   }, [initialLocation])
+    // initialLocation && setCurrent(initialLocation)
+  }, [initialLocation])
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
@@ -59,7 +61,7 @@ export default function MapModal({ isOpen, onClose, onLocationSelect, initialLoc
         </DialogHeader>
         <div className="h-fit">
           <MapContainer
-            center={[current.lat, current.lng]}
+            center={(current.lat && current.lng) ? [current.lat, current.lng] : undefined}
             zoom={13}
             style={{ height: 500, width: '100%' }}
           >
@@ -67,7 +69,7 @@ export default function MapModal({ isOpen, onClose, onLocationSelect, initialLoc
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
               url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             />
-            {current && (
+            {(current.lat && current.lng) && (
               <Marker position={new LatLng(current.lat, current.lng)} />
             )}
             <MapEvents onLocationSelect={handleLocationSelect} />
