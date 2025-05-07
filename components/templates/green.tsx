@@ -191,13 +191,13 @@ export default function TemplateGreen({ template }: any) {
                 <div className={`absolute bg-[url('/bgYellow.png')] bg-cover bg-no-repeat h-[150px] -bottom-[5px] left-0 right-0 z-20 p-5 pt-10`}>
                 </div>
                 <div className="absolute top-0 bottom-0 left-0 right-0 "></div>
-                <div className="w-full px-5">
+                {/* <div className="w-full px-5">
                     <div style={{
                         background: colors[currentColor]
                     }} className={`w-full text-center font-bold h-fit p-5 mt-5 rounded-lg text-white`}>
                         Commander
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
         <MapModal

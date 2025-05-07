@@ -203,14 +203,14 @@ export default function TemplateRed({ template }: any) {
                 <p className="text-center text-sm px-5 mt-5 w-fit mx-auto">
                     <Heart className="h-12 w-12" />
                 </p>
-                <div className="w-full px-5">
+                {/* <div className="w-full px-5">
                     <div className={`w-full text-center font-bold  h-fit p-5 mt-5 rounded-full text-white`}
                         style={{
                             background: colors[currentColor]
                         }}>
                         Commander
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
         <MapModal

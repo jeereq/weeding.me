@@ -187,13 +187,13 @@ export default function TemplateYellow({ template }: any) {
                 </div>
             </div>
             <div className={`w-full z-10 text-xs lg:text-sm relative bg-white`}>
-                <div className="w-full p-5">
+                {/* <div className="w-full p-5">
                     <div style={{
                         background: colors[currentColor]
                     }} className={`w-full text-center font-bold h-fit p-5 mt-5 rounded-full text-white`}>
                         Commander
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
         <MapModal
