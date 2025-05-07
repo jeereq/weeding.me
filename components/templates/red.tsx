@@ -49,10 +49,10 @@ export default function TemplateRed({ template }: any) {
     const [currentColor] = useState<string>('custome');
     const [image, setImage] = useState<any>(null);
     const [formData, setFormData] = useState<any>({
-        dateDay: 18,
-        dateMonth: 6,
-        dateYear: 2025,
-        date: '18/06/2025',
+        dateDay: new Date().getDate(),
+        dateMonth: new Date().getMonth() + 1,
+        dateYear: new Date().getFullYear(),
+        date: new Date().toString(),
         dateTime: "18:00",
         template: template.id,
         dateLocation: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
@@ -84,7 +84,7 @@ export default function TemplateRed({ template }: any) {
                         setOpenForm(true)
                     }}
                     className={`w-full cursor-pointer text-center font-bold h-fit py-3 mt-5 rounded-lg bg-black text-white`}>
-                    Tester
+                    Personnaliser le model
                 </div>
             </div>
             <div className="w-full flex justify-between items-center text-xs lg:text-md px-5">
@@ -143,7 +143,7 @@ export default function TemplateRed({ template }: any) {
                         {formData.dateYear}
                     </div>
                     <p className="text-center text-sm px-5">
-                        Rendez-vous le <b>{formData.dateDay}/{formData.dateMonth}/{formData.dateYear}</b> à <b>{formData.dateTime}</b> sur le(l') {formData.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
+                        Rendez-vous le <b>{formData.dateDay}/{formData.dateMonth}/{formData.dateYear}</b> à <b>{formData.dateTime}</b> sur le(la)(l') {formData.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
                         Votre amour et votre soutien sont les plus beaux cadeaux que nous puissions espérer.
                     </p>
 
@@ -188,7 +188,7 @@ export default function TemplateRed({ template }: any) {
                 }}
                     className="text-center cursor-pointer text-sm px-5 mt-5 w-fit mx-auto"
                 >
-                    <MapPinned className="h-12 w-12" />
+                    <MapPinned className="h-12 w-12 mx-auto" />
                     <div className="w-full">
                         {formData.dateLocationLat && formData.dateLocationLng && (
                             <p className="text-sm text-muted-foreground mt-2">

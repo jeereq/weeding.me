@@ -1,6 +1,6 @@
 "use client";
 import { Camera, Heart, MapPinned } from "lucide-react";
-import { useState } from "react";
+import { use, useEffect, useState } from "react";
 import InvitationFormInvitation from "../ui/invitation-form";
 import { useRouter } from "next/navigation";
 import dynamic from 'next/dynamic'
@@ -33,10 +33,10 @@ export default function TemplateGreen({ template }: any) {
     const [image, setImage] = useState<any>(null);
     const [currentColor] = useState<string>('custome');
     const [formData, setFormData] = useState<any>({
-        dateDay: 18,
-        dateMonth: 6,
-        dateYear: 2025,
-        date: '18/06/2025',
+        dateDay: new Date().getDate(),
+        dateMonth: new Date().getMonth() + 1,
+        dateYear: new Date().getFullYear(),
+        date: new Date().toString(),
         dateTime: "18:00",
         template: template.id,
         dateLocation: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
@@ -57,6 +57,9 @@ export default function TemplateGreen({ template }: any) {
     const closeModalForm = () => {
         setOpenForm(false);
     }
+    useEffect(function () { 
+        console.log(formData)
+    }, [formData])
     return <>
         <div className="w-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
 
@@ -76,7 +79,7 @@ export default function TemplateGreen({ template }: any) {
                         router.push('/templates')
                     }}
                 >
-                    Retour
+                     Personnaliser le model
                 </div>
                 <div className="w-fit flex items-center justify-center p-5  rounded-full">
                     <div style={{
@@ -153,7 +156,7 @@ export default function TemplateGreen({ template }: any) {
                         {formData.dateYear}
                     </div>
                     <p className="text-center text-sm px-5">
-                        Rendez-vous le <b>{formData.dateDay}/{formData.dateMonth}/{formData.dateYear}</b> à <b>{formData.dateTime}</b> sur le(l') {formData.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
+                        Rendez-vous le <b>{formData.dateDay}/{formData.dateMonth}/{formData.dateYear}</b> à <b>{formData.dateTime}</b> sur le(la)(l') {formData.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
                         Votre amour et votre soutien sont les plus beaux cadeaux que nous puissions espérer.
                     </p>
                     <p onClick={function () {
