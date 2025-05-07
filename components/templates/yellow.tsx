@@ -1,12 +1,13 @@
 "use client";
 import { Camera, Heart, MapPinned } from "lucide-react";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useReactToPrint } from "react-to-print";
 import { useRef } from "react";
 import { useRouter } from "next/navigation";
 import InvitationFormInvitation from "../ui/invitation-form";
 import dynamic from 'next/dynamic'
 import TemplateImages from "../ui/templateImages";
+import { createHeart } from "@/lib/utils";
 const MapModal = dynamic(
     () => import('@/components/ui/map-modal'),
     { ssr: false }
@@ -61,7 +62,8 @@ export default function TemplateYellow({ template }: any) {
         men: "Jeereq",
         women: "Medine",
         typeInvitation: "couple",
-        nameInvitation: "Jeereq et Medine"
+        nameInvitation: "Jeereq et Medine",
+        heart: false
     });
     const onChange = (e: any) => {
         const { files } = e.target;
@@ -74,6 +76,12 @@ export default function TemplateYellow({ template }: any) {
         setOpenForm(false);
     }
 
+    useEffect(function () {
+        if (formData.heart) {
+            const id = setInterval(createHeart, 50);
+            return () => clearInterval(id);
+        }
+    }, [formData.heart])
     return <>
         <TemplateImages setImage={setImage} />
         <div className="w-full grid grid-cols-1 py-5 gap-2 relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
