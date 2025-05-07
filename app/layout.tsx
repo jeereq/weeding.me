@@ -41,6 +41,7 @@ export default function RootLayout({
         <link rel="preconnect" href="https://fonts.googleapis.com" />
         <link rel="preconnect" href="https://fonts.gstatic.com" />
         <link href="https://fonts.googleapis.com/css2?family=Pinyon+Script&display=swap" rel="stylesheet" />
+        <link rel="shortcut icon" href="/me.png" type="image/x-icon" />
       </head>
       <body className={candara.className}>
         <ThemeProvider

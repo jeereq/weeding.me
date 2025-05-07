@@ -15,17 +15,19 @@ export default function TemplateGreen({ template }: any) {
     const router = useRouter();
     const [openForm, setOpenForm] = useState(false);
     const [colors, setColors] = useState<any>({
-        custome: "black"
+        custome: "#b21515"
     })
     const contentRef = useRef<HTMLDivElement>(null);
     const reactToPrintFn = useReactToPrint({
         contentRef,
+        documentTitle: template.style,
         pageStyle: `
             @page {
                 size: 500px;   /* auto is the initial value */
                 margin: 0;  /* this affects the margin in the printer settings */
             }
         `});
+
     const [isMapOpen, setIsMapOpen] = useState(false);
     const [months] = useState<any>({
         1: 'janvier',
@@ -68,9 +70,6 @@ export default function TemplateGreen({ template }: any) {
     const closeModalForm = () => {
         setOpenForm(false);
     }
-    useEffect(function () {
-        console.log(formData)
-    }, [formData])
     return <>
         <div className="w-full grid grid-cols-1 py-5 gap-2 relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
             <div className="w-full px-5 grid grid-cols-1 gap-2">
