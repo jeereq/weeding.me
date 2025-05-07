@@ -2,6 +2,8 @@
 import { Camera, Heart, MapPinned } from "lucide-react";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
+import { useReactToPrint } from "react-to-print";
+import { useRef } from "react";
 import InvitationFormInvitation from "../ui/invitation-form";
 import dynamic from 'next/dynamic'
 const MapModal = dynamic(
@@ -13,22 +15,19 @@ export default function TemplateRed({ template }: any) {
     const router = useRouter();
     const [openForm, setOpenForm] = useState(false);
     const [colors, setColors] = useState<any>({
-        green: 'bg-green-900',
-        yellow: 'bg-yellow-900',
-        red: 'bg-red-900',
-        purple: 'bg-purple-900',
-        indigo: 'bg-indigo-900',
-        pink: 'bg-pink-900',
         custome: "black"
     })
+    const contentRef = useRef<HTMLDivElement>(null);
+    const reactToPrintFn = useReactToPrint({
+        contentRef,
+        pageStyle: `
+            @page {
+                size: 500px;   /* auto is the initial value */
+                margin: 0;  /* this affects the margin in the printer settings */
+            }
+        `});
     const [isMapOpen, setIsMapOpen] = useState(false);
-    const [colorsText, setTextColors] = useState<any>({
-        green: 'text-green-900',
-        yellow: 'text-yellow-900',
-        red: 'text-red-900',
-        purple: 'text-purple-900',
-        indigo: 'text-indigo-900',
-        pink: 'text-pink-900',
+    const [colorsText,] = useState<any>({
         custome: "black"
     })
     const [months] = useState<any>({
@@ -43,7 +42,7 @@ export default function TemplateRed({ template }: any) {
         9: 'septembre',
         10: 'octobre',
         11: 'novembre',
-        12: 'décembre',
+        12: 'décembre'
     })
 
     const [currentColor] = useState<string>('custome');
@@ -85,9 +84,10 @@ export default function TemplateRed({ template }: any) {
                     className={`w-full cursor-pointer text-center font-bold h-fit py-3 mt-5 rounded-lg bg-black text-white`}>
                     Tester
                 </div>
+
                 <div
                     onClick={function () {
-                        setOpenForm(true)
+                        reactToPrintFn()
                     }}
                     className={`w-full cursor-pointer text-center font-bold h-fit py-3 mt-2 rounded-lg bg-black text-white`}>
                     Imprimer
@@ -122,7 +122,7 @@ export default function TemplateRed({ template }: any) {
                 />
             </div>
         </div>
-        <div className="w-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
+        <div ref={contentRef} className="w-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
             <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit">
                 <div className={`w-full p-10 h-full `} style={{
                     color: colors[currentColor],

@@ -1,6 +1,8 @@
 "use client";
 import { Camera, Heart, MapPinned } from "lucide-react";
 import { useEffect, useState } from "react";
+import { useReactToPrint } from "react-to-print";
+import { useRef } from "react";
 import InvitationFormInvitation from "../ui/invitation-form";
 import { useRouter } from "next/navigation";
 import dynamic from 'next/dynamic'
@@ -15,6 +17,15 @@ export default function TemplateGreen({ template }: any) {
     const [colors, setColors] = useState<any>({
         custome: "black"
     })
+    const contentRef = useRef<HTMLDivElement>(null);
+    const reactToPrintFn = useReactToPrint({
+        contentRef,
+        pageStyle: `
+            @page {
+                size: 500px;   /* auto is the initial value */
+                margin: 0;  /* this affects the margin in the printer settings */
+            }
+        `});
     const [isMapOpen, setIsMapOpen] = useState(false);
     const [months] = useState<any>({
         1: 'janvier',
@@ -72,7 +83,7 @@ export default function TemplateGreen({ template }: any) {
                 </div>
                 <div
                     onClick={function () {
-                        setOpenForm(true)
+                        reactToPrintFn()
                     }}
                     className={`w-full cursor-pointer text-center font-bold h-fit py-3 mt-2 rounded-lg bg-black text-white`}>
                     Imprimer
@@ -107,7 +118,7 @@ export default function TemplateGreen({ template }: any) {
                 />
             </div>
         </div>
-        <div className="w-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
+        <div ref={contentRef} className="w-fit h-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
             <div className="aspect-[3/5] lg:aspect-[3.5/5] z-30 relative rounded-b-full overflow-hidden">
                 <div className="absolute top-[30px] z-20 text-3xl lg:text-4xl font-bold text-white text-center w-full p-5">
                     <div style={{
