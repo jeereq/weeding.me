@@ -29,14 +29,14 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
         }
     }
     function CalculeSansReduction(): number {
-        return formData.invitations * 0.7
+        return (formData.invitations * 0.7)
     }
     if (!openModal) return <div className="w-fit"></div>
     return (<>
         <div className="w-full fixed top-0 bottom-0 left-0 right-0 flex items-center bg-black bg-opacity-30 justify-center z-50">
             <div className="w-11/12 md:w-[600px] h-fit bg-white relative shadow-lg rounded-xl p-3">
+                <h1 className="font-bold text-xl">Commander vos invitations</h1>
                 <form onSubmit={onSubmit} className="space-y-4 w-full h-fit overflow-y-scroll p-2">
-                    <h1 className="font-bold text-xl">Commander vos invitations</h1>
                     <div className="space-y-2">
                         <Label htmlFor="initiateurDeLaDemande">Nom complet du demandeur</Label>
                         <Input
@@ -126,7 +126,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                         />
                     </div>
                 </form>
-                <div className="w-full gap-2 grid grid-cols-2 mt-2 border-t">
+                <div className="w-full gap-2 grid grid-cols-2 mt-2 border-t pt-3">
                     <Button onClick={closeModalForm} type="submit" className="w-full">
                         Annuler
                     </Button>
