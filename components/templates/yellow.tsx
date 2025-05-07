@@ -134,7 +134,7 @@ export default function TemplateYellow({ template }: any) {
         </div>
         <div ref={contentRef} className="w-fit h-fit relative shadow-lg mx-auto rounded-xl bg-white py-5">
             <div className="aspect-[3/5] z-30 relative">
-                <div className="absolute bg-[url('/bgYellow.png')] rotate-180 z-30 bg-cover bg-no-repeat h-[150px] top-0 left-0 right-0">
+                <div className="absolute bg-[url('/bgYellow.png')] rotate-180 z-30 bg-cover bg-no-repeat h-[150px] -top-1 left-0 right-0">
 
                 </div>
                 <img
