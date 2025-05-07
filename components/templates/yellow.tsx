@@ -131,7 +131,7 @@ export default function TemplateYellow({ template }: any) {
                     alt={template.title}
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
-                <div className={`absolute top-0 -bottom-[10px] left-0 right-0 bg-white bg-opacity-30 flex group items-center justify-center`}>
+                <div className={`absolute top-0 -bottom-[10px] left-0 right-0 bg-white bg-opacity-5 flex group items-center justify-center`}>
                     <input type="file" hidden id="camera" className="hidden" accept="image/*" onChange={onChange} />
                     <label htmlFor="camera" className={`group-hover:block text-white hidden cursor-pointer text-3xl`}>
                         <Camera size={48} className="text-2xl" />
