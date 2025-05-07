@@ -20,28 +20,8 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
     openModal: boolean,
     closeModalForm: any
 }) => {
-    const [isLocating, setIsLocating] = useState(false);
     const [isMapOpen, setIsMapOpen] = useState(false);
-    const handleGeolocation = () => {
-        setIsLocating(true);
-        if ('geolocation' in navigator) {
-            navigator.geolocation.getCurrentPosition(
-                (position: any) => {
-                    setFormData({
-                        ...formData,
-                        dateLocationLat: position.coords.lat,
-                        dateLocationLng: position.coords.lng
 
-                    });
-                    setIsLocating(false);
-                },
-                (error) => {
-                    console.error('Error getting location:', error);
-                    setIsLocating(false);
-                }
-            );
-        }
-    };
 
     const handleMapLocationSelect = (location: { lat: number; lng: number }) => {
         setFormData({
@@ -64,27 +44,27 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                             id="title"
                             value={formData.title}
                             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-                            placeholder="Ex: Mariage de Sophie et Thomas"
+                            placeholder="Ex: Mariage de Medine et Jeereq"
                             required
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="title">Nom du maris</Label>
+                        <Label htmlFor="men">Nom du maris</Label>
                         <Input
-                            id="title"
+                            id="men"
                             value={formData.men}
                             onChange={(e) => setFormData({ ...formData, men: e.target.value })}
-                            placeholder="Ex: Mariage de Thomas"
+                            placeholder="Ex: Jeereq"
                             required
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="title">Nom de la femme</Label>
+                        <Label htmlFor="women">Nom de la femme</Label>
                         <Input
-                            id="title"
+                            id="women"
                             value={formData.women}
                             onChange={(e) => setFormData({ ...formData, women: e.target.value })}
-                            placeholder="Ex: Mariage de Sophie"
+                            placeholder="Ex: Medine"
                             required
                         />
                     </div>

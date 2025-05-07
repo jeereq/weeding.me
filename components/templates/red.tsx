@@ -89,7 +89,7 @@ export default function TemplateRed({ template }: any) {
                     onClick={function () {
                         reactToPrintFn()
                     }}
-                    className={`w-full cursor-pointer text-center font-bold h-fit py-2 rounded-lg bg-black text-white`}>
+                    className={`w-full lg:block hidden cursor-pointer text-center font-bold h-fit py-2 rounded-lg bg-black text-white`}>
                     Imprimer
                 </div>
             </div>
@@ -151,7 +151,7 @@ export default function TemplateRed({ template }: any) {
 
                 </div>
             </div>
-            <div className="aspect-[3/5] z-30 relative group bg-white">
+            <div className="aspect-[3/5] overflow-hidden z-30 relative group bg-white">
                 <div className="absolute bg-[url('/bgYellow.png')] rotate-180 z-30 bg-cover bg-no-repeat h-[150px] -top-1 left-0 right-0">
 
                 </div>
