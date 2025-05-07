@@ -19,7 +19,7 @@ export default function TemplateImages({ setImage = function () { } }: any) {
                 setImage(uri)
                 setCurrent(id)
             }}>
-                <Image style={{ objectFit: "cover" }} src={uri} height={60} width={60} alt="" className={`${current == id ? "h-[60px] w-[60px] lg:mx-0 mx-2 lg:my-2" : "h-[50px] w-[50px]"} bg-cover border-2 rounded-lg border-black`} />
+                <Image style={{ objectFit: "cover" }} src={uri} height={60} width={60} alt="" className={`${current == id ? "h-[60px] w-[60px] lg:mx-0 mx-2 lg:my-2" : "h-[50px] lg:mx-[2px] mx-2 lg:my-[2px] w-[50px]"} bg-cover border-2 rounded-lg border-black`} />
             </div>
         })}
     </div>

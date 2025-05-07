@@ -54,12 +54,14 @@ export default function TemplateYellow({ template }: any) {
         template: template.id,
         dateTime: "18:00",
         dateLocation: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
-        dateLocationLat: 4.323554693688447,
-        dateLocationLng: 15.27127504348755,
+        dateLocationLat: -4.3276,
+        dateLocationLng: 15.3136,
         dateLocationAddress: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
         title: "Jeereq & Medine",
         men: "Jeereq",
         women: "Medine",
+        typeInvitation: "couple",
+        nameInvitation: "Jeereq et Medine"
     });
     const onChange = (e: any) => {
         const { files } = e.target;
@@ -94,7 +96,7 @@ export default function TemplateYellow({ template }: any) {
             </div>
             <div className="w-full grid lg:grid-cols-3 gap-2 flex items-center text-xs lg:text-md px-5">
                 <div
-                    className={`text-white w-full text-center px-5 py-3 cursor-pointer  rounded-lg bg-black`}
+                    className={`text-white w-full font-bold text-center px-5 py-3 cursor-pointer  rounded-lg bg-black`}
                     onClick={function () {
                         router.push('/templates')
                     }}
@@ -109,6 +111,7 @@ export default function TemplateYellow({ template }: any) {
                     </div>
                 </div>
                 <input type="color" name="custome"
+                    value={colors[currentColor]}
                     onChange={function (e) {
                         setColors(function (state: any) {
                             return {
@@ -197,7 +200,7 @@ export default function TemplateYellow({ template }: any) {
                         <MapPinned className="h-12 w-12 mx-auto" />
                         <div className="w-full">
                             {formData.dateLocationLat && formData.dateLocationLng && (
-                                <p className="text-sm text-muted-foreground mt-2">
+                                <p className="text-sm mt-2">
                                     Coordonnées : {formData.dateLocationLat}, {formData.dateLocationLng}
                                 </p>
                             )}
@@ -208,6 +211,12 @@ export default function TemplateYellow({ template }: any) {
                     </p>
                     <p className="text-center text-sm px-5 mt-10 w-fit mx-auto">
                         <Heart className="h-12 w-12" />
+                    </p>
+                    <div className={`text-lg lg:text-xl font-bold mt-5 pb-2 text-center w-full p-5 pb-0`}>
+                        {formData.nameInvitation}
+                    </div>
+                    <p className="text-center text-sm px-5 w-fit mx-auto text-center">
+                        Préparez-vous à célébrer l'amour ! <span className="font-bold">{formData.men}</span> & <span className="font-bold">{formData.women}</span> vont se dire "oui" pour la vie.
                     </p>
                 </div>
             </div>

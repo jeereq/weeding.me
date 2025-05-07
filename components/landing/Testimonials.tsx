@@ -44,7 +44,7 @@ export default function Testimonials() {
     hidden: { opacity: 0, y: 20 },
     show: { opacity: 1, y: 0 },
   };
-
+  return <div className="w-full"></div>
   return (
     <section id="testimonials" className="py-20 bg-muted/30">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
