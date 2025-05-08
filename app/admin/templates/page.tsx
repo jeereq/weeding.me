@@ -32,7 +32,6 @@ const categories = [
 ];
 
 export default function TemplatesPage() {
-  // const [templates, setTemplates] = useState<Template[]>(mockTemplates);
   const [searchTerm, setSearchTerm] = useState('');
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
@@ -59,7 +58,7 @@ export default function TemplatesPage() {
       if (isEditing && selectedTemplate) {
         setSelectedTemplate({ ...selectedTemplate, imageUrl });
       } else {
-        setNewTemplate({ ...newTemplate, imageUrl });
+        // setNewTemplate({ ...newTemplate, imageUrl });
       }
     };
     reader.readAsDataURL(file);

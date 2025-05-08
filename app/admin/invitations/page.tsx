@@ -6,13 +6,15 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, MapPin, Loader2, UserPlus, Users } from 'lucide-react';
+import { Plus, MapPin, Loader2, UserPlus, Users, Badge } from 'lucide-react';
 import { Textarea } from '@/components/ui/textarea';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import dynamic from 'next/dynamic'
 import { useData } from '@/lib/data';
 import { templates } from '@/lib/utils';
+import Image from 'next/image';
+import InvitationFormInvitationAdmin from '@/components/ui/invitation-form-admin';
 
 const MapModal = dynamic(
   () => import('@/components/ui/map-modal'),
@@ -117,55 +119,38 @@ interface GuestFormData {
 export default function InvitationsPage() {
   const [invitations, setInvitations] = useState<Invitation[]>([]);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
-  const [isEditOpen, setIsEditOpen] = useState(false);
   const [isGuestsOpen, setIsGuestsOpen] = useState(false);
   const [selectedInvitation, setSelectedInvitation] = useState<Invitation | null>(null);
-  const [isLocating, setIsLocating] = useState(false);
   const [isMapOpen, setIsMapOpen] = useState(false);
   const { user } = useData()
-  const [formData, setFormData] = useState<InvitationFormData>({
-    title: '',
-    event_date: '',
-    template_id: '',
-    type: 'autre',
-    location: {
-      lat: 4.323554693688447,
-      lng: 15.27127504348755,
-      address: '',
-    },
+  const [formData, setFormData] = useState<any>({
+    dateDay: new Date().getDate(),
+    dateMonth: new Date().getMonth() + 1,
+    dateYear: new Date().getFullYear(),
+    date: new Date().toString(),
+    dateTime: "18:00",
+    template: "",
+    dateLocation: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
+    dateLocationLat: -4.3276,
+    dateLocationLng: 15.3136,
+    dateLocationAddress: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
+    title: "Jeereq & Medine",
+    men: "Jeereq",
+    women: "Medine",
+    typeInvitation: "couple",
+    nameInvitation: "Percy et Merveille",
+    heart: false,
+    initiateurDeLaDemande: "",
+    phone: "",
+    invitations: 50,
+    city: "",
+    country: ""
   });
   const [guestFormData, setGuestFormData] = useState<GuestFormData>({
     name: '',
     email: '',
     phone: '',
   });
-
-  useEffect(() => {
-    setInvitations(mockInvitations);
-  }, []);
-
-  const handleGeolocation = () => {
-    setIsLocating(true);
-    if ('geolocation' in navigator) {
-      navigator.geolocation.getCurrentPosition(
-        (position: any) => {
-          setFormData({
-            ...formData,
-            location: {
-              ...formData.location,
-              lat: position.coords.lat,
-              lng: position.coords.lng
-            },
-          });
-          setIsLocating(false);
-        },
-        (error) => {
-          console.error('Error getting location:', error);
-          setIsLocating(false);
-        }
-      );
-    }
-  };
 
   const handleMapLocationSelect = (location: { lat: number; lng: number }) => {
     setFormData({
@@ -201,56 +186,6 @@ export default function InvitationsPage() {
     });
   };
 
-  const handleEdit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!selectedInvitation) return;
-
-    const updatedInvitations = invitations.map(inv =>
-      inv.id === selectedInvitation.id
-        ? {
-          ...inv,
-          title: formData.title,
-          event_date: formData.event_date,
-          type: formData.type,
-          location: formData.location,
-          template: { title: templates.find(t => t.id === formData.template_id)?.title || inv.template.title }
-        }
-        : inv
-    );
-    setInvitations(updatedInvitations);
-    setIsEditOpen(false);
-    setSelectedInvitation(null);
-    setFormData({
-      title: '',
-      event_date: '',
-      template_id: '',
-      type: 'autre',
-      location: { lat: null, lng: null, address: '' },
-    });
-  };
-
-  const handleAddGuest = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!selectedInvitation) return;
-
-    const newGuest: Guest = {
-      id: Math.random().toString(),
-      name: guestFormData.name,
-      email: guestFormData.email,
-      phone: guestFormData.phone,
-      status: 'pending'
-    };
-
-    const updatedInvitations = invitations.map(inv =>
-      inv.id === selectedInvitation.id
-        ? { ...inv, guests: [...inv.guests, newGuest] }
-        : inv
-    );
-
-    setInvitations(updatedInvitations);
-    setGuestFormData({ name: '', email: '', phone: '' });
-  };
-
   const handleRemoveGuest = (invitationId: string, guestId: string) => {
     const updatedInvitations = invitations.map(inv =>
       inv.id === invitationId
@@ -260,245 +195,83 @@ export default function InvitationsPage() {
     setInvitations(updatedInvitations);
   };
 
-  const openEditModal = (invitation: Invitation) => {
-    setSelectedInvitation(invitation);
-    setFormData({
-      title: invitation.title,
-      event_date: invitation.event_date,
-      type: invitation.type,
-      template_id: templates.find(t => t.title === invitation.template.title)?.id || '',
-      location: invitation.location,
-    });
-    setIsEditOpen(true);
-  };
 
   const openGuestsModal = (invitation: Invitation) => {
     setSelectedInvitation(invitation);
     setIsGuestsOpen(true);
   };
 
-  const InvitationForm = ({ onSubmit, title }: { onSubmit: (e: React.FormEvent) => void, title: string }) => (
-    <form onSubmit={onSubmit} className="space-y-4">
-      <div className="space-y-2">
-        <Label htmlFor="type">Type d'événement</Label>
-        <RadioGroup
-          value={formData.type}
-          onValueChange={(value) => setFormData({ ...formData, type: value as InvitationType })}
-          className="grid grid-cols-2 gap-4"
-        >
-          {invitationTypes.map((type) => (
-            <div key={type.value} className="flex items-center space-x-2">
-              <RadioGroupItem value={type.value} id={type.value} />
-              <Label htmlFor={type.value}>{type.label}</Label>
-            </div>
-          ))}
-        </RadioGroup>
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="title">Titre de l'invitation</Label>
-        <Input
-          id="title"
-          value={formData.title}
-          onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-          placeholder="Ex: Mariage de Sophie et Thomas"
-          required
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="event_date">Date de l'événement</Label>
-        <Input
-          id="event_date"
-          type="date"
-          value={formData.event_date}
-          onChange={(e) => setFormData({ ...formData, event_date: e.target.value })}
-          required
-        />
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="location">Localisation</Label>
-        <div className="flex gap-2 mb-2">
-          <Button
-            type="button"
-            variant="outline"
-            onClick={handleGeolocation}
-            disabled={isLocating}
-          >
-            {isLocating ? (
-              <Loader2 className="h-4 w-4 animate-spin mr-2" />
-            ) : (
-              <MapPin className="h-4 w-4 mr-2" />
-            )}
-            Utiliser ma position
-          </Button>
-          <Button
-            type="button"
-            variant="outline"
-            onClick={() => setIsMapOpen(true)}
-          >
-            Choisir sur la carte
-          </Button>
-        </div>
-        <Textarea
-          placeholder="Adresse complète"
-          value={formData.location.address}
-          onChange={(e) => setFormData({
-            ...formData,
-            location: { ...formData.location, address: e.target.value }
-          })}
-          required
-        />
-        {formData.location.lat && formData.location.lng && (
-          <p className="text-sm text-muted-foreground mt-2">
-            Coordonnées : {formData.location.lat}, {formData.location.lng}
-          </p>
-        )}
-      </div>
-
-      <div className="space-y-2">
-        <Label htmlFor="template">Template</Label>
-        <Select
-          value={formData.template_id}
-          onValueChange={(value) => setFormData({ ...formData, template_id: value })}
-        >
-          <SelectTrigger>
-            <SelectValue placeholder="Sélectionner un template" />
-          </SelectTrigger>
-          <SelectContent>
-            {templates.map((template) => (
-              <SelectItem key={template.id} value={template.id}>
-                {template.title}
-              </SelectItem>
-            ))}
-          </SelectContent>
-        </Select>
-      </div>
-
-      <Button type="submit" className="w-full">
-        {title}
-      </Button>
-    </form>
-  );
 
   return (
     <div>
       <div className="flex justify-between items-center mb-8">
         <h1 className="text-3xl font-bold">Invitations</h1>
-        <Dialog open={isCreateOpen} onOpenChange={setIsCreateOpen}>
-          <DialogTrigger asChild>
-            <Button>
-              <Plus className="h-4 w-4 lg:mr-2" />
-              <span className="lg:block hidden">
-                Nouvelle invitation
-              </span>
-            </Button>
-          </DialogTrigger>
-          <DialogContent>
-            <DialogHeader>
-              <DialogTitle>Créer une nouvelle invitation</DialogTitle>
-            </DialogHeader>
-            <InvitationForm onSubmit={handleCreate} title="Créer l'invitation" />
-          </DialogContent>
-        </Dialog>
+        <Button onClick={function () {
+          setIsCreateOpen(true)
+        }}>
+          <Plus className="h-4 w-4 lg:mr-2" />
+          <span className="lg:block hidden">
+            Nouvelle invitation
+          </span>
+        </Button>
       </div>
+      <InvitationFormInvitationAdmin
+        formData={formData}
+        setFormData={setFormData}
+        closeModalForm={function () {
+          setIsCreateOpen(false)
+        }}
+        openModal={isCreateOpen}
+        onSubmit={handleCreate}
+      />
 
-      <div className="grid gap-2">
+      <div className="grid gap-2 grid-cols-3">
         {user.templates.map((invitation: any) => (
-          <Card key={invitation.id}>
+          <Card key={invitation.id} className="overflow-hidden">
+            <div className="aspect-video relative">
+              <img
+                src={templates.find(t => t.id == invitation.template)?.imageUrl}
+                alt={invitation.title}
+                className="object-cover w-full h-full"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+              <Badge className="absolute top-2 right-2">
+                {templates.find(t => t.id == invitation.template)?.title}
+              </Badge>
+              <div className="absolute bottom-2 right-2 flex gap-2">
+              </div>
+            </div>
             <CardContent className="p-6">
-              <div className="flex justify-between items-start">
-                <div>
-                  <h3 className="text-lg font-medium">{invitation.title}</h3>
-                  <p className="text-sm text-muted-foreground">
-                    Invitations: {invitation?.invitations}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    Template: {templates.find(t => t.id == invitation.template)?.title}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    Date: {new Date(invitation.date).toLocaleDateString()}
-                  </p>
-                  <p className="text-sm text-muted-foreground">
-                    Lieu: {invitation.address}
-                  </p>
+              <h3 className="text-lg font-semibold mb-2">{invitation.title}</h3>
+              <p className="text-sm text-muted-foreground mb-4">
+                {invitation.address}
+              </p>
+              <div className="flex justify-between items-center">
+                <div className="flex items-center text-sm text-muted-foreground">
+                  <Users className="h-4 w-4 mr-1" />
+                  {invitation.invitations} Invitations
                 </div>
-                <div className="grid lg:grid-cols-2 space-x-4">
+                <div className="flex gap-2">
                   <Button
-                    variant="outline"
+                    variant="ghost"
                     size="sm"
-                    className='mb-1 lg:mb-0'
                     onClick={() => openGuestsModal(invitation)}
                   >
-                    <Users className="h-4 w-4 mr-2" />
-                    {invitation?.invitations}
+                    <Users className="h-4 w-4" />
                   </Button>
-                  <Dialog open={isEditOpen && selectedInvitation?.id === invitation.id} onOpenChange={setIsEditOpen}>
-                    <DialogTrigger asChild>
-                      <Button variant="outline" size="sm" onClick={() => openEditModal(invitation)}>
-                        Modifier
-                      </Button>
-                    </DialogTrigger>
-                    <DialogContent>
-                      <DialogHeader>
-                        <DialogTitle>Modifier l'invitation</DialogTitle>
-                      </DialogHeader>
-                      <InvitationForm onSubmit={handleEdit} title="Enregistrer les modifications" />
-                    </DialogContent>
-                  </Dialog>
                 </div>
               </div>
             </CardContent>
           </Card>
+
         ))}
       </div>
 
       <Dialog open={isGuestsOpen} onOpenChange={setIsGuestsOpen}>
         <DialogContent className="max-w-3xl">
           <DialogHeader>
-            <DialogTitle>Gérer les invités - {selectedInvitation?.title}</DialogTitle>
+            <DialogTitle>Les invités - {selectedInvitation?.title}</DialogTitle>
           </DialogHeader>
-
-          <form onSubmit={handleAddGuest} className="flex gap-4 items-end mb-6">
-            <div className="flex-1 space-y-2">
-              <Label htmlFor="guest-name">Nom de l'invité</Label>
-              <Input
-                id="guest-name"
-                value={guestFormData.name}
-                onChange={(e) => setGuestFormData({ ...guestFormData, name: e.target.value })}
-                placeholder="Ex: Jean Dupont"
-                required
-              />
-            </div>
-            <div className="flex-1 space-y-2">
-              <Label htmlFor="guest-email">Email</Label>
-              <Input
-                id="guest-email"
-                type="email"
-                value={guestFormData.email}
-                onChange={(e) => setGuestFormData({ ...guestFormData, email: e.target.value })}
-                placeholder="Ex: jean@example.com"
-                required
-              />
-            </div>
-            <div className="flex-1 space-y-2">
-              <Label htmlFor="guest-phone">Téléphone</Label>
-              <Input
-                id="guest-phone"
-                type="tel"
-                value={guestFormData.phone}
-                onChange={(e) => setGuestFormData({ ...guestFormData, phone: e.target.value })}
-                placeholder="Ex: +33612345678"
-                required
-              />
-            </div>
-            <Button type="submit">
-              <UserPlus className="h-4 w-4 mr-2" />
-              Ajouter
-            </Button>
-          </form>
-
           <div className="rounded-md border">
             <Table>
               <TableHeader>
@@ -540,17 +313,6 @@ export default function InvitationsPage() {
           </div>
         </DialogContent>
       </Dialog>
-
-      <MapModal
-        isOpen={isMapOpen}
-        onClose={() => setIsMapOpen(false)}
-        onLocationSelect={handleMapLocationSelect}
-        initialLocation={
-          formData.location.lat && formData.location.lng
-            ? { lat: formData.location.lat, lng: formData.location.lng }
-            : { lat: 4.323554693688447, lng: 15.27127504348755 }
-        }
-      />
     </div>
   );
 }

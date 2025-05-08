@@ -70,7 +70,6 @@ export default function TemplateGreen({ template }: any) {
         city: "",
         country: ""
     });
-
     const onChange = (e: any) => {
         const { files } = e.target;
         if (files && files.length > 0) {
@@ -87,6 +86,7 @@ export default function TemplateGreen({ template }: any) {
             return () => clearInterval(id);
         }
     }, [formData.heart])
+    
     return <>
         <TemplateImages setImage={setImage} />
         <div className="w-full grid grid-cols-1 py-5 gap-2 relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">

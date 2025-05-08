@@ -1,5 +1,4 @@
 "use client";
-
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { cn } from '@/lib/utils';
@@ -29,20 +28,17 @@ export function Sidebar() {
   const router = useRouter();
   const { user, logout } = useData();
 
-  // Mock admin check - Replace with actual role check from Supabase
-  const isAdmin = true;
-
   const handleSignOut = () => {
     logout();
     router.push('/');
   };
 
-  const filteredNavigation = navigation.filter(item => 
-    !item.adminOnly || (item.adminOnly && isAdmin)
+  const filteredNavigation = navigation.filter(item =>
+    !item.adminOnly || (item.adminOnly && (user?.role?.id == 3))
   );
 
   return (
-    <div className="lg:w-64 bg-card h-full lg:p-4 p-1 border-r">
+    <div className="lg:w-64 bg-card h-full flex flex-col justify-between lg:p-4 p-1 border-r">
       <nav className="space-y-2">
         {filteredNavigation.map((item) => (
           <Link
@@ -59,14 +55,14 @@ export function Sidebar() {
             <span className='hidden lg:block'>{item.name}</span>
           </Link>
         ))}
-        <button
-          onClick={handleSignOut}
-          className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors"
-        >
-          <LogOut className="h-5 w-5" />
-          <span className='hidden lg:block'>Déconnexion</span>
-        </button>
       </nav>
+      <button
+        onClick={handleSignOut}
+        className="w-full flex items-center space-x-3 px-3 py-2 rounded-lg text-sm font-medium text-destructive hover:bg-destructive/10 transition-colors"
+      >
+        <LogOut className="h-5 w-5" />
+        <span className='hidden lg:block'>Déconnexion</span>
+      </button>
     </div>
   );
 }

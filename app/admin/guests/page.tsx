@@ -259,9 +259,6 @@ const GuestsPage: FC = () => {
         </div>
       </div>
       <Card>
-        <CardHeader>
-          <CardTitle>Liste des invités</CardTitle>
-        </CardHeader>
         <CardContent>
           <div className="flex gap-4 mb-6">
             <div className="relative flex-1">
