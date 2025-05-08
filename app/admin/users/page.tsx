@@ -47,10 +47,12 @@ export default function UsersPage() {
   const [searchTerm, setSearchTerm] = useState('');
   const { user } = useData()
   const { fetch, loading } = useFetchData({ uri: "auth/users" })
+  const { fetch: fetchUpdate, loading: loadingUpdate } = useFetchData({ uri: "auth/update" })
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [selectedUser, setSelectedUser] = useState<any | null>(null);
   const [newUser, setNewUser] = useState<any>({
+    id: '',
     email: '',
     username: '',
     phone: '',
@@ -107,14 +109,17 @@ export default function UsersPage() {
   };
 
   useEffect(function () {
-
     fetch({ role: user.role.id }, "POST").then(function ({ data }) {
       if (data) {
         setUsers(data.data || [])
       }
     })
   }, [])
-
+  if (loading) return <div className="w-full text-center">
+    <h1 className="font-bold text-center">
+      ...Chargement
+    </h1>
+  </div>
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -165,8 +170,12 @@ export default function UsersPage() {
                       variant="ghost"
                       size="sm"
                       onClick={() => {
-                        setSelectedUser({ ...user, role: user.role.id });
+                        setSelectedUser({ ...user, role: user?.role?.id || user?.role });
                         setEditDialogOpen(true);
+                        fetchUpdate({ ...user, role: user?.role?.id || user?.role }, "POST")
+                          .then(function (data) {
+                            console.log(data)
+                          })
                       }}
                     >
                       Modifier
@@ -247,7 +256,7 @@ export default function UsersPage() {
                 <Input
                   id="edit-name"
                   value={selectedUser.username}
-                  onChange={(e) => setSelectedUser({ ...selectedUser, name: e.target.value })}
+                  onChange={(e) => setSelectedUser({ ...selectedUser, username: e.target.value })}
                 />
               </div>
               <div className="space-y-2">
@@ -293,7 +302,7 @@ export default function UsersPage() {
                   Annuler
                 </Button>
                 <Button onClick={handleUpdateUser}>
-                  Enregistrer les modifications
+                  {loadingUpdate ? "...Chargement" : "Enregistrer les modifications"}
                 </Button>
               </div>
             </div>

@@ -511,7 +511,7 @@ export default function InvitationsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {user?.guests?.map((guest) => (
+                {user?.guests?.map((guest: any) => (
                   <TableRow key={guest.id}>
                     <TableCell>{guest.name}</TableCell>
                     <TableCell>{guest.email}</TableCell>

@@ -6,7 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Pencil, Users, Upload, Download } from "lucide-react";
+import { Search, Users, Upload, Download } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
@@ -85,9 +85,6 @@ export default function TemplatesPage() {
   const handleUpdateTemplate = () => {
     if (!selectedTemplate) return;
 
-    const updatedTemplates = templates.map(template =>
-      template.id === selectedTemplate.id ? { ...selectedTemplate } : template
-    );
     setEditDialogOpen(false);
     setSelectedTemplate(null);
   };
@@ -236,13 +233,6 @@ export default function TemplatesPage() {
                     {template.category}
                   </Badge>
                   <div className="absolute bottom-2 right-2 flex gap-2">
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      onClick={() => handleImageDownload(template.imageUrl, `${template.title}.jpg`)}
-                    >
-                      <Download className="h-4 w-4" />
-                    </Button>
                   </div>
                 </div>
                 <CardContent className="p-6">
@@ -266,7 +256,6 @@ export default function TemplatesPage() {
                       >
                         <Users className="h-4 w-4" />
                       </Button>
-                     
                     </div>
                   </div>
                 </CardContent>
