@@ -13,7 +13,7 @@ import {
   Palette
 } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/lib/auth';
+import { useData } from '@/lib/data';
 
 const navigation = [
   { name: 'Tableau de bord', href: '/admin', icon: LayoutDashboard },
@@ -27,7 +27,7 @@ const navigation = [
 export function Sidebar() {
   const pathname = usePathname();
   const router = useRouter();
-  const { user, logout } = useAuth();
+  const { user, logout } = useData();
 
   // Mock admin check - Replace with actual role check from Supabase
   const isAdmin = true;

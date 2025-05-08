@@ -2,7 +2,7 @@
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import { Sidebar } from '@/components/admin/Sidebar';
-import { useAuth } from '@/lib/auth';
+import { useData } from '@/lib/data';
 
 export default function AdminLayout({
   children,
@@ -10,7 +10,7 @@ export default function AdminLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
-  const { user } = useAuth();
+  const { user } = useData();
 
   useEffect(() => {
     if (!user) {

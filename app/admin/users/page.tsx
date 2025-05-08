@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
@@ -10,6 +10,8 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Search, Shield, UserPlus, UserCog, AlertTriangle } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Label } from "@/components/ui/label";
+import { useFetchData } from '@/hooks/useFetchData';
+import { useData } from '@/lib/data';
 
 interface User {
   id: string;
@@ -41,20 +43,23 @@ const mockUsers: User[] = [
 ];
 
 export default function UsersPage() {
-  const [users, setUsers] = useState<User[]>(mockUsers);
+  const [users, setUsers] = useState<any[]>(mockUsers);
   const [searchTerm, setSearchTerm] = useState('');
+  const { user } = useData()
+  const { fetch, loading } = useFetchData({ uri: "auth/users" })
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
-  const [selectedUser, setSelectedUser] = useState<User | null>(null);
+  const [selectedUser, setSelectedUser] = useState<any | null>(null);
   const [newUser, setNewUser] = useState<any>({
     email: '',
-    name: '',
+    username: '',
+    phone: '',
     role: 'editor'
   });
 
   const filteredUsers = users.filter(user =>
     user.email.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    user.name.toLowerCase().includes(searchTerm.toLowerCase())
+    user.username.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
   const handleCreateUser = () => {
@@ -101,6 +106,15 @@ export default function UsersPage() {
     }
   };
 
+  useEffect(function () {
+
+    fetch({ role: user.role.id }, "POST").then(function ({ data }) {
+      if (data) {
+        setUsers(data.data || [])
+      }
+    })
+  }, [])
+
   return (
     <div className="space-y-6">
       <div className="flex justify-between items-center">
@@ -114,11 +128,8 @@ export default function UsersPage() {
       </div>
 
       <Card>
-        <CardHeader>
-          <CardTitle>Liste des utilisateurs</CardTitle>
-        </CardHeader>
         <CardContent>
-          <div className="flex gap-4 mb-6">
+          <div className="flex gap-4 mt-6 mb-6">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
@@ -144,9 +155,9 @@ export default function UsersPage() {
             <TableBody>
               {filteredUsers.map((user) => (
                 <TableRow key={user.id}>
-                  <TableCell className="font-medium">{user.name}</TableCell>
+                  <TableCell className="font-medium">{user.username}</TableCell>
                   <TableCell>{user.email}</TableCell>
-                  <TableCell>{getRoleBadge(user.role)}</TableCell>
+                  <TableCell>{getRoleBadge(user.role.name)}</TableCell>
                   <TableCell>{new Date(user.lastLogin).toLocaleDateString()}</TableCell>
                   <TableCell>{new Date(user.createdAt).toLocaleDateString()}</TableCell>
                   <TableCell className="text-right">
@@ -154,7 +165,7 @@ export default function UsersPage() {
                       variant="ghost"
                       size="sm"
                       onClick={() => {
-                        setSelectedUser(user);
+                        setSelectedUser({ ...user, role: user.role.id });
                         setEditDialogOpen(true);
                       }}
                     >
@@ -192,19 +203,25 @@ export default function UsersPage() {
               />
             </div>
             <div className="space-y-2">
-              <Label htmlFor="role">Rôle</Label>
-              <Select
-                value={newUser.role}
-                onValueChange={(value: 'admin' | 'editor') => setNewUser({ ...newUser, role: value })}
-              >
-                <SelectTrigger>
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="editor">Editor</SelectItem>
-                  <SelectItem value="admin">Admin</SelectItem>
-                </SelectContent>
-              </Select>
+              <Label htmlFor="edit-phone">Téléphone</Label>
+              <Input
+                id="edit-phone"
+                type="phone"
+                value={newUser.phone}
+                onChange={(e) => setNewUser({ ...newUser, phone: e.target.value })}
+              />
+            </div>
+            <div className="space-y-2">
+              <Label htmlFor="edit-role">Rôle</Label>
+              <select value={newUser.role} onChange={(e) => setNewUser({ ...newUser, role: e.target.value })}
+                name="role" id="edit-role" className='w-full py-2 bg-black bg-opacity-0 rounded-lg border'>
+                <option value="4">
+                  Editor
+                </option>
+                <option value="3">
+                  Admin
+                </option>
+              </select>
             </div>
             <div className="flex justify-end space-x-2">
               <Button variant="outline" onClick={() => setCreateDialogOpen(false)}>
@@ -229,7 +246,7 @@ export default function UsersPage() {
                 <Label htmlFor="edit-name">Nom</Label>
                 <Input
                   id="edit-name"
-                  value={selectedUser.name}
+                  value={selectedUser.username}
                   onChange={(e) => setSelectedUser({ ...selectedUser, name: e.target.value })}
                 />
               </div>
@@ -243,19 +260,25 @@ export default function UsersPage() {
                 />
               </div>
               <div className="space-y-2">
+                <Label htmlFor="edit-phone">Téléphone</Label>
+                <Input
+                  id="edit-phone"
+                  type="phone"
+                  value={selectedUser.phone}
+                  onChange={(e) => setSelectedUser({ ...selectedUser, phone: e.target.value })}
+                />
+              </div>
+              <div className="space-y-2">
                 <Label htmlFor="edit-role">Rôle</Label>
-                <Select
-                  value={selectedUser.role}
-                  onValueChange={(value: 'admin' | 'editor') => setSelectedUser({ ...selectedUser, role: value })}
-                >
-                  <SelectTrigger>
-                    <SelectValue />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="editor">Editor</SelectItem>
-                    <SelectItem value="admin">Admin</SelectItem>
-                  </SelectContent>
-                </Select>
+                <select value={selectedUser.role} onChange={(e) => setSelectedUser({ ...selectedUser, role: e.target.value })}
+                  name="role" id="edit-role" className='w-full py-2 bg-black bg-opacity-0 rounded-lg border'>
+                  <option value="4">
+                    Editor
+                  </option>
+                  <option value="3">
+                    Admin
+                  </option>
+                </select>
               </div>
               {selectedUser.role === 'admin' && (
                 <div className="flex items-center gap-2 p-4 bg-yellow-50 text-yellow-800 rounded-lg">
@@ -265,7 +288,7 @@ export default function UsersPage() {
                   </p>
                 </div>
               )}
-              <div className="flex justify-end space-x-2">
+              <div className="grid grid-cols-2 gap-2">
                 <Button variant="outline" onClick={() => setEditDialogOpen(false)}>
                   Annuler
                 </Button>

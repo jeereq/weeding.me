@@ -11,6 +11,8 @@ import { Textarea } from '@/components/ui/textarea';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import dynamic from 'next/dynamic'
+import { useData } from '@/lib/data';
+import { templates } from '@/lib/utils';
 
 const MapModal = dynamic(
   () => import('@/components/ui/map-modal'),
@@ -98,13 +100,6 @@ const mockInvitations: Invitation[] = [
   }
 ];
 
-const templates = [
-  { id: '1', title: 'Élégance Florale' },
-  { id: '2', title: 'Célébration Festive' },
-  { id: '3', title: 'Minimaliste Moderne' },
-  { id: '4', title: 'Champêtre Vintage' },
-];
-
 interface InvitationFormData {
   title: string;
   event_date: string;
@@ -127,6 +122,7 @@ export default function InvitationsPage() {
   const [selectedInvitation, setSelectedInvitation] = useState<Invitation | null>(null);
   const [isLocating, setIsLocating] = useState(false);
   const [isMapOpen, setIsMapOpen] = useState(false);
+  const { user } = useData()
   const [formData, setFormData] = useState<InvitationFormData>({
     title: '',
     event_date: '',
@@ -409,23 +405,23 @@ export default function InvitationsPage() {
       </div>
 
       <div className="grid gap-2">
-        {invitations.map((invitation) => (
+        {user.templates.map((invitation: any) => (
           <Card key={invitation.id}>
             <CardContent className="p-6">
               <div className="flex justify-between items-start">
                 <div>
                   <h3 className="text-lg font-medium">{invitation.title}</h3>
                   <p className="text-sm text-muted-foreground">
-                    Type: {invitationTypes.find(t => t.value === invitation.type)?.label}
+                    Invitations: {invitation?.invitations}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Template: {invitation.template.title}
+                    Template: {templates.find(t => t.id == invitation.template)?.title}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Date: {new Date(invitation.event_date).toLocaleDateString()}
+                    Date: {new Date(invitation.date).toLocaleDateString()}
                   </p>
                   <p className="text-sm text-muted-foreground">
-                    Lieu: {invitation.location.address}
+                    Lieu: {invitation.address}
                   </p>
                 </div>
                 <div className="grid lg:grid-cols-2 space-x-4">
@@ -436,7 +432,7 @@ export default function InvitationsPage() {
                     onClick={() => openGuestsModal(invitation)}
                   >
                     <Users className="h-4 w-4 mr-2" />
-                    {invitation.guests.length} invités
+                    {invitation?.invitations}
                   </Button>
                   <Dialog open={isEditOpen && selectedInvitation?.id === invitation.id} onOpenChange={setIsEditOpen}>
                     <DialogTrigger asChild>
@@ -515,7 +511,7 @@ export default function InvitationsPage() {
                 </TableRow>
               </TableHeader>
               <TableBody>
-                {selectedInvitation?.guests.map((guest) => (
+                {user?.guests?.map((guest) => (
                   <TableRow key={guest.id}>
                     <TableCell>{guest.name}</TableCell>
                     <TableCell>{guest.email}</TableCell>
