@@ -98,22 +98,22 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                             onChange={(e) => setFormData({
                                 ...formData,
                                 date: e.target.value,
-                                dateDay: new Date(e.target.value).getDate(),
-                                dateMonth: new Date(e.target.value).getMonth() + 1,
-                                dateYear: new Date(e.target.value).getFullYear(),
+                                day: new Date(e.target.value).getDate(),
+                                month: new Date(e.target.value).getMonth() + 1,
+                                year: new Date(e.target.value).getFullYear(),
                             })}
                             required
                         />
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="date">Heure et minute</Label>
+                        <Label htmlFor="time">Heure et minute</Label>
                         <div className="w-full gap-1">
                             <Input
-                                id="date"
+                                id="time"
                                 type="time"
-                                value={formData.dateTime}
-                                onChange={(e) => setFormData({ ...formData, dateTime: e.target.value })}
+                                value={formData.time}
+                                onChange={(e) => setFormData({ ...formData, time: e.target.value })}
                                 required
                             />
                         </div>
@@ -163,16 +163,16 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                         </div>
                         <Textarea
                             placeholder="Adresse complète"
-                            value={formData.dateLocationAddress}
+                            value={formData.address}
                             onChange={(e) => setFormData({
                                 ...formData,
-                                dateLocationAddress: e.target.value
+                                address: e.target.value
                             })}
                             required
                         />
-                        {formData.dateLocationLat && formData.dateLocationLng && (
+                        {formData.lat && formData.lng && (
                             <p className="text-sm text-muted-foreground mt-2">
-                                Coordonnées : {formData.dateLocationLat}, {formData.dateLocationLng}
+                                Coordonnées : {formData.lat}, {formData.lng}
                             </p>
                         )}
                     </div>
@@ -189,7 +189,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                     isOpen={isMapOpen}
                     onClose={() => setIsMapOpen(false)}
                     onLocationSelect={handleMapLocationSelect}
-                    initialLocation={{ lat: formData.dateLocationLat, lng: formData.dateLocationLng }}
+                    initialLocation={{ lat: formData.lat, lng: formData.lng }}
                 />
             </div>
         </div>
