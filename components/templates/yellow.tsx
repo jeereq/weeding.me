@@ -69,7 +69,8 @@ export default function TemplateYellow({ template, hide = false }: any) {
         phone: "",
         invitations: 50,
         city: "",
-        country: ""
+        country: "",
+        image: ""
     });
     const onChange = (e: any) => {
         const { files } = e.target;
@@ -88,7 +89,7 @@ export default function TemplateYellow({ template, hide = false }: any) {
             return () => clearInterval(id);
         }
     }, [formData.heart])
-    
+
     return <>
         {hide && <TemplateImages setImage={setImage} />}
         <div className="w-full grid grid-cols-1 py-5 gap-2 relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">

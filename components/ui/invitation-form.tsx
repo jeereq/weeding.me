@@ -136,7 +136,6 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                             </option>
                         </select>
                     </div>
-
                     <div className="space-y-2">
                         <Label htmlFor="nameInvitation">Nom(s) sur l'invitation</Label>
                         <Input

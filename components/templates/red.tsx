@@ -69,7 +69,8 @@ export default function TemplateRed({ template, hide = false }: any) {
         phone: "",
         invitations: 50,
         city: "",
-        country: ""
+        country: "",
+        image: ""
     });
 
     const onChange = (e: any) => {

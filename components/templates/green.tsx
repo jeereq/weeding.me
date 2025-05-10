@@ -68,7 +68,8 @@ export default function TemplateGreen({ template, hide = false }: any) {
         phone: "",
         invitations: 50,
         city: "",
-        country: ""
+        country: "",
+        image: ""
     });
     const onChange = (e: any) => {
         const { files } = e.target;
