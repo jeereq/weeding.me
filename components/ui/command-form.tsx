@@ -32,7 +32,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
     function CalculeSansReduction(): number {
         return (formData.invitations * 0.7)
     }
-    
+
     if (!openModal) return <div className="w-fit"></div>
     return (
         <>
@@ -44,12 +44,11 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                             e.preventDefault()
                             fetch(formData, "POST")
                                 .then(function ({ data: { message } }: any) {
-                                    alert(message)
-                                    onSubmit(e)
-                                    closeModalForm()
-                                })
-                                .catch(function (error) {
-                                    console.log(error)
+                                    if (message) {
+                                        alert(message)
+                                        onSubmit(e)
+                                        closeModalForm()
+                                    }
                                 })
                         }} className="space-y-4 w-full h-fit overflow-y-scroll p-2">
                         <div className="space-y-2">
@@ -58,7 +57,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                                 id="initiateurDeLaDemande"
                                 value={formData.initiateurDeLaDemande}
                                 onChange={(e) => setFormData({ ...formData, initiateurDeLaDemande: e.target.value })}
-                                placeholder="Ex: Mariage de Medine et Jeereq"
+                                placeholder="Ex: Mariage de Jeereq et Medine"
                                 required
                             />
                         </div>
