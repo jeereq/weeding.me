@@ -5,6 +5,7 @@ import Header from "@/components/landing/Header";
 import TemplateGreen from "@/components/templates/green";
 import TemplateYellow from "@/components/templates/yellow";
 import TemplateRed from "@/components/templates/red";
+import { props } from "@/lib/data";
 
 export default function TemplateContent({ template, id }: any) {
 
@@ -24,9 +25,9 @@ export default function TemplateContent({ template, id }: any) {
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6 }}
                         >
-                            {id == 1 && <TemplateGreen template={template} />}
-                            {id == 2 && <TemplateYellow template={template} />}
-                            {id == 3 && <TemplateRed template={template} />}
+                            {id == 1 && <TemplateGreen template={template} data={props} />}
+                            {id == 2 && <TemplateYellow template={template} data={props} />}
+                            {id == 3 && <TemplateRed template={template} data={props} />}
                         </motion.div>
                     </div>
                 </div>

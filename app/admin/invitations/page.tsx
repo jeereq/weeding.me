@@ -59,27 +59,28 @@ export default function InvitationsPage() {
   const { user } = useData()
   const { fetch, loading } = useFetchData({ uri: "auth/users/invitations" })
   const [formData, setFormData] = useState<any>({
-    dateDay: new Date().getDate(),
-    dateMonth: new Date().getMonth() + 1,
-    dateYear: new Date().getFullYear(),
+    day: new Date().getDate(),
+    month: new Date().getMonth() + 1,
+    year: new Date().getFullYear(),
     date: new Date().toString(),
-    dateTime: "18:00",
-    template: "",
+    template: 1,
+    time: "18:00",
     dateLocation: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
-    dateLocationLat: -4.3276,
-    dateLocationLng: 15.3136,
-    dateLocationAddress: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
+    lat: -4.3276,
+    lng: 15.3136,
+    address: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
     title: "Jeereq & Medine",
     men: "Jeereq",
     women: "Medine",
     typeInvitation: "couple",
-    nameInvitation: "Percy et Merveille",
+    nameInvitation: "Jeereq et Medine",
     heart: false,
     initiateurDeLaDemande: "",
     phone: "",
     invitations: 50,
     city: "",
-    country: ""
+    country: "",
+    image: ""
   });
 
   const handleCreate = (e: React.FormEvent) => {
@@ -145,7 +146,7 @@ export default function InvitationsPage() {
   return (
     <div>
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Invitations</h1>
+        <h1 className="text-3xl font-bold">Invitations Choisis</h1>
         <Button onClick={function () {
           setIsCreateOpen(true)
         }}>
@@ -165,7 +166,7 @@ export default function InvitationsPage() {
         onSubmit={handleCreate}
       />
 
-      <div className="grid gap-2 grid-cols-3">
+      <div className="grid gap-2 lg:grid-cols-3">
         {user.templates.map((invitation: any) => (
           <>
             <Card key={invitation.id} className="overflow-hidden">
@@ -184,6 +185,7 @@ export default function InvitationsPage() {
               </div>
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold mb-2">{invitation.title}</h3>
+                <h4 className="text-md mb-2">{templates.find(t => t.id == invitation.template)?.title}</h4>
                 <p className="text-sm text-muted-foreground mb-4">
                   {invitation.address}
                 </p>
@@ -203,6 +205,8 @@ export default function InvitationsPage() {
                     <Button
                       variant="ghost"
                       size="sm"
+                      disabled={!invitation.active && user?.role?.id == 4}
+                      className={`${invitation.active ? "text-green-500" : "text-red-500"}`}
                       onClick={() => openActiveModal(invitation)}
                     >
                       <RefreshCw className="h-4 w-4" />
@@ -219,7 +223,7 @@ export default function InvitationsPage() {
               </CardContent>
             </Card>
 
-            <Dialog open={isGuestsOpen} onOpenChange={setIsGuestsOpen}>
+            <Dialog open={isGuestsOpen && selectedInvitation?.id == invitation.id} onOpenChange={setIsGuestsOpen}>
               <DialogContent className="max-w-3xl">
                 <DialogHeader>
                   <DialogTitle>Les invités du mariage de {selectedInvitation?.title}</DialogTitle>
@@ -265,7 +269,7 @@ export default function InvitationsPage() {
                 </div>
               </DialogContent>
             </Dialog>
-            <Dialog open={isActiveOpen} onOpenChange={setIsActiveOpen}>
+            <Dialog open={isActiveOpen && selectedInvitation?.id == invitation.id} onOpenChange={setIsActiveOpen}>
               <DialogContent className="max-w-3xl">
                 <DialogHeader>
                   <DialogTitle>
@@ -296,7 +300,7 @@ export default function InvitationsPage() {
                 </TableBody>
               </DialogContent>
             </Dialog>
-            <Dialog open={isViewOpen} onOpenChange={setIsViewOpen}>
+            <Dialog open={isViewOpen && selectedInvitation?.id == invitation.id} onOpenChange={setIsViewOpen}>
               <DialogContent className="max-w-3xl">
                 <TableBody>
                   <div className="w-full">
@@ -308,9 +312,9 @@ export default function InvitationsPage() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6 }}
                         >
-                          {invitation.template == 1 && <TemplateGreen hide template={invitation} />}
-                          {invitation.template == 2 && <TemplateYellow hide template={invitation} />}
-                          {invitation.template == 3 && <TemplateRed hide template={invitation} />}
+                          {invitation.template == 1 && <TemplateGreen hide template={templates.find(t => t.id == invitation.template)} data={invitation} />}
+                          {invitation.template == 2 && <TemplateYellow hide template={templates.find(t => t.id == invitation.template)} data={invitation} />}
+                          {invitation.template == 3 && <TemplateRed hide template={templates.find(t => t.id == invitation.template)} data={invitation} />}
                         </motion.div>
                       </div>
                     </div>

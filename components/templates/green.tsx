@@ -13,12 +13,9 @@ const MapModal = dynamic(
     { ssr: false }
 )
 
-export default function TemplateGreen({ template, hide = false }: any) {
+export default function TemplateGreen({ template, data, hide = false }: any) {
     const router = useRouter();
     const [openForm, setOpenForm] = useState(false);
-    const [colors, setColors] = useState<any>({
-        custome: "black"
-    })
     const contentRef = useRef<HTMLDivElement>(null);
     const reactToPrintFn = useReactToPrint({
         contentRef,
@@ -46,30 +43,9 @@ export default function TemplateGreen({ template, hide = false }: any) {
         12: 'décembre',
     })
     const [image, setImage] = useState<any>(null);
-    const [currentColor] = useState<string>('custome');
     const [formData, setFormData] = useState<any>({
-        day: new Date().getDate(),
-        month: new Date().getMonth() + 1,
-        year: new Date().getFullYear(),
-        date: new Date().toString(),
         template: template.id,
-        time: "18:00",
-        dateLocation: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
-        lat: -4.3276,
-        lng: 15.3136,
-        address: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
-        title: "Jeereq & Medine",
-        men: "Jeereq",
-        women: "Medine",
-        typeInvitation: "couple",
-        nameInvitation: "Jeereq et Medine",
-        heart: false,
-        initiateurDeLaDemande: "",
-        phone: "",
-        invitations: 50,
-        city: "",
-        country: "",
-        image: ""
+        ...data
     });
     const onChange = (e: any) => {
         const { files } = e.target;
@@ -133,20 +109,22 @@ export default function TemplateGreen({ template, hide = false }: any) {
                 </div>
                 <div className="w-full flex items-center justify-center  rounded-lg">
                     <div style={{
-                        color: colors[currentColor]
+                        color: formData.color
                     }} className={`w-fit text-center w-full py-3 rounded-lg text-white uppercase font-bold`}>
-                        {colors[currentColor]}
+                        {formData.color}
                     </div>
                 </div>
                 <input type="color" name="custome"
-                    value={colors[currentColor]}
+                    value={formData.color}
                     onChange={function (e) {
-                        setColors(function (state: any) {
+                       
+                        setFormData(function (state: any) {
                             return {
                                 ...state,
-                                custome: e.target.value
+                                color: e.target.value
                             }
                         })
+
                     }}
                     className="h-[40px] w-full cursor-pointer border-2 border-black rounded-lg" placeholder="Couleur"
                 />
@@ -156,12 +134,12 @@ export default function TemplateGreen({ template, hide = false }: any) {
             <div className="aspect-[3/5] lg:aspect-[3.25/5] z-30 relative rounded-b-full overflow-hidden">
                 <div className="absolute top-[30px] z-20 text-3xl lg:text-4xl font-bold text-white text-center w-full p-5">
                     <div style={{
-                        background: colors[currentColor]
+                        background: formData.color
                     }} className={`w-fit px-5 py-3  mx-auto`}>
                         Save the date
                     </div>
                     <span className="mt-5 w-fit mx-auto block">
-                        {formData.dateDay} / {formData.dateMonth}
+                        {formData.day} / {formData.month}
                     </span>
                 </div>
                 <img
@@ -170,7 +148,7 @@ export default function TemplateGreen({ template, hide = false }: any) {
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
                 <div style={{
-                    background: colors[currentColor],
+                    background: formData.color,
                     opacity: 0.30
                 }} className={`absolute top-0 bottom-0 left-0 right-0 group flex items-center justify-center bg-opacity-50`}>
                     <input type="file" hidden id="camera" className="hidden" accept="image/*" onChange={onChange} />
@@ -188,28 +166,28 @@ export default function TemplateGreen({ template, hide = false }: any) {
             </div>
             <div className="w-full -translate-y-[15%] relative z-20 text-xs lg:text-sm overflow-hidden p-5 h-fit rounded-t-full">
                 <div style={{
-                    background: colors[currentColor],
+                    background: formData.color,
 
                 }} className={`w-full text-white p-10 pt-[170px] lg:pt-[150px] h-full rounded-t-full`}>
                     <p className="text-center text-sm px-5">
-                        Deux âmes qui se sont trouvées, deux chemins qui n'en feront plus qu'un... C'est avec des étoiles plein les yeux et le cœur débordant d'amour que <b>Jeereq</b> et <b>Médine</b> vous convient à la célébration de leur union.
+                        Deux âmes qui se sont trouvées, deux chemins qui n'en feront plus qu'un... C'est avec des étoiles plein les yeux et le cœur débordant d'amour que  <span className="font-bold">{formData.men}</span> & <span className="font-bold">{formData.women}</span> vous convient à la célébration de leur union.
                     </p>
                     <div className="w-full flex items-center justify-center mt-10">
                         <div className="w-fit border-t-2  border-dashed border-b-2 px-5 py-2">
                             le
                         </div>
                         <div className="w-fit font-bold border-dashed text-5xl px-5">
-                            {formData.dateDay}
+                            {formData.day}
                         </div>
                         <div className="w-fit border-t-2 border-b-2 border-dashed px-5 py-2">
-                            {months[formData.dateMonth]}
+                            {months[formData.month]}
                         </div>
                     </div>
                     <div className="w-full text-center mb-10">
-                        {formData.dateYear}
+                        {formData.year}
                     </div>
                     <p className="text-center text-sm px-5">
-                        Rendez-vous le <b>{formData.dateDay}/{formData.dateMonth}/{formData.dateYear}</b> à <b>{formData.dateTime}</b> sur le(la)(l') {formData.dateLocationAddress} pour être témoins de notre <b> "oui"</b> pour la vie.
+                        Rendez-vous le <b>{formData.day}/{formData.month}/{formData.year}</b> à <b>{formData.time}</b> sur le(la)(l') {formData.address} pour être témoins de notre <b> "oui"</b> pour la vie.
                         Votre amour et votre soutien sont les plus beaux cadeaux que nous puissions espérer.
                     </p>
                     <p onClick={function () {
@@ -220,9 +198,9 @@ export default function TemplateGreen({ template, hide = false }: any) {
 
                         <MapPinned className="h-12 w-12 mx-auto " />
                         <div className="w-full">
-                            {formData.dateLocationLat && formData.dateLocationLng && (
+                            {formData.lat && formData.lng && (
                                 <p className="text-sm text-white mt-2">
-                                    Coordonnées : {formData.dateLocationLat}, {formData.dateLocationLng}
+                                    Coordonnées : {formData.lat}, {formData.lng}
                                 </p>
                             )}
                         </div>
@@ -257,12 +235,10 @@ export default function TemplateGreen({ template, hide = false }: any) {
             isOpen={isMapOpen}
             onClose={() => setIsMapOpen(false)}
             onLocationSelect={() => { }}
-            initialLocation={{ lat: formData.dateLocationLat, lng: formData.dateLocationLng }}
+            initialLocation={{ lat: formData.lat, lng: formData.lng }}
         />
         <InvitationFormInvitation openModal={openForm} closeModalForm={closeModalForm} formData={formData} setFormData={setFormData}
-            onSubmit={function (e) {
-                e.preventDefault()
-                e.stopPropagation()
+            onSubmit={function () {
             }} invitationTypes={[]} />
     </>
 }
