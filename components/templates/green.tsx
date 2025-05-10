@@ -75,6 +75,12 @@ export default function TemplateGreen({ template, hide = false }: any) {
         const { files } = e.target;
         if (files && files.length > 0) {
             setImage(URL.createObjectURL(files[0]))
+            setFormData(function (state: any) {
+                return {
+                    ...state,
+                    image: URL.createObjectURL(files[0])
+                }
+            })
         }
     }
     const closeModalForm = () => {
@@ -89,7 +95,15 @@ export default function TemplateGreen({ template, hide = false }: any) {
     }, [formData.heart])
 
     return <>
-        {hide && <TemplateImages setImage={setImage} />}
+        {hide && <TemplateImages setImage={function (url: string) {
+            setImage(url)
+            setFormData(function (state: any) {
+                return {
+                    ...state,
+                    image: url
+                }
+            })
+        }} />}
         <div className="w-full grid grid-cols-1 py-5 gap-2 relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
             <div className="w-full px-5 grid grid-cols-1 gap-2">
                 <div
