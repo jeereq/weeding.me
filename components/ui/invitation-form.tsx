@@ -23,6 +23,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
 }) => {
     const [isMapOpen, setIsMapOpen] = useState(false);
     const [isCommandOpen, setIsCommandOpen] = useState(false);
+
     const openCommandForm = () => {
         setIsCommandOpen(true)
     }

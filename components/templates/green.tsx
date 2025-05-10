@@ -244,9 +244,10 @@ export default function TemplateGreen({ template, hide = false }: any) {
             onLocationSelect={() => { }}
             initialLocation={{ lat: formData.dateLocationLat, lng: formData.dateLocationLng }}
         />
-        <InvitationFormInvitation openModal={openForm} closeModalForm={closeModalForm} formData={formData} setFormData={setFormData} onSubmit={function (e) {
-            e.preventDefault()
-            e.stopPropagation()
-        }} invitationTypes={[]} />
+        <InvitationFormInvitation openModal={openForm} closeModalForm={closeModalForm} formData={formData} setFormData={setFormData}
+            onSubmit={function (e) {
+                e.preventDefault()
+                e.stopPropagation()
+            }} invitationTypes={[]} />
     </>
 }
