@@ -1,15 +1,16 @@
 "use client";
 
 import { useState, useRef } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Search, Plus, Pencil, Users, Image, Upload, Download } from "lucide-react";
+import { Search, Users, Upload, Download } from "lucide-react";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { Badge } from "@/components/ui/badge";
+import { templates } from '@/lib/utils';
 
 interface Template {
   id: string;
@@ -22,30 +23,6 @@ interface Template {
   assignedUsers: string[];
 }
 
-// Mock data - Replace with Supabase data
-const mockTemplates: Template[] = [
-  {
-    id: '1',
-    title: 'Élégance Florale',
-    description: 'Un design élégant avec des motifs floraux délicats',
-    category: 'Mariage',
-    imageUrl: 'https://images.pexels.com/photos/1589216/pexels-photo-1589216.jpeg',
-    style: 'Classique & Raffiné',
-    createdAt: '2025-01-01T00:00:00Z',
-    assignedUsers: ['2', '3']
-  },
-  {
-    id: '2',
-    title: 'Corporate Classic',
-    description: 'Design professionnel pour événements d\'entreprise',
-    category: 'Professionnel',
-    imageUrl: 'https://images.pexels.com/photos/3183150/pexels-photo-3183150.jpeg',
-    style: 'Business & Structuré',
-    createdAt: '2025-01-15T00:00:00Z',
-    assignedUsers: ['4']
-  }
-];
-
 const categories = [
   'Mariage',
   'Anniversaire',
@@ -55,24 +32,19 @@ const categories = [
 ];
 
 export default function TemplatesPage() {
-  const [templates, setTemplates] = useState<Template[]>(mockTemplates);
   const [searchTerm, setSearchTerm] = useState('');
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const [editDialogOpen, setEditDialogOpen] = useState(false);
   const [assignDialogOpen, setAssignDialogOpen] = useState(false);
   const [selectedTemplate, setSelectedTemplate] = useState<Template | null>(null);
-  const [newTemplate, setNewTemplate] = useState({
-    title: '',
-    description: '',
-    category: '',
-    imageUrl: '',
-    style: ''
-  });
+
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  const filteredTemplates = templates.filter(template =>
-    template.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
-    template.category.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredTemplates = templates.map(function (item: any) {
+    return { ...item, assignedUsers: [] }
+  }).filter(template =>
+    (template.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      template.category.toLowerCase().includes(searchTerm.toLowerCase())) && template.active
   );
 
   const handleImageUpload = async (event: React.ChangeEvent<HTMLInputElement>, isEditing: boolean) => {
@@ -86,7 +58,7 @@ export default function TemplatesPage() {
       if (isEditing && selectedTemplate) {
         setSelectedTemplate({ ...selectedTemplate, imageUrl });
       } else {
-        setNewTemplate({ ...newTemplate, imageUrl });
+        // setNewTemplate({ ...newTemplate, imageUrl });
       }
     };
     reader.readAsDataURL(file);
@@ -109,31 +81,9 @@ export default function TemplatesPage() {
     }
   };
 
-  const handleCreateTemplate = () => {
-    const template: Template = {
-      id: Math.random().toString(),
-      ...newTemplate,
-      createdAt: new Date().toISOString(),
-      assignedUsers: []
-    };
-    setTemplates([template, ...templates]);
-    setCreateDialogOpen(false);
-    setNewTemplate({
-      title: '',
-      description: '',
-      category: '',
-      imageUrl: '',
-      style: ''
-    });
-  };
-
   const handleUpdateTemplate = () => {
     if (!selectedTemplate) return;
 
-    const updatedTemplates = templates.map(template =>
-      template.id === selectedTemplate.id ? { ...selectedTemplate } : template
-    );
-    setTemplates(updatedTemplates);
     setEditDialogOpen(false);
     setSelectedTemplate(null);
   };
@@ -253,20 +203,10 @@ export default function TemplatesPage() {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <h1 className="text-3xl font-bold">Gestion des templates</h1>
-        <Button onClick={() => setCreateDialogOpen(true)}>
-          <Plus className="h-4 w-4 lg:mr-2" />
-          <span className="w-fit lg:block hidden">
-            Nouveau template
-          </span>
-        </Button>
       </div>
-
       <Card>
-        <CardHeader>
-          <CardTitle>Liste des templates</CardTitle>
-        </CardHeader>
         <CardContent>
-          <div className="flex gap-2 mb-6">
+          <div className="flex gap-2 mt-6  mb-6">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
@@ -292,13 +232,6 @@ export default function TemplatesPage() {
                     {template.category}
                   </Badge>
                   <div className="absolute bottom-2 right-2 flex gap-2">
-                    <Button
-                      variant="secondary"
-                      size="sm"
-                      onClick={() => handleImageDownload(template.imageUrl, `${template.title}.jpg`)}
-                    >
-                      <Download className="h-4 w-4" />
-                    </Button>
                   </div>
                 </div>
                 <CardContent className="p-6">
@@ -322,16 +255,6 @@ export default function TemplatesPage() {
                       >
                         <Users className="h-4 w-4" />
                       </Button>
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => {
-                          setSelectedTemplate(template);
-                          setEditDialogOpen(true);
-                        }}
-                      >
-                        <Pencil className="h-4 w-4" />
-                      </Button>
                     </div>
                   </div>
                 </CardContent>
@@ -346,12 +269,6 @@ export default function TemplatesPage() {
           <DialogHeader>
             <DialogTitle>Nouveau template</DialogTitle>
           </DialogHeader>
-          <TemplateForm
-            data={newTemplate}
-            onChange={setNewTemplate}
-            onSubmit={handleCreateTemplate}
-            submitText="Créer le template"
-          />
         </DialogContent>
       </Dialog>
 
@@ -382,7 +299,6 @@ export default function TemplatesPage() {
               <p className="text-sm text-muted-foreground">
                 Sélectionnez les éditeurs qui auront accès à ce template.
               </p>
-              {/* Add user assignment UI here */}
               <div className="flex justify-end">
                 <Button variant="outline" onClick={() => setAssignDialogOpen(false)}>
                   Fermer

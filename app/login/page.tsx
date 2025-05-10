@@ -8,13 +8,15 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuth } from "@/lib/auth";
 import Header from "@/components/landing/Header";
 import Footer from "@/components/landing/Footer";
+import { useFetchData } from "@/hooks/useFetchData";
+import { useData } from "@/lib/data";
 
 export default function Login() {
   const router = useRouter();
-  const { login, isLoading } = useAuth();
+  const { login, loginJwt } = useData()
+  const { fetch, loading: isLoading } = useFetchData({ uri: "auth/login" })
   const [formData, setFormData] = useState({
     email: "",
     password: "",
@@ -23,8 +25,19 @@ export default function Login() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      await login(formData.email, formData.password);
-      router.push("/admin");
+      fetch(formData, "POST").then(function ({ data: { data, jwt }, error }) {
+
+        if (error) {
+          alert(error)
+        } else if (data) {
+          login(data)
+          loginJwt(jwt)
+          router.push("/admin");
+        }
+      }).catch(function ({ error }) {
+        console.log(error)
+        alert(error)
+      })
     } catch (error) {
       console.error("Login failed:", error);
     }

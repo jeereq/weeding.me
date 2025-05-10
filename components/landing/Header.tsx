@@ -4,12 +4,12 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Heart, Menu, X } from "lucide-react";
 import Link from "next/link";
-import { useAuth } from "@/lib/auth";
+import { useData } from "@/lib/data";
 
 export default function Header() {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const { user } = useAuth();
+  const { user } = useData();
 
   useEffect(() => {
     const handleScroll = () => {

@@ -5,20 +5,20 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { useAuth } from '@/lib/auth';
+import { useData } from '@/lib/data';
 
 export default function SettingsPage() {
-  const { user } = useAuth();
+  const { user } = useData();
   const [profile, setProfile] = useState({
     email: '',
-    name: '',
+    username: '',
   });
 
   useEffect(() => {
     if (user) {
       setProfile({
         email: user.email,
-        name: user.name,
+        username: user.username,
       });
     }
   }, [user]);
@@ -52,8 +52,8 @@ export default function SettingsPage() {
               <Label htmlFor="name">Nom</Label>
               <Input
                 id="name"
-                value={profile.name}
-                onChange={(e) => setProfile({ ...profile, name: e.target.value })}
+                value={profile.username}
+                onChange={(e) => setProfile({ ...profile, username: e.target.value })}
               />
             </div>
 

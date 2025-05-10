@@ -5,7 +5,6 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from '@/components/ui/textarea';
 import dynamic from 'next/dynamic'
-import { InvitationType } from '@/app/admin/invitations/page';
 import CommandFormInvitation from './command-form';
 
 const MapModal = dynamic(
@@ -13,17 +12,15 @@ const MapModal = dynamic(
     { ssr: false }
 )
 
-const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, closeModalForm }: {
+const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openModal, closeModalForm }: {
     onSubmit: (e: React.FormEvent) => void,
     formData: any,
     setFormData: (data: any) => void,
-    invitationTypes: InvitationType[],
     openModal: boolean,
     closeModalForm: any
 }) => {
     const [isMapOpen, setIsMapOpen] = useState(false);
     const [isCommandOpen, setIsCommandOpen] = useState(false);
-
     const openCommandForm = () => {
         setIsCommandOpen(true)
     }
@@ -99,22 +96,22 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                             onChange={(e) => setFormData({
                                 ...formData,
                                 date: e.target.value,
-                                day: new Date(e.target.value).getDate(),
-                                month: new Date(e.target.value).getMonth() + 1,
-                                year: new Date(e.target.value).getFullYear(),
+                                dateDay: new Date(e.target.value).getDate(),
+                                dateMonth: new Date(e.target.value).getMonth() + 1,
+                                dateYear: new Date(e.target.value).getFullYear(),
                             })}
                             required
                         />
                     </div>
 
                     <div className="space-y-2">
-                        <Label htmlFor="time">Heure et minute</Label>
+                        <Label htmlFor="date">Heure et minute</Label>
                         <div className="w-full gap-1">
                             <Input
-                                id="time"
+                                id="date"
                                 type="time"
-                                value={formData.time}
-                                onChange={(e) => setFormData({ ...formData, time: e.target.value })}
+                                value={formData.dateTime}
+                                onChange={(e) => setFormData({ ...formData, dateTime: e.target.value })}
                                 required
                             />
                         </div>
@@ -164,16 +161,16 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                         </div>
                         <Textarea
                             placeholder="Adresse complète"
-                            value={formData.address}
+                            value={formData.dateLocationAddress}
                             onChange={(e) => setFormData({
                                 ...formData,
-                                address: e.target.value
+                                dateLocationAddress: e.target.value
                             })}
                             required
                         />
-                        {formData.lat && formData.lng && (
+                        {formData.dateLocationLat && formData.dateLocationLng && (
                             <p className="text-sm text-muted-foreground mt-2">
-                                Coordonnées : {formData.lat}, {formData.lng}
+                                Coordonnées : {formData.dateLocationLat}, {formData.dateLocationLng}
                             </p>
                         )}
                     </div>
@@ -190,7 +187,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                     isOpen={isMapOpen}
                     onClose={() => setIsMapOpen(false)}
                     onLocationSelect={handleMapLocationSelect}
-                    initialLocation={{ lat: formData.lat, lng: formData.lng }}
+                    initialLocation={{ lat: formData.dateLocationLat, lng: formData.dateLocationLng }}
                 />
             </div>
         </div>
@@ -198,4 +195,4 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
     </>
     );
 }
-export default InvitationFormInvitation;
+export default InvitationFormInvitationAdmin;

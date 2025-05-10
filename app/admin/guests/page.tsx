@@ -1,6 +1,6 @@
 "use client";
 
-import { FC, useState } from 'react';
+import { FC, useEffect, useState } from 'react';
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
@@ -13,6 +13,8 @@ import { Search, Mail, Filter, Users, Eye, Building2, User, UsersRound, Plus, Tr
 import { Badge } from "@/components/ui/badge";
 import { ScrollArea } from "@/components/ui/scroll-area";
 import { Label } from "@/components/ui/label";
+import { useData } from '@/lib/data';
+import { useFetchData } from '@/hooks/useFetchData';
 
 interface Member {
   name: string;
@@ -58,61 +60,8 @@ const mockInvitations: Record<string, Invitation> = {
   }
 };
 
-const mockGuests: Guest[] = [
-  {
-    id: '1',
-    name: 'Famille Dubois',
-    email: 'dubois@example.com',
-    status: 'attending',
-    rsvpDate: '2025-01-15',
-    type: 'family',
-    invitationId: 'inv1',
-    members: [
-      { name: 'Pierre Dubois', relation: 'Père' },
-      { name: 'Marie Dubois', relation: 'Mère' },
-      { name: 'Lucas Dubois', relation: 'Fils' }
-    ]
-  },
-  {
-    id: '2',
-    name: 'Tech Solutions SA',
-    email: 'contact@techsolutions.com',
-    status: 'pending',
-    rsvpDate: '-',
-    type: 'company',
-    invitationId: 'inv2',
-    members: [
-      { name: 'Équipe Direction' },
-      { name: 'Département IT' },
-      { name: 'Service Marketing' }
-    ]
-  },
-  {
-    id: '3',
-    name: 'Club de Tennis',
-    email: 'tennis.club@example.com',
-    status: 'attending',
-    rsvpDate: '2025-01-10',
-    type: 'group',
-    invitationId: 'inv1',
-    members: [
-      { name: 'Groupe Compétition' },
-      { name: 'Équipe Loisirs' }
-    ]
-  },
-  {
-    id: '4',
-    name: 'Sophie Martin',
-    email: 'sophie@example.com',
-    status: 'attending',
-    rsvpDate: '2025-01-12',
-    type: 'individual',
-    invitationId: 'inv1'
-  }
-];
-
 const GuestsPage: FC = () => {
-  const [guests, setGuests] = useState<Guest[]>(mockGuests);
+  const [guests, setGuests] = useState<Guest[]>([]);
   const [selectedGuests, setSelectedGuests] = useState<string[]>([]);
   const [searchTerm, setSearchTerm] = useState('');
   const [statusFilter, setStatusFilter] = useState<string>('all');
@@ -122,6 +71,8 @@ const GuestsPage: FC = () => {
   const [previewDialogOpen, setPreviewDialogOpen] = useState(false);
   const [selectedGuest, setSelectedGuest] = useState<Guest | null>(null);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
+  const { user } = useData()
+  const { fetch, loading } = useFetchData({ uri: "auth/users/invitations" })
   const [newGuest, setNewGuest] = useState<{
     name: string;
     email: string;
@@ -225,17 +176,24 @@ const GuestsPage: FC = () => {
 
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'family':
-        return <Users className="h-4 w-4" />;
-      case 'company':
-        return <Building2 className="h-4 w-4" />;
-      case 'group':
+      case 'celibataire':
+        return <User className="h-4 w-4" />;
+      case 'couple':
         return <UsersRound className="h-4 w-4" />;
       default:
         return <User className="h-4 w-4" />;
     }
   };
 
+  useEffect(function () {
+    fetch({ id: user.id }, "POST").then(function ({ data }) {
+      console.log(data)
+      if (data.data) {
+        setGuests(data.data)
+      }
+    })
+
+  }, [])
   return (
     <div className="space-y-6 overflow-scroll">
       <div className="flex justify-between items-center">
@@ -259,11 +217,8 @@ const GuestsPage: FC = () => {
         </div>
       </div>
       <Card>
-        <CardHeader>
-          <CardTitle>Liste des invités</CardTitle>
-        </CardHeader>
         <CardContent>
-          <div className="flex gap-4 mb-6">
+          <div className="flex gap-4 py-6">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
@@ -294,7 +249,6 @@ const GuestsPage: FC = () => {
                   <SelectValue placeholder="Type d'invité" />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="all">Tous les types</SelectItem>
                   <SelectItem value="family">Famille</SelectItem>
                   <SelectItem value="company">Entreprise</SelectItem>
                   <SelectItem value="group">Groupe</SelectItem>
@@ -322,7 +276,7 @@ const GuestsPage: FC = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {filteredGuests.map((guest) => (
+              {filteredGuests.map((guest: any) => (
                 <TableRow key={guest.id}>
                   <TableCell>
                     <Checkbox
@@ -341,11 +295,7 @@ const GuestsPage: FC = () => {
                   <TableCell className="font-medium">
                     <div>
                       {guest.name}
-                      {guest.members && (
-                        <p className="text-sm text-muted-foreground">
-                          {guest.members.length} membre{guest.members.length > 1 ? 's' : ''}
-                        </p>
-                      )}
+
                     </div>
                   </TableCell>
                   <TableCell>{guest.email}</TableCell>
@@ -354,7 +304,7 @@ const GuestsPage: FC = () => {
                       {guest.status}
                     </span>
                   </TableCell>
-                  <TableCell>{guest.rsvpDate}</TableCell>
+                  <TableCell>{guest.createdAt}</TableCell>
                   <TableCell className="text-right space-x-2">
                     <Button
                       variant="ghost"
@@ -370,7 +320,7 @@ const GuestsPage: FC = () => {
                       onClick={() => {
                         const url = `${window.location.origin}/invitation/${guest.id}`;
                         navigator.clipboard.writeText(url);
-                        // You might want to add a toast notification here
+
                         alert('Lien copié dans le presse-papier');
                       }}
                     >

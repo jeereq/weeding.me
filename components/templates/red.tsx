@@ -13,7 +13,7 @@ const MapModal = dynamic(
     { ssr: false }
 )
 
-export default function TemplateRed({ template }: any) {
+export default function TemplateRed({ template, hide = false }: any) {
     const router = useRouter();
     const [openForm, setOpenForm] = useState(false);
     const [colors, setColors] = useState<any>({
@@ -49,21 +49,21 @@ export default function TemplateRed({ template }: any) {
     const [currentColor] = useState<string>('custome');
     const [image, setImage] = useState<any>(null);
     const [formData, setFormData] = useState<any>({
-        dateDay: new Date().getDate(),
-        dateMonth: new Date().getMonth() + 1,
-        dateYear: new Date().getFullYear(),
+        day: new Date().getDate(),
+        month: new Date().getMonth() + 1,
+        year: new Date().getFullYear(),
         date: new Date().toString(),
-        dateTime: "18:00",
         template: template.id,
+        time: "18:00",
         dateLocation: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
-        dateLocationLat: -4.3276,
-        dateLocationLng: 15.3136,
-        dateLocationAddress: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
+        lat: -4.3276,
+        lng: 15.3136,
+        address: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
         title: "Jeereq & Medine",
         men: "Jeereq",
         women: "Medine",
         typeInvitation: "couple",
-        nameInvitation: "Percy et Merveille",
+        nameInvitation: "Jeereq et Medine",
         heart: false,
         initiateurDeLaDemande: "",
         phone: "",
@@ -90,7 +90,7 @@ export default function TemplateRed({ template }: any) {
     }, [formData.heart])
 
     return <>
-        <TemplateImages setImage={setImage} />
+        {hide && <TemplateImages setImage={setImage} />}
         <div className="w-full grid grid-cols-1 py-5 gap-2 relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
             <div className="w-full px-5 grid grid-cols-1 gap-2">
                 <div
