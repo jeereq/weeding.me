@@ -8,19 +8,21 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { useAuth } from "@/lib/data";
+import { useData } from "@/lib/data";
 import Header from "@/components/landing/Header";
 import Footer from "@/components/landing/Footer";
+import { useFetchData } from "@/hooks/useFetchData";
 
 export default function Register() {
   const router = useRouter();
-  const { register, isLoading } = useAuth();
+  const { register, isLoading } = useData();
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     password: "",
     confirmPassword: "",
   });
+  const { } = useFetchData({ uri: "auth/" })
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -29,7 +31,7 @@ export default function Register() {
       return;
     }
     try {
-      await register(formData.email, formData.password, formData.name);
+      await register(formData.email, formData.password, formData.usern);
       router.push("/admin");
     } catch (error) {
       console.error("Registration failed:", error);

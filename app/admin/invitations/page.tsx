@@ -2,25 +2,13 @@
 import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Plus, MapPin, Loader2, UserPlus, Users, Badge } from 'lucide-react';
-import { Textarea } from '@/components/ui/textarea';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
+import { Plus, Users, Badge, RefreshCw } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
-import dynamic from 'next/dynamic'
 import { useData } from '@/lib/data';
 import { templates } from '@/lib/utils';
-import Image from 'next/image';
 import InvitationFormInvitationAdmin from '@/components/ui/invitation-form-admin';
-
-const MapModal = dynamic(
-  () => import('@/components/ui/map-modal'),
-  { ssr: false }
-)
-
+import { useFetchData } from '@/hooks/useFetchData';
 
 interface Location {
   lat: number | null;
@@ -57,72 +45,14 @@ interface Invitation {
   guests: Guest[];
 }
 
-const invitationTypes = [
-  { value: 'mariage_civil', label: 'Mariage Civil' },
-  { value: 'mariage_religieux', label: 'Mariage Religieux' },
-  { value: 'pacs', label: 'PACS' },
-  { value: 'fiancailles', label: 'Fiançailles' },
-  { value: 'anniversaire_mariage', label: 'Anniversaire de Mariage' },
-  { value: 'autre', label: 'Autre Célébration' },
-] as const;
-
-const mockInvitations: Invitation[] = [
-  {
-    id: '1',
-    title: 'Mariage Été 2025',
-    event_date: '2025-07-15',
-    status: 'active',
-    type: 'mariage_civil',
-    location: {
-      lat: 48.8566,
-      lng: 2.3522,
-      address: '1 Place Charles de Gaulle, 75008 Paris'
-    },
-    template: { title: 'Élégance Florale' },
-    guests: [
-      { id: '1', name: 'Sophie Martin', email: 'sophie@example.com', phone: '+33612345678', status: 'confirmed' },
-      { id: '2', name: 'Thomas Dubois', email: 'thomas@example.com', phone: '+33623456789', status: 'pending' }
-    ]
-  },
-  {
-    id: '2',
-    title: 'Anniversaire 30 ans',
-    event_date: '2025-03-20',
-    status: 'draft',
-    type: 'autre',
-    location: {
-      lat: 45.7640,
-      lng: 4.8357,
-      address: '20 Place Bellecour, 69002 Lyon'
-    },
-    template: { title: 'Célébration Festive' },
-    guests: [
-      { id: '3', name: 'Marie Petit', email: 'marie@example.com', phone: '+33634567890', status: 'declined' }
-    ]
-  }
-];
-
-interface InvitationFormData {
-  title: string;
-  event_date: string;
-  template_id: string;
-  type: InvitationType;
-  location: Location;
-}
-
-interface GuestFormData {
-  name: string;
-  email: string;
-  phone: string;
-}
-
 export default function InvitationsPage() {
-  const [invitations, setInvitations] = useState<Invitation[]>([]);
+  const [invitations, setInvitations] = useState<any[]>([]);
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isGuestsOpen, setIsGuestsOpen] = useState(false);
+  const [isActiveOpen, setIsActiveOpen] = useState(false);
   const [selectedInvitation, setSelectedInvitation] = useState<Invitation | null>(null);
-  const [isMapOpen, setIsMapOpen] = useState(false);
   const { user } = useData()
+  const { fetch, loading } = useFetchData({ uri: "auth/users/invitations" })
   const [formData, setFormData] = useState<any>({
     dateDay: new Date().getDate(),
     dateMonth: new Date().getMonth() + 1,
@@ -146,22 +76,6 @@ export default function InvitationsPage() {
     city: "",
     country: ""
   });
-  const [guestFormData, setGuestFormData] = useState<GuestFormData>({
-    name: '',
-    email: '',
-    phone: '',
-  });
-
-  const handleMapLocationSelect = (location: { lat: number; lng: number }) => {
-    setFormData({
-      ...formData,
-      location: {
-        ...formData.location,
-        lat: location.lat,
-        lng: location.lng,
-      },
-    });
-  };
 
   const handleCreate = (e: React.FormEvent) => {
     e.preventDefault();
@@ -195,13 +109,30 @@ export default function InvitationsPage() {
     setInvitations(updatedInvitations);
   };
 
+  const openActiveModal = (invitation: Invitation) => {
+    setSelectedInvitation(invitation);
+    setIsActiveOpen(true);
+  };
 
   const openGuestsModal = (invitation: Invitation) => {
     setSelectedInvitation(invitation);
     setIsGuestsOpen(true);
   };
 
+  useEffect(function () {
+    fetch({ id: user.id }, "POST").then(function ({ data }) {
+      if (data.data) {
+        setInvitations(data.data)
+      }
+    })
 
+  }, [])
+
+  if (loading) return <div className="w-full">
+    <h1 className="font-bold text-center">
+      ...Chargement
+    </h1>
+  </div>
   return (
     <div>
       <div className="flex justify-between items-center mb-8">
@@ -236,7 +167,7 @@ export default function InvitationsPage() {
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
               <Badge className="absolute top-2 right-2">
-                {templates.find(t => t.id == invitation.template)?.title}
+                {templates.find(t => t.id == invitation.template)?.style}
               </Badge>
               <div className="absolute bottom-2 right-2 flex gap-2">
               </div>
@@ -255,6 +186,13 @@ export default function InvitationsPage() {
                   <Button
                     variant="ghost"
                     size="sm"
+                    onClick={() => openActiveModal(invitation)}
+                  >
+                    <RefreshCw className="h-4 w-4" />
+                  </Button>
+                  <Button
+                    variant="ghost"
+                    size="sm"
                     onClick={() => openGuestsModal(invitation)}
                   >
                     <Users className="h-4 w-4" />
@@ -270,7 +208,7 @@ export default function InvitationsPage() {
       <Dialog open={isGuestsOpen} onOpenChange={setIsGuestsOpen}>
         <DialogContent className="max-w-3xl">
           <DialogHeader>
-            <DialogTitle>Les invités - {selectedInvitation?.title}</DialogTitle>
+            <DialogTitle>Les invités du mariage de {selectedInvitation?.title}</DialogTitle>
           </DialogHeader>
           <div className="rounded-md border">
             <Table>
@@ -311,6 +249,14 @@ export default function InvitationsPage() {
               </TableBody>
             </Table>
           </div>
+        </DialogContent>
+      </Dialog>
+      <Dialog open={isActiveOpen} onOpenChange={setIsActiveOpen}>
+        <DialogContent className="max-w-3xl">
+          <DialogHeader>
+            <DialogTitle>Les invités du mariage de {selectedInvitation?.title}</DialogTitle>
+          </DialogHeader>
+
         </DialogContent>
       </Dialog>
     </div>
