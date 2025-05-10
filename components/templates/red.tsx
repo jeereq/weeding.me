@@ -118,7 +118,7 @@ export default function TemplateRed({ template, data, hide = false }: any) {
                 <input type="color" name="custome"
                     value={formData.color}
                     onChange={function (e) {
-                   
+
                         setFormData(function (state: any) {
                             return {
                                 ...state,
@@ -164,7 +164,7 @@ export default function TemplateRed({ template, data, hide = false }: any) {
 
                 </div>
                 <img
-                    src={image || template.imageUrl}
+                    src={image || formData.image}
                     alt={template.title}
                     className="object-cover z-10 h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />

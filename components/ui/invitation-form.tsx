@@ -46,7 +46,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                     <div className="w-full space-y-2">
                         <Label htmlFor="typeInvitation">Animation</Label>
                         <select name="typeInvitation" id="typeInvitation" className='w-full py-2'
-                            value={formData.heart}
+                            value={`${formData.heart}`}
                             onChange={(e) => setFormData({
                                 ...formData,
                                 heart: e.target.value == "true",

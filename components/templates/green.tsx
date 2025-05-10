@@ -117,7 +117,7 @@ export default function TemplateGreen({ template, data, hide = false }: any) {
                 <input type="color" name="custome"
                     value={formData.color}
                     onChange={function (e) {
-                       
+
                         setFormData(function (state: any) {
                             return {
                                 ...state,
@@ -143,7 +143,7 @@ export default function TemplateGreen({ template, data, hide = false }: any) {
                     </span>
                 </div>
                 <img
-                    src={image || template.imageUrl}
+                    src={image || formData.image}
                     alt={template.title}
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
@@ -221,7 +221,7 @@ export default function TemplateGreen({ template, data, hide = false }: any) {
             </div>
             <div className={`w-full -translate-y-[35%] z-10 text-xs lg:text-sm relative  h-[700px]`}>
                 <img
-                    src={image || template.imageUrl}
+                    src={image || formData.image}
                     alt={template.title}
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
