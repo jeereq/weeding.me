@@ -8,6 +8,7 @@ import InvitationFormInvitation from "../ui/invitation-form";
 import dynamic from 'next/dynamic'
 import TemplateImages from "../ui/templateImages";
 import { createHeart } from "@/lib/utils";
+
 const MapModal = dynamic(
     () => import('@/components/ui/map-modal'),
     { ssr: false }
@@ -48,16 +49,16 @@ export default function TemplateYellow({ template, hide = false }: any) {
     const [currentColor] = useState<string>('custome');
     const [image, setImage] = useState<any>(null);
     const [formData, setFormData] = useState<any>({
-        dateDay: new Date().getDate(),
-        dateMonth: new Date().getMonth() + 1,
-        dateYear: new Date().getFullYear(),
+        day: new Date().getDate(),
+        month: new Date().getMonth() + 1,
+        year: new Date().getFullYear(),
         date: new Date().toString(),
         template: template.id,
-        dateTime: "18:00",
+        time: "18:00",
         dateLocation: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
-        dateLocationLat: -4.3276,
-        dateLocationLng: 15.3136,
-        dateLocationAddress: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
+        lat: -4.3276,
+        lng: 15.3136,
+        address: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
         title: "Jeereq & Medine",
         men: "Jeereq",
         women: "Medine",
