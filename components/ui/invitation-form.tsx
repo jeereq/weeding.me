@@ -1,11 +1,10 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from '@/components/ui/textarea';
 import dynamic from 'next/dynamic'
-import { InvitationType } from '@/app/admin/invitations/page';
 import CommandFormInvitation from './command-form';
 
 const MapModal = dynamic(
@@ -17,7 +16,6 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
     onSubmit: (e: React.FormEvent) => void,
     formData: any,
     setFormData: (data: any) => void,
-    invitationTypes: InvitationType[],
     openModal: boolean,
     closeModalForm: any
 }) => {
@@ -49,7 +47,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                             value={`${formData.heart}`}
                             onChange={(e) => setFormData({
                                 ...formData,
-                                heart: e.target.value == "true",
+                                heart: e.target.value,
                             })}>
                             <option value={"true"}>
                                 Coeur
@@ -70,7 +68,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                         />
                     </div>
                     <div className="space-y-2">
-                        <Label htmlFor="men">Nom du maris</Label>
+                        <Label htmlFor="men">Nom du mari</Label>
                         <Input
                             id="men"
                             value={formData.men}

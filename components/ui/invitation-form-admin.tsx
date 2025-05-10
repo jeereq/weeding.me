@@ -61,7 +61,7 @@ const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openMo
                     onSubmit={function (e: any) {
                         e.preventDefault()
                         const { id } = user
-                        fetch({ ...formData, user: id }, "POST")
+                        fetch({ ...formData, user: id, price: Calcule() }, "POST")
                             .then(function ({ data: { data, message } }: any) {
                                 if (message) {
                                     alert(message)
@@ -77,7 +77,7 @@ const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openMo
                             value={formData.heart}
                             onChange={(e) => setFormData({
                                 ...formData,
-                                heart: e.target.value == "true",
+                                heart: e.target.value,
                             })}>
                             <option value={"true"}>
                                 Coeur

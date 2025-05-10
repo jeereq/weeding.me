@@ -64,7 +64,7 @@ export default function TemplateGreen({ template, data, hide = false }: any) {
     }
 
     useEffect(function () {
-        if (formData.heart) {
+        if (formData.heart == "true") {
             const id = setInterval(createHeart, 50);
             return () => clearInterval(id);
         }
@@ -237,8 +237,13 @@ export default function TemplateGreen({ template, data, hide = false }: any) {
             onLocationSelect={() => { }}
             initialLocation={{ lat: formData.lat, lng: formData.lng }}
         />
-        <InvitationFormInvitation openModal={openForm} closeModalForm={closeModalForm} formData={formData} setFormData={setFormData}
+        <InvitationFormInvitation
+            openModal={openForm}
+            closeModalForm={closeModalForm}
+            formData={formData}
+            setFormData={setFormData}
             onSubmit={function () {
-            }} invitationTypes={[]} />
+            }}
+        />
     </>
 }

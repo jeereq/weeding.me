@@ -5,7 +5,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Plus, Users, Badge, RefreshCw, Eye } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { useData } from '@/lib/data';
+import { props, useData } from '@/lib/data';
 import { templates } from '@/lib/utils';
 import { motion } from "framer-motion";
 import InvitationFormInvitationAdmin from '@/components/ui/invitation-form-admin';
@@ -56,31 +56,11 @@ export default function InvitationsPage() {
   const [isActiveOpen, setIsActiveOpen] = useState(false);
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [selectedInvitation, setSelectedInvitation] = useState<Invitation | null>(null);
-  const { user } = useData()
-  const { fetch, loading } = useFetchData({ uri: "auth/users/invitations" })
+  const { user, updateInvitation } = useData()
+  const { fetch, loading } = useFetchData({ uri: "auth/invitations/activeCommand" })
   const [formData, setFormData] = useState<any>({
-    day: new Date().getDate(),
-    month: new Date().getMonth() + 1,
-    year: new Date().getFullYear(),
-    date: new Date().toString(),
+    ...props,
     template: 1,
-    time: "18:00",
-    dateLocation: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
-    lat: -4.3276,
-    lng: 15.3136,
-    address: "Avenue de la paix, Kinshasa, en face de l'Institut National de Sécurité Sociale (INSS)",
-    title: "Jeereq & Medine",
-    men: "Jeereq",
-    women: "Medine",
-    typeInvitation: "couple",
-    nameInvitation: "Jeereq et Medine",
-    heart: false,
-    initiateurDeLaDemande: "",
-    phone: "",
-    invitations: 50,
-    city: "",
-    country: "",
-    image: ""
   });
 
   const handleCreate = (e: React.FormEvent) => {
@@ -129,14 +109,6 @@ export default function InvitationsPage() {
     setIsViewOpen(true);
   };
 
-  useEffect(function () {
-    fetch({ id: user.id }, "POST").then(function ({ data }) {
-      if (data.data) {
-        setInvitations(data.data)
-      }
-    })
-
-  }, [])
 
   if (loading) return <div className="w-full">
     <h1 className="font-bold text-center">
@@ -192,7 +164,7 @@ export default function InvitationsPage() {
                 <div className="flex justify-between items-center">
                   <div className="flex items-center text-sm text-muted-foreground">
                     <Users className="h-4 w-4 mr-1" />
-                    {invitation.invitations} Invitations
+                    {invitation.invitations} Invitations <span className="font-bold ml-2 mr-1">$</span> {invitation.price.toFixed(2)}
                   </div>
                   <div className="flex gap-2">
                     <Button
@@ -236,7 +208,6 @@ export default function InvitationsPage() {
                         <TableHead>Email</TableHead>
                         <TableHead>Téléphone</TableHead>
                         <TableHead>Statut</TableHead>
-                        <TableHead className="text-right">Actions</TableHead>
                       </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -289,12 +260,17 @@ export default function InvitationsPage() {
                     </Button>
                     <Button
                       onClick={function () {
-                        setIsActiveOpen(false)
+                        fetch({ id: invitation.id }, "POST").then(function ({ data }) {
+                          if (data.data) {
+                            updateInvitation({ ...invitation, active: true }, user)
+                            setIsActiveOpen(false)
+                          }
+                        })
                       }}
                       type="submit"
                       className="w-full bg-green-900"
                     >
-                      Activer
+                      {(loading) ? "...Chargement" : "Activer"}
                     </Button>
                   </div>
                 </TableBody>

@@ -10,7 +10,8 @@ export default function TemplateImages({ setImage = function () { } }: any) {
         { id: 5, uri: "https://i.pinimg.com/736x/f8/fb/c7/f8fbc71d5ddc970e4f1a34bb40c337c8.jpg" },
         { id: 6, uri: "https://i.pinimg.com/736x/94/43/ba/9443baeb6215a676acc5cafba5890024.jpg" },
         { id: 7, uri: "https://i.pinimg.com/736x/66/23/80/66238049cec9b0fe7e41a84cfecff559.jpg" },
-        { id: 8, uri: "https://i.pinimg.com/736x/63/3b/3c/633b3c4b98015d299120d616897e4844.jpg" }
+        { id: 8, uri: "https://i.pinimg.com/736x/63/3b/3c/633b3c4b98015d299120d616897e4844.jpg" },
+        { id: 9, uri: "https://i.pinimg.com/736x/d9/3f/1f/d93f1f8cbe0aa03820c4af9e0c159554.jpg" }
     ])
     const [current, setCurrent] = useState<number | null>(null)
     return <div className="lg:fixed relative z-40 mb-5 left-0 top-0 bottom-0 w-fit px-2 h-full flex lg:flex-col items-center justify-center">

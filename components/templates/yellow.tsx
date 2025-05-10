@@ -17,8 +17,6 @@ const MapModal = dynamic(
 export default function TemplateYellow({ template, data, hide = false }: any) {
     const router = useRouter();
     const [openForm, setOpenForm] = useState(false);
-
-
     const contentRef = useRef<HTMLDivElement>(null);
     const reactToPrintFn = useReactToPrint({
         contentRef,
@@ -67,7 +65,7 @@ export default function TemplateYellow({ template, data, hide = false }: any) {
     }
 
     useEffect(function () {
-        if (formData.heart) {
+        if (formData.heart == "true") {
             const id = setInterval(createHeart, 50);
             return () => clearInterval(id);
         }
@@ -242,9 +240,9 @@ export default function TemplateYellow({ template, data, hide = false }: any) {
             closeModalForm={closeModalForm}
             formData={formData}
             setFormData={setFormData}
-            onSubmit={function (e) {
-                e.preventDefault()
-                e.stopPropagation()
-            }} invitationTypes={[]} />
+            onSubmit={function () {
+            }}
+
+        />
     </>
 }

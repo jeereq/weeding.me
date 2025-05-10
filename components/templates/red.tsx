@@ -65,7 +65,7 @@ export default function TemplateRed({ template, data, hide = false }: any) {
         setOpenForm(false);
     }
     useEffect(function () {
-        if (formData.heart) {
+        if (formData.heart == "true") {
             const id = setInterval(createHeart, 50);
             return () => clearInterval(id);
         }
@@ -230,9 +230,11 @@ export default function TemplateRed({ template, data, hide = false }: any) {
         <InvitationFormInvitation
             openModal={openForm}
             closeModalForm={closeModalForm}
-            formData={formData} setFormData={setFormData} onSubmit={function (e) {
-                e.preventDefault()
-                e.stopPropagation()
-            }} invitationTypes={[]} />
+            formData={formData}
+            setFormData={setFormData}
+            onSubmit={function (e) {
+
+            }}
+        />
     </>
 }

@@ -32,6 +32,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
             return (formData.invitations * 0.7)
         }
     }
+
     function CalculeSansReduction(): number {
         return (formData.invitations * 0.7)
     }
@@ -46,7 +47,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                         onSubmit={function (e: any) {
                             e.preventDefault()
                             if (formData.id) {
-                                fetchUpdate(formData, "POST")
+                                fetchUpdate({ ...formData, price: Calcule() }, "POST")
                                     .then(function ({ data: { message, data } }: any) {
                                         if (message) {
                                             alert(message)
@@ -57,7 +58,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                                     })
 
                             } else {
-                                fetch(formData, "POST")
+                                fetch({ user: user.id, ...formData, price: Calcule() }, "POST")
                                     .then(function ({ data: { message, data } }: any) {
                                         if (message) {
                                             alert(message)
@@ -85,6 +86,17 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                                 disabled={formData?.id}
                                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                 placeholder="Ex: +243 817 125 577"
+                                required
+                            />
+                        </div>
+                        <div className="space-y-2">
+                            <Label htmlFor="email">Email</Label>
+                            <Input
+                                type='email'
+                                value={formData.email}
+                                disabled={formData?.id}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                placeholder="Ex: jeereq@gmail.com"
                                 required
                             />
                         </div>

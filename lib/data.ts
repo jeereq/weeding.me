@@ -30,10 +30,11 @@ export const props = {
   heart: false,
   initiateurDeLaDemande: "",
   phone: "",
+  email: "",
   invitations: 50,
   city: "",
   country: "",
-  image: "https://i.pinimg.com/736x/63/de/3a/63de3a93ad459acf7e6d9ee0d5102aac.jpg",
+  image: "https://i.pinimg.com/736x/d9/3f/1f/d93f1f8cbe0aa03820c4af9e0c159554.jpg",
   color: "black"
 }
 
