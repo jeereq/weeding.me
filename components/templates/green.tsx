@@ -13,7 +13,7 @@ const MapModal = dynamic(
     { ssr: false }
 )
 
-export default function TemplateGreen({ template }: any) {
+export default function TemplateGreen({ template, hide = false }: any) {
     const router = useRouter();
     const [openForm, setOpenForm] = useState(false);
     const [colors, setColors] = useState<any>({
@@ -86,9 +86,9 @@ export default function TemplateGreen({ template }: any) {
             return () => clearInterval(id);
         }
     }, [formData.heart])
-    
+
     return <>
-        <TemplateImages setImage={setImage} />
+        {hide && <TemplateImages setImage={setImage} />}
         <div className="w-full grid grid-cols-1 py-5 gap-2 relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
             <div className="w-full px-5 grid grid-cols-1 gap-2">
                 <div

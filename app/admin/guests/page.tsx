@@ -218,7 +218,7 @@ const GuestsPage: FC = () => {
       </div>
       <Card>
         <CardContent>
-          <div className="flex gap-4 mb-6">
+          <div className="flex gap-4 py-6">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
@@ -249,10 +249,8 @@ const GuestsPage: FC = () => {
                   <SelectValue placeholder="Type d'invité" />
                 </SelectTrigger>
                 <SelectContent>
-                  4!
-                  0l
-k                  <SelectItem value="family">Famille</SelectItem>
-                   <SelectItem value="company">Entreprise</SelectItem>
+                  <SelectItem value="family">Famille</SelectItem>
+                  <SelectItem value="company">Entreprise</SelectItem>
                   <SelectItem value="group">Groupe</SelectItem>
                   <SelectItem value="individual">Individuel</SelectItem>
                 </SelectContent>

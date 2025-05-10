@@ -3,12 +3,16 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Plus, Users, Badge, RefreshCw } from 'lucide-react';
+import { Plus, Users, Badge, RefreshCw, Eye } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { useData } from '@/lib/data';
 import { templates } from '@/lib/utils';
+import { motion } from "framer-motion";
 import InvitationFormInvitationAdmin from '@/components/ui/invitation-form-admin';
 import { useFetchData } from '@/hooks/useFetchData';
+import TemplateGreen from '@/components/templates/green';
+import TemplateYellow from '@/components/templates/yellow';
+import TemplateRed from '@/components/templates/red';
 
 interface Location {
   lat: number | null;
@@ -50,6 +54,7 @@ export default function InvitationsPage() {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isGuestsOpen, setIsGuestsOpen] = useState(false);
   const [isActiveOpen, setIsActiveOpen] = useState(false);
+  const [isViewOpen, setIsViewOpen] = useState(false);
   const [selectedInvitation, setSelectedInvitation] = useState<Invitation | null>(null);
   const { user } = useData()
   const { fetch, loading } = useFetchData({ uri: "auth/users/invitations" })
@@ -79,7 +84,7 @@ export default function InvitationsPage() {
 
   const handleCreate = (e: React.FormEvent) => {
     e.preventDefault();
-    const newInvitation: Invitation = {
+    const newInvitation: any = {
       id: Math.random().toString(),
       title: formData.title,
       event_date: formData.event_date,
@@ -103,7 +108,7 @@ export default function InvitationsPage() {
   const handleRemoveGuest = (invitationId: string, guestId: string) => {
     const updatedInvitations = invitations.map(inv =>
       inv.id === invitationId
-        ? { ...inv, guests: inv.guests.filter(g => g.id !== guestId) }
+        ? { ...inv, guests: inv.guests.filter((g: any) => g.id !== guestId) }
         : inv
     );
     setInvitations(updatedInvitations);
@@ -117,6 +122,10 @@ export default function InvitationsPage() {
   const openGuestsModal = (invitation: Invitation) => {
     setSelectedInvitation(invitation);
     setIsGuestsOpen(true);
+  };
+  const openViewsModal = (invitation: Invitation) => {
+    setSelectedInvitation(invitation);
+    setIsViewOpen(true);
   };
 
   useEffect(function () {
@@ -158,107 +167,161 @@ export default function InvitationsPage() {
 
       <div className="grid gap-2 grid-cols-3">
         {user.templates.map((invitation: any) => (
-          <Card key={invitation.id} className="overflow-hidden">
-            <div className="aspect-video relative">
-              <img
-                src={templates.find(t => t.id == invitation.template)?.imageUrl}
-                alt={invitation.title}
-                className="object-cover w-full h-full"
-              />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-              <Badge className="absolute top-2 right-2">
-                {templates.find(t => t.id == invitation.template)?.style}
-              </Badge>
-              <div className="absolute bottom-2 right-2 flex gap-2">
-              </div>
-            </div>
-            <CardContent className="p-6">
-              <h3 className="text-lg font-semibold mb-2">{invitation.title}</h3>
-              <p className="text-sm text-muted-foreground mb-4">
-                {invitation.address}
-              </p>
-              <div className="flex justify-between items-center">
-                <div className="flex items-center text-sm text-muted-foreground">
-                  <Users className="h-4 w-4 mr-1" />
-                  {invitation.invitations} Invitations
-                </div>
-                <div className="flex gap-2">
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => openActiveModal(invitation)}
-                  >
-                    <RefreshCw className="h-4 w-4" />
-                  </Button>
-                  <Button
-                    variant="ghost"
-                    size="sm"
-                    onClick={() => openGuestsModal(invitation)}
-                  >
-                    <Users className="h-4 w-4" />
-                  </Button>
+          <>
+            <Card key={invitation.id} className="overflow-hidden">
+              <div className="aspect-video relative">
+                <img
+                  src={templates.find(t => t.id == invitation.template)?.imageUrl}
+                  alt={invitation.title}
+                  className="object-cover w-full h-full"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+                <Badge className="absolute top-2 right-2">
+                  {templates.find(t => t.id == invitation.template)?.style}
+                </Badge>
+                <div className="absolute bottom-2 right-2 flex gap-2">
                 </div>
               </div>
-            </CardContent>
-          </Card>
+              <CardContent className="p-6">
+                <h3 className="text-lg font-semibold mb-2">{invitation.title}</h3>
+                <p className="text-sm text-muted-foreground mb-4">
+                  {invitation.address}
+                </p>
+                <div className="flex justify-between items-center">
+                  <div className="flex items-center text-sm text-muted-foreground">
+                    <Users className="h-4 w-4 mr-1" />
+                    {invitation.invitations} Invitations
+                  </div>
+                  <div className="flex gap-2">
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => openViewsModal(invitation)}
+                    >
+                      <Eye className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => openActiveModal(invitation)}
+                    >
+                      <RefreshCw className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => openGuestsModal(invitation)}
+                    >
+                      <Users className="h-4 w-4" />
+                    </Button>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
 
+            <Dialog open={isGuestsOpen} onOpenChange={setIsGuestsOpen}>
+              <DialogContent className="max-w-3xl">
+                <DialogHeader>
+                  <DialogTitle>Les invités du mariage de {selectedInvitation?.title}</DialogTitle>
+                </DialogHeader>
+                <div className="rounded-md border">
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Nom</TableHead>
+                        <TableHead>Email</TableHead>
+                        <TableHead>Téléphone</TableHead>
+                        <TableHead>Statut</TableHead>
+                        <TableHead className="text-right">Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {user?.guests?.map((guest: any) => (
+                        <TableRow key={guest.id}>
+                          <TableCell>{guest.name}</TableCell>
+                          <TableCell>{guest.email}</TableCell>
+                          <TableCell>{guest.phone}</TableCell>
+                          <TableCell>
+                            <span className={`capitalize ${guest.status === 'confirmed' ? 'text-green-600' :
+                              guest.status === 'declined' ? 'text-red-600' :
+                                'text-yellow-600'
+                              }`}>
+                              {guest.status}
+                            </span>
+                          </TableCell>
+                          <TableCell className="text-right">
+                            <Button
+                              variant="ghost"
+                              size="sm"
+                              onClick={() => selectedInvitation && handleRemoveGuest(selectedInvitation.id, guest.id)}
+                            >
+                              Supprimer
+                            </Button>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </div>
+              </DialogContent>
+            </Dialog>
+            <Dialog open={isActiveOpen} onOpenChange={setIsActiveOpen}>
+              <DialogContent className="max-w-3xl">
+                <DialogHeader>
+                  <DialogTitle>
+                    Voulez-vous activer cette demande ou commande d'invitation du mariage de {selectedInvitation?.title} ?
+                  </DialogTitle>
+                </DialogHeader>
+                <TableBody>
+                  <div className="w-full gap-2 grid grid-cols-2 mt-2">
+                    <Button
+                      onClick={function () {
+                        setIsActiveOpen(false)
+                      }}
+                      type="submit"
+                      className="w-full"
+                    >
+                      Annuler
+                    </Button>
+                    <Button
+                      onClick={function () {
+                        setIsActiveOpen(false)
+                      }}
+                      type="submit"
+                      className="w-full bg-green-900"
+                    >
+                      Activer
+                    </Button>
+                  </div>
+                </TableBody>
+              </DialogContent>
+            </Dialog>
+            <Dialog open={isViewOpen} onOpenChange={setIsViewOpen}>
+              <DialogContent className="max-w-3xl">
+                <TableBody>
+                  <div className="w-full">
+                    <div className="w-full 0 mx-auto px-4 sm:px-6 lg:px-8">
+                      <div className="w-full lg:w-[500px] h-[70vh] overflow-y-scroll mx-auto ">
+                        <motion.div
+                          key={invitation.template}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.6 }}
+                        >
+                          {invitation.template == 1 && <TemplateGreen hide template={invitation} />}
+                          {invitation.template == 2 && <TemplateYellow hide template={invitation} />}
+                          {invitation.template == 3 && <TemplateRed hide template={invitation} />}
+                        </motion.div>
+                      </div>
+                    </div>
+                  </div>
+                </TableBody>
+              </DialogContent>
+            </Dialog>
+          </>
         ))}
       </div>
 
-      <Dialog open={isGuestsOpen} onOpenChange={setIsGuestsOpen}>
-        <DialogContent className="max-w-3xl">
-          <DialogHeader>
-            <DialogTitle>Les invités du mariage de {selectedInvitation?.title}</DialogTitle>
-          </DialogHeader>
-          <div className="rounded-md border">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead>Nom</TableHead>
-                  <TableHead>Email</TableHead>
-                  <TableHead>Téléphone</TableHead>
-                  <TableHead>Statut</TableHead>
-                  <TableHead className="text-right">Actions</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody>
-                {user?.guests?.map((guest: any) => (
-                  <TableRow key={guest.id}>
-                    <TableCell>{guest.name}</TableCell>
-                    <TableCell>{guest.email}</TableCell>
-                    <TableCell>{guest.phone}</TableCell>
-                    <TableCell>
-                      <span className={`capitalize ${guest.status === 'confirmed' ? 'text-green-600' :
-                        guest.status === 'declined' ? 'text-red-600' :
-                          'text-yellow-600'
-                        }`}>
-                        {guest.status}
-                      </span>
-                    </TableCell>
-                    <TableCell className="text-right">
-                      <Button
-                        variant="ghost"
-                        size="sm"
-                        onClick={() => selectedInvitation && handleRemoveGuest(selectedInvitation.id, guest.id)}
-                      >
-                        Supprimer
-                      </Button>
-                    </TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </div>
-        </DialogContent>
-      </Dialog>
-      <Dialog open={isActiveOpen} onOpenChange={setIsActiveOpen}>
-        <DialogContent className="max-w-3xl">
-          <DialogHeader>
-            <DialogTitle>Les invités du mariage de {selectedInvitation?.title}</DialogTitle>
-          </DialogHeader>
-
-        </DialogContent>
-      </Dialog>
     </div>
   );
 }
