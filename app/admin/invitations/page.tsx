@@ -173,11 +173,11 @@ export default function InvitationsPage() {
                   {invitation.address}
                 </p>
                 <div className="flex justify-between items-center">
-                  <div className="flex items-center text-sm text-muted-foreground">
-                    <Users className="h-4 w-4 mr-1" />
+                  <div title={`${invitation.title} ${invitation.invitations} invitations, ${invitation.price.toFixed(2)}$ `} className="flex items-center mr-1 text-sm text-muted-foreground">
+                    <Users  className="h-4 w-4 mr-1" />
                     {invitation.invitations} Invitations <span className="font-bold ml-2 mr-1">$</span> {invitation.price.toFixed(2)}
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex gap-1">
                     <Button
                       variant="ghost"
                       size="sm"

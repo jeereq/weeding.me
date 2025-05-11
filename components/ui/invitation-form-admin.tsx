@@ -55,7 +55,7 @@ const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openMo
     if (!openModal) return <div className="w-fit"></div>
     return (<>
         <div className="w-full fixed top-0 bottom-0 left-0 right-0 flex items-center bg-black bg-opacity-30 justify-center z-50">
-            <div className="w-11/12 md:w-[500px] h-fit bg-white relative shadow-lg rounded-xl p-5">
+            <div className="w-11/12 max-w-3xl h-fit bg-white relative shadow-lg rounded-xl p-5">
                 <h1 className="font-bold text-xl">Ajouter une invitation</h1>
                 <form
                     onSubmit={function (e: any) {
@@ -70,7 +70,7 @@ const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openMo
                                     closeModalForm()
                                 }
                             })
-                    }} className="space-y-4 w-full h-[70vh] overflow-y-scroll">
+                    }} className="space-y-4 flex flex-wrap w-full h-[70vh] overflow-y-scroll">
                     <div className="w-full space-y-2">
                         <Label htmlFor="typeInvitation">Animation</Label>
                         <select name="typeInvitation" id="typeInvitation" className='w-full py-2'
@@ -104,7 +104,7 @@ const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openMo
                             })}
                         </select>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 w-full ">
                         <Label htmlFor="title">Titre de l'invitation</Label>
                         <Input
                             id="title"
@@ -114,7 +114,7 @@ const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openMo
                             required
                         />
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 w-1/2 pr-1">
                         <Label htmlFor="men">Nom du maris</Label>
                         <Input
                             id="men"
@@ -124,7 +124,7 @@ const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openMo
                             required
                         />
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 w-1/2 pl-1">
                         <Label htmlFor="women">Nom de la femme</Label>
                         <Input
                             id="women"
@@ -135,7 +135,7 @@ const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openMo
                         />
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-2 w-1/2 pr-1">
                         <Label htmlFor="date">Date de l'événement</Label>
                         <Input
                             id="date"
@@ -152,7 +152,7 @@ const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openMo
                         />
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-2  w-1/2 pl-1">
                         <Label htmlFor="time">Heure et minute</Label>
                         <div className="w-full gap-1">
                             <Input
@@ -164,7 +164,7 @@ const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openMo
                             />
                         </div>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 w-full">
                         <Label htmlFor="location">Localisation</Label>
                         <div className="flex gap-2 grid-cols-1 grid  mb-2">
                             <Button
@@ -190,7 +190,7 @@ const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openMo
                             </p>
                         )}
                     </div>
-                    <div className="space-y-2 ">
+                    <div className="space-y-2 w-full ">
                         <Label htmlFor="initiateurDeLaDemande">Nom complet du demandeur</Label>
                         <Input
                             id="initiateurDeLaDemande"
@@ -200,7 +200,7 @@ const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openMo
                             required
                         />
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 w-full">
                         <Label htmlFor="phone">Numéro de téléphone</Label>
                         <Input
                             type='tel'
@@ -210,7 +210,7 @@ const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openMo
                             required
                         />
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 w-full">
                         <Label htmlFor="invitations">Nombre d'invitations (Minimum de 50)</Label>
                         <Input
                             id="invitations"
@@ -251,7 +251,7 @@ const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openMo
                         </Label>}
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-2  w-1/2 pr-1">
                         <Label htmlFor="city">Ville</Label>
                         <Input
                             id="city"
@@ -264,7 +264,7 @@ const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openMo
                             required
                         />
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 w-1/2 pl-1">
                         <Label htmlFor="country">Pays</Label>
                         <Input
                             id="country"
