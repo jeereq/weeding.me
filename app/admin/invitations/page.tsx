@@ -58,6 +58,7 @@ export default function InvitationsPage() {
   const [selectedInvitation, setSelectedInvitation] = useState<Invitation | null>(null);
   const { user, updateInvitation } = useData()
   const { fetch, loading } = useFetchData({ uri: "auth/invitations/activeCommand" })
+  const { fetch: fetchDesactive, loading: loadingDesactive } = useFetchData({ uri: "auth/invitations/activeCommand" })
   const [formData, setFormData] = useState<any>({
     ...props,
     template: 1,
@@ -144,15 +145,16 @@ export default function InvitationsPage() {
             <Card key={invitation.id} className="overflow-hidden">
               <div className="aspect-video relative">
                 <img
-                  src={templates.find(t => t.id == invitation.template)?.imageUrl}
+                  src={invitation.image || templates.find(t => t.id == invitation.template)?.imageUrl}
                   alt={invitation.title}
                   className="object-cover w-full h-full"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
-                <Badge className="absolute top-2 right-2">
-                  {templates.find(t => t.id == invitation.template)?.style}
+                <Badge
+                  className={`${invitation.active ? "text-green-500" : "text-red-500"} absolute top-2 right-2`}>
                 </Badge>
-                <div className="absolute bottom-2 right-2 flex gap-2">
+                <div className="absolute bottom-2 right-2 flex gap-2 font-bold">
+                  {templates.find(t => t.id == invitation.template)?.category}
                 </div>
               </div>
               <CardContent className="p-6">
@@ -244,7 +246,7 @@ export default function InvitationsPage() {
               <DialogContent className="max-w-3xl">
                 <DialogHeader>
                   <DialogTitle>
-                    Voulez-vous activer cette demande ou commande d'invitation du mariage de {selectedInvitation?.title} ?
+                    Voulez-vous {invitation.active ? "desactiver" : "activer"} cette demande ou commande d'invitation : {selectedInvitation?.title} ?
                   </DialogTitle>
                 </DialogHeader>
                 <TableBody>
@@ -260,17 +262,27 @@ export default function InvitationsPage() {
                     </Button>
                     <Button
                       onClick={function () {
-                        fetch({ id: invitation.id }, "POST").then(function ({ data }) {
-                          if (data.data) {
-                            updateInvitation({ ...invitation, active: true }, user)
-                            setIsActiveOpen(false)
-                          }
-                        })
+                        if (invitation.active) {
+                          fetchDesactive({ id: invitation.id }, "POST").then(function ({ data }) {
+                            if (data.data) {
+                              updateInvitation({ ...invitation, active: false }, user)
+                              setIsActiveOpen(false)
+                            }
+                          })
+                        } else {
+
+                          fetch({ id: invitation.id }, "POST").then(function ({ data }) {
+                            if (data.data) {
+                              updateInvitation({ ...invitation, active: true }, user)
+                              setIsActiveOpen(false)
+                            }
+                          })
+                        }
                       }}
                       type="submit"
-                      className="w-full bg-green-900"
+                      className={`w-full ${invitation.active ? "bg-red-500" : " bg-green-900"}`}
                     >
-                      {(loading) ? "...Chargement" : "Activer"}
+                      {(loading || loadingDesactive) ? "...Chargement" : invitation.active ? "Desactiver" : "Activer"}
                     </Button>
                   </div>
                 </TableBody>
@@ -281,7 +293,7 @@ export default function InvitationsPage() {
                 <TableBody>
                   <div className="w-full">
                     <div className="w-full 0 mx-auto px-4 sm:px-6 lg:px-8">
-                      <div className="w-full lg:w-[500px] h-[70vh] overflow-y-scroll mx-auto ">
+                      <div className="w-full w-fit h-[85vh] overflow-y-scroll mx-auto ">
                         <motion.div
                           key={invitation.template}
                           initial={{ opacity: 0, y: 20 }}

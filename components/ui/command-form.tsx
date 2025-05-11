@@ -56,7 +56,6 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                                             closeModalForm()
                                         }
                                     })
-
                             } else {
                                 fetch({ user: user.id, ...formData, price: Calcule() }, "POST")
                                     .then(function ({ data: { message, data } }: any) {
@@ -67,8 +66,8 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                                         }
                                     })
                             }
-                        }} className="space-y-4 w-full h-fit overflow-y-scroll p-2">
-                        <div className="space-y-2">
+                        }} className="space-y-4 w-full flex flex-wrap h-fit overflow-y-scroll p-2">
+                        <div className="space-y-2 w-full">
                             <Label htmlFor="initiateurDeLaDemande">Nom complet du demandeur</Label>
                             <Input
                                 id="initiateurDeLaDemande"
@@ -78,7 +77,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                                 required
                             />
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-2 w-1/2 pr-1">
                             <Label htmlFor="phone">Numéro de téléphone</Label>
                             <Input
                                 type='tel'
@@ -89,7 +88,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                                 required
                             />
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-2 w-1/2 pl-1">
                             <Label htmlFor="email">Email</Label>
                             <Input
                                 type='email'
@@ -100,7 +99,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                                 required
                             />
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-2 w-full">
                             <Label htmlFor="invitations">Nombre d'invitations (Minimum de 50)</Label>
                             <Input
                                 id="invitations"
@@ -115,7 +114,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                             />
                         </div>
 
-                        <div className="w-full space-y-2">
+                        <div className="w-full space-y-2 w-full">
                             <Label >
                                 Le coût unitaire d'une invitation est de  <b>0.7$</b>
                             </Label>
@@ -142,7 +141,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                             </Label>}
                         </div>
 
-                        <div className="space-y-2">
+                        <div className="space-y-2 w-1/2 pr-1">
                             <Label htmlFor="city">Ville</Label>
                             <Input
                                 id="city"
@@ -155,7 +154,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                                 required
                             />
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-2 w-1/2 pl-1">
                             <Label htmlFor="country">Pays</Label>
                             <Input
                                 id="country"

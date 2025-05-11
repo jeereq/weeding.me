@@ -190,7 +190,7 @@ const InvitationFormInvitationAdmin = ({ onSubmit, formData, setFormData, openMo
                             </p>
                         )}
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 ">
                         <Label htmlFor="initiateurDeLaDemande">Nom complet du demandeur</Label>
                         <Input
                             id="initiateurDeLaDemande"

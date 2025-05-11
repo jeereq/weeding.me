@@ -87,7 +87,7 @@ export default function TemplateGreen({ template, data, hide = false }: any) {
                         setOpenForm(true)
                     }}
                     className={`w-full cursor-pointer text-center font-bold h-fit py-2 rounded-lg bg-black text-white`}>
-                    Personnaliser le model
+                    {formData.id ? "Modifier le model" : "Personnaliser le model"}
                 </div>
 
                 <div
@@ -234,7 +234,9 @@ export default function TemplateGreen({ template, data, hide = false }: any) {
         <MapModal
             isOpen={isMapOpen}
             onClose={() => setIsMapOpen(false)}
-            onLocationSelect={() => { }}
+            onLocationSelect={() => {
+               
+            }}
             initialLocation={{ lat: formData.lat, lng: formData.lng }}
         />
         <InvitationFormInvitation
