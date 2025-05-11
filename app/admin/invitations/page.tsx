@@ -126,7 +126,9 @@ export default function InvitationsPage() {
   return (
     <div>
       <div className="flex justify-between items-center mb-8">
-        <h1 className="text-3xl font-bold">Invitations Choisis</h1>
+        <h1 className="text-3xl font-bold">
+          {user.role.id ? "Invitations" : "Invitations Choisis"}
+        </h1>
         <Button onClick={function () {
           setIsCreateOpen(true)
         }}>
@@ -146,7 +148,7 @@ export default function InvitationsPage() {
         onSubmit={handleCreate}
       />
 
-      <div className="grid gap-2 lg:grid-cols-3">
+      <div className="grid gap-2 md:grid-cols-3 lg:grid-cols-4">
         {user.templates.map((invitation: any) => (
           <>
             <Card key={invitation.id} className="overflow-hidden">
@@ -165,7 +167,7 @@ export default function InvitationsPage() {
                 </div>
               </div>
               <CardContent className="p-6">
-                <h3 className="text-lg font-semibold mb-2">{invitation.title}</h3>
+                <h3 className="text-lg font-semibold mb-2" style={{ color: invitation.color }}>{invitation.title}</h3>
                 <h4 className="text-md mb-2">{templates.find(t => t.id == invitation.template)?.title}</h4>
                 <p className="text-sm text-muted-foreground mb-4">
                   {invitation.address}
