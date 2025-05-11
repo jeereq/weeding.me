@@ -81,7 +81,7 @@ export default function TemplateYellow({ template, data, hide = false }: any) {
                 }
             })
         }} />}
-        <div className="w-full grid grid-cols-1 py-5 gap-2 relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
+        {hide && <div className="w-full grid grid-cols-1 py-5 gap-2 relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
             <div className="w-full px-5 grid grid-cols-1 gap-2">
                 <div
                     onClick={function () {
@@ -129,7 +129,7 @@ export default function TemplateYellow({ template, data, hide = false }: any) {
                     className="h-[40px] w-full cursor-pointer border-2 border-black rounded-lg" placeholder="Couleur"
                 />
             </div>
-        </div>
+        </div>}
         <div ref={contentRef} className="w-fit h-fit relative shadow-lg mx-auto rounded-xl bg-white py-5">
             <div className="aspect-[3/5] z-30 relative">
                 <div className="absolute bg-[url('/bgYellow.png')] rotate-180 z-30 bg-cover bg-no-repeat h-[150px] -top-1 left-0 right-0">
@@ -141,10 +141,12 @@ export default function TemplateYellow({ template, data, hide = false }: any) {
                     className="object-cover h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className={`absolute top-0 -bottom-[10px] left-0 right-0 bg-white bg-opacity-5 flex group items-center justify-center`}>
-                    <input type="file" hidden id="camera" className="hidden" accept="image/*" onChange={onChange} />
-                    <label htmlFor="camera" className={`group-hover:block text-white hidden cursor-pointer text-3xl`}>
-                        <Camera size={48} className="text-2xl" />
-                    </label>
+                    {hide && <>
+                        <input type="file" hidden id="camera" className="hidden" accept="image/*" onChange={onChange} />
+                        <label htmlFor="camera" className={`group-hover:block text-white hidden cursor-pointer text-3xl`}>
+                            <Camera size={48} className="text-2xl" />
+                        </label>
+                    </>}
                 </div>
                 <div style={{
                     color: formData.color
@@ -234,7 +236,7 @@ export default function TemplateYellow({ template, data, hide = false }: any) {
             isOpen={isMapOpen}
             onClose={() => setIsMapOpen(false)}
             onLocationSelect={() => {
-               
+
             }}
             initialLocation={{ lat: formData.lat, lng: formData.lng }}
         />

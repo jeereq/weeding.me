@@ -80,7 +80,7 @@ export default function TemplateGreen({ template, data, hide = false }: any) {
                 }
             })
         }} />}
-        <div className="w-full grid grid-cols-1 py-5 gap-2 relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
+        {hide && <div className="w-full grid grid-cols-1 py-5 gap-2 relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
             <div className="w-full px-5 grid grid-cols-1 gap-2">
                 <div
                     onClick={function () {
@@ -129,7 +129,7 @@ export default function TemplateGreen({ template, data, hide = false }: any) {
                     className="h-[40px] w-full cursor-pointer border-2 border-black rounded-lg" placeholder="Couleur"
                 />
             </div>
-        </div>
+        </div>}
         <div ref={contentRef} className="w-fit h-fit relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
             <div className="aspect-[3/5] lg:aspect-[3.25/5] z-30 relative rounded-b-full overflow-hidden">
                 <div className="absolute top-[30px] z-20 text-3xl lg:text-4xl font-bold text-white text-center w-full p-5">
@@ -151,10 +151,14 @@ export default function TemplateGreen({ template, data, hide = false }: any) {
                     background: formData.color,
                     opacity: 0.30
                 }} className={`absolute top-0 bottom-0 left-0 right-0 group flex items-center justify-center bg-opacity-50`}>
-                    <input type="file" hidden id="camera" className="hidden" accept="image/*" onChange={onChange} />
-                    <label htmlFor="camera" className={`group-hover:block text-white hidden cursor-pointer text-3xl`}>
-                        <Camera size={48} className="text-2xl" />
-                    </label>
+                    {hide &&
+                        <>
+                            <input type="file" hidden id="camera" className="hidden" accept="image/*" onChange={onChange} />
+                            <label htmlFor="camera" className={`group-hover:block text-white hidden cursor-pointer text-3xl`}>
+                                <Camera size={48} className="text-2xl" />
+                            </label>
+                        </>
+                    }
                 </div>
                 <div className="absolute bottom-[90px] z-20 text-5xl font-bold lg:text-7xl text-white text-center w-full p-5">
                     {formData.men}
@@ -235,7 +239,7 @@ export default function TemplateGreen({ template, data, hide = false }: any) {
             isOpen={isMapOpen}
             onClose={() => setIsMapOpen(false)}
             onLocationSelect={() => {
-               
+
             }}
             initialLocation={{ lat: formData.lat, lng: formData.lng }}
         />

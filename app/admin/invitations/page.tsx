@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Plus, Users, Badge, RefreshCw, Eye } from 'lucide-react';
+import { Plus, Users, Badge, RefreshCw, Eye, UserRound, Pencil } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { props, useData } from '@/lib/data';
 import { templates } from '@/lib/utils';
@@ -57,6 +57,7 @@ export default function InvitationsPage() {
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [selectedInvitation, setSelectedInvitation] = useState<Invitation | null>(null);
   const { user, updateInvitation } = useData()
+  const [isSee, setIsSee] = useState(false)
   const { fetch, loading } = useFetchData({ uri: "auth/invitations/activeCommand" })
   const { fetch: fetchDesactive, loading: loadingDesactive } = useFetchData({ uri: "auth/invitations/activeCommand" })
   const [formData, setFormData] = useState<any>({
@@ -108,6 +109,12 @@ export default function InvitationsPage() {
   const openViewsModal = (invitation: Invitation) => {
     setSelectedInvitation(invitation);
     setIsViewOpen(true);
+    setIsSee(true);
+  };
+  const openViewsModalWithoutUpdate = (invitation: Invitation) => {
+    setSelectedInvitation(invitation);
+    setIsViewOpen(true);
+    setIsSee(false);
   };
 
 
@@ -172,9 +179,16 @@ export default function InvitationsPage() {
                     <Button
                       variant="ghost"
                       size="sm"
-                      onClick={() => openViewsModal(invitation)}
+                      onClick={() => openViewsModalWithoutUpdate(invitation)}
                     >
                       <Eye className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => openViewsModal(invitation)}
+                    >
+                      <Pencil className="h-4 w-4" />
                     </Button>
                     <Button
                       variant="ghost"
@@ -300,9 +314,9 @@ export default function InvitationsPage() {
                           animate={{ opacity: 1, y: 0 }}
                           transition={{ duration: 0.6 }}
                         >
-                          {invitation.template == 1 && <TemplateGreen hide template={templates.find(t => t.id == invitation.template)} data={invitation} />}
-                          {invitation.template == 2 && <TemplateYellow hide template={templates.find(t => t.id == invitation.template)} data={invitation} />}
-                          {invitation.template == 3 && <TemplateRed hide template={templates.find(t => t.id == invitation.template)} data={invitation} />}
+                          {invitation.template == 1 && <TemplateGreen hide={isSee} template={templates.find(t => t.id == invitation.template)} data={invitation} />}
+                          {invitation.template == 2 && <TemplateYellow hide={isSee} template={templates.find(t => t.id == invitation.template)} data={invitation} />}
+                          {invitation.template == 3 && <TemplateRed hide={isSee} template={templates.find(t => t.id == invitation.template)} data={invitation} />}
                         </motion.div>
                       </div>
                     </div>

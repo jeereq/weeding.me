@@ -81,7 +81,7 @@ export default function TemplateRed({ template, data, hide = false }: any) {
                 }
             })
         }} />}
-        <div className="w-full grid grid-cols-1 py-5 gap-2 relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
+        {hide && <div className="w-full grid grid-cols-1 py-5 gap-2 relative shadow-lg mb-10 mx-auto rounded-xl overflow-hidden bg-white">
             <div className="w-full px-5 grid grid-cols-1 gap-2">
                 <div
                     onClick={function () {
@@ -130,7 +130,7 @@ export default function TemplateRed({ template, data, hide = false }: any) {
                     className="h-[40px] w-full cursor-pointer border-2 border-black rounded-lg" placeholder="Couleur"
                 />
             </div>
-        </div>
+        </div>}
         <div ref={contentRef} className="w-fit  pb-5 relative shadow-lg mx-auto rounded-xl overflow-hidden bg-white">
             <div className="w-full relative z-20 text-xs lg:text-sm overflow-hidden h-fit">
                 <div className={`w-full p-10 h-full `} style={{
@@ -170,10 +170,12 @@ export default function TemplateRed({ template, data, hide = false }: any) {
                     className="object-cover z-10 h-full w-full transition-transform duration-500 group-hover:scale-110"
                 />
                 <div className={`absolute top-0 bottom-0 left-0 group flex items-center justify-center right-0 z-20 ${formData.color} bg-opacity-50`}>
-                    <input type="file" hidden id="camera" className="hidden" accept="image/*" onChange={onChange} />
-                    <label htmlFor="camera" className={`group-hover:block text-white hidden cursor-pointer text-3xl`}>
-                        <Camera size={48} className="text-2xl" />
-                    </label>
+                    {hide && <>
+                        <input type="file" hidden id="camera" className="hidden" accept="image/*" onChange={onChange} />
+                        <label htmlFor="camera" className={`group-hover:block text-white hidden cursor-pointer text-3xl`}>
+                            <Camera size={48} className="text-2xl" />
+                        </label>
+                    </>}
                 </div>
                 <div className="absolute bg-[url('/reverse.png')] z-30 bg-cover bg-no-repeat h-[150px] -bottom-1 left-0 right-0">
 
@@ -226,7 +228,7 @@ export default function TemplateRed({ template, data, hide = false }: any) {
             isOpen={isMapOpen}
             onClose={() => setIsMapOpen(false)}
             onLocationSelect={() => {
-                
+
             }}
             initialLocation={{ lat: formData.lat, lng: formData.lng }}
         />
