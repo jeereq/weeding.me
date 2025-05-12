@@ -159,12 +159,17 @@ const GuestsPage: FC = () => {
       status: 'pending',
       members: newGuest.type !== 'singel' ? newGuest.members : [],
     };
+    delete newGuest.id
     fetchCreate(newGuest, "POST").then(function ({ data }) {
-      if (data) {
+      console.log(data)
+      if (data.data) {
         setGuests([guest, ...guests]);
+        setCreateDialogOpen(false)
+        alert(data.message)
       }
     }).catch(function (error) {
       console.log(error)
+      setCreateDialogOpen(false)
     })
   }
 
@@ -175,7 +180,7 @@ const GuestsPage: FC = () => {
       }
     })
 
-  }, [])
+  }, [user])
 
   if (loading) return <div className="w-full">
     <h1 className="font-bold text-center">
@@ -421,8 +426,7 @@ const GuestsPage: FC = () => {
                 onValueChange={(value: Guest['type']) => {
                   setNewGuest({
                     ...newGuest,
-                    type: value,
-                    members: value === 'singel' ? [] : newGuest.members,
+                    type: value
                   });
                 }}
               >
@@ -439,7 +443,7 @@ const GuestsPage: FC = () => {
               </Select>
             </div>
             <div className="space-y-2 w-full">
-              <Label htmlFor="invitation">Invitation</Label>
+              <Label htmlFor="userTemplate">Invitation</Label>
               <Select
                 value={newGuest.userTemplate}
                 onValueChange={(value) => setNewGuest({ ...newGuest, userTemplate: value })}
@@ -452,7 +456,7 @@ const GuestsPage: FC = () => {
                   {user?.templates?.filter(function ({ active }: any) {
                     return active
                   }).map(function ({ id, title, color }: any) {
-                    return <SelectItem value={id} style={{ color }}>{title}</SelectItem>
+                    return <SelectItem value={`${id}`} style={{ color }}>{title}</SelectItem>
                   })}
                 </SelectContent>
               </Select>
