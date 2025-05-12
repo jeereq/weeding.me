@@ -2,7 +2,7 @@
 import InvitationContent from './components/InvitationContent';
 
 export function generateStaticParams() {
-  return new Array(100000).fill(function () { }).map(function (y, i) { return i; }).map((guestId: number) => ({
+  return new Array(10000).fill(function () { }).map(function (y, i) { return i; }).map((guestId: number) => ({
     guestId: `${guestId}`
   }));
 }
