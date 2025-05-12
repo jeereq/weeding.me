@@ -26,7 +26,6 @@ export default function Login() {
     e.preventDefault();
     try {
       fetch(formData, "POST").then(function ({ data: { data, jwt }, error }) {
-
         if (error) {
           alert(error)
         } else if (data) {
@@ -35,8 +34,7 @@ export default function Login() {
           router.push("/admin");
         }
       }).catch(function ({ error }) {
-        console.log(error)
-        alert(error)
+        alert(error || "Verifier votre connexion !")
       })
     } catch (error) {
       console.error("Login failed:", error);
@@ -93,7 +91,7 @@ export default function Login() {
                     {isLoading ? "Connexion..." : "Se connecter"}
                   </Button>
 
-                
+
                 </form>
               </CardContent>
             </Card>
