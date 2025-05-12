@@ -1,5 +1,5 @@
 "use client";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -9,11 +9,14 @@ import Header from "@/components/landing/Header";
 import Footer from "@/components/landing/Footer";
 import { useRouter } from "next/navigation";
 import { templates } from "@/lib/utils";
+import { useFetchData } from "@/hooks/useFetchData";
+import { useData } from "@/lib/data";
 
 
 export default function Templates() {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
+  const { loading } = useFetchData({ uri: "auth/users/templates" })
 
   const filteredTemplates = templates.filter((template) => (
     template.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -25,6 +28,12 @@ export default function Templates() {
     router.push(`/templates/${templateId}?title=${encodeURIComponent(templates.find(t => t.id === templateId)?.title || '')}`);
   };
 
+
+  if (loading) return <div className="w-full">
+    <h1 className="font-bold text-center">
+      ...Chargement
+    </h1>
+  </div>
   return (
     <main className="min-h-screen bg-background">
       <Header />
@@ -77,7 +86,7 @@ export default function Templates() {
                       />
                       <div className="absolute h-full inset-0  bg-gradient-to-t from-background/80 to-transparent lg:opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-6">
                         <div className="w-full h-fit grid gap-2">
-                   
+
                           <Button
                             variant="secondary"
                             className="w-full backdrop-blur-sm"

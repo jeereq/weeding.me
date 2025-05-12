@@ -1,12 +1,13 @@
 "use client";
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from '@/components/ui/textarea';
 import dynamic from 'next/dynamic'
-import { InvitationType } from '@/app/admin/invitations/page';
 import CommandFormInvitation from './command-form';
+import { useFetchData } from '@/hooks/useFetchData';
+import { useData } from '@/lib/data';
 
 const MapModal = dynamic(
     () => import('@/components/ui/map-modal'),
@@ -17,39 +18,54 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
     onSubmit: (e: React.FormEvent) => void,
     formData: any,
     setFormData: (data: any) => void,
-    invitationTypes: InvitationType[],
     openModal: boolean,
     closeModalForm: any
 }) => {
+    const { user, updateInvitation } = useData()
     const [isMapOpen, setIsMapOpen] = useState(false);
     const [isCommandOpen, setIsCommandOpen] = useState(false);
+    const { loading: loadingUpdate, fetch: fetchUpdate } = useFetchData({ uri: "auth/invitations/commandeUpdate" })
 
-    const openCommandForm = () => {
-        setIsCommandOpen(true)
+    const openCommandForm = (e: any) => {
+        if (formData.id) {
+            fetchUpdate({ ...formData }, "POST")
+                .then(function ({ data: { message, data } }: any) {
+                    if (message) {
+                        alert(message)
+                        onSubmit({ ...e })
+                        updateInvitation(data, user)
+                        closeModalForm()
+                    }
+                })
+        } else {
+            setIsCommandOpen(true)
+        }
     }
     const closeCommandForm = () => {
         setIsCommandOpen(false)
     }
     const handleMapLocationSelect = (location: { lat: number; lng: number }) => {
-        setFormData({
-            ...formData,
-            dateLocationLat: location.lat,
-            dateLocationLng: location.lng
+        setFormData(function (formData: any) {
+            return {
+                ...formData,
+                lat: location.lat,
+                lng: location.lng
+            }
         });
     };
     if (!openModal) return <div className="w-fit"></div>
     return (<>
         <div className="w-full fixed top-0 bottom-0 left-0 right-0 flex items-center bg-black bg-opacity-30 justify-center z-50">
-            <div className="w-11/12 md:w-[500px] h-fit bg-white relative shadow-lg rounded-xl p-5">
-                <h1 className="font-bold text-xl">Personnaliser le model</h1>
-                <form onSubmit={onSubmit} className="space-y-4 w-full h-[70vh] overflow-y-scroll">
+            <div className="w-11/12 max-w-3xl h-fit bg-white relative shadow-lg rounded-xl p-5">
+                <h1 className="font-bold text-xl">{formData.id ? "Modifier le model" : "Personnaliser le model"}</h1>
+                <form onSubmit={onSubmit} className="space-y-4 w-full flex flex-wrap  h-[60vh] overflow-y-scroll">
                     <div className="w-full space-y-2">
                         <Label htmlFor="typeInvitation">Animation</Label>
                         <select name="typeInvitation" id="typeInvitation" className='w-full py-2'
-                            value={formData.heart}
+                            value={`${formData.heart}`}
                             onChange={(e) => setFormData({
                                 ...formData,
-                                heart: e.target.value == "true",
+                                heart: e.target.value,
                             })}>
                             <option value={"true"}>
                                 Coeur
@@ -59,7 +75,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                             </option>
                         </select>
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 w-full">
                         <Label htmlFor="title">Titre de l'invitation</Label>
                         <Input
                             id="title"
@@ -69,8 +85,8 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                             required
                         />
                     </div>
-                    <div className="space-y-2">
-                        <Label htmlFor="men">Nom du maris</Label>
+                    <div className="space-y-2 w-1/2 pr-1">
+                        <Label htmlFor="men">Nom du mari</Label>
                         <Input
                             id="men"
                             value={formData.men}
@@ -79,7 +95,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                             required
                         />
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 w-1/2 pl-1">
                         <Label htmlFor="women">Nom de la femme</Label>
                         <Input
                             id="women"
@@ -90,7 +106,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                         />
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-2 w-1/2 pr-1">
                         <Label htmlFor="date">Date de l'événement</Label>
                         <Input
                             id="date"
@@ -107,7 +123,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                         />
                     </div>
 
-                    <div className="space-y-2">
+                    <div className="space-y-2 w-1/2 pl-1">
                         <Label htmlFor="time">Heure et minute</Label>
                         <div className="w-full gap-1">
                             <Input
@@ -119,7 +135,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                             />
                         </div>
                     </div>
-                    <div className="w-full space-y-2">
+                    <div className="w-full space-y-2 w-1/2 pr-1">
                         <Label htmlFor="typeInvitation">Type d'invitation</Label>
                         <select name="typeInvitation" id="typeInvitation" className='w-full py-2'
                             value={formData.typeInvitation}
@@ -136,8 +152,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                             </option>
                         </select>
                     </div>
-
-                    <div className="space-y-2">
+                    <div className="space-y-2 w-1/2 pl-1">
                         <Label htmlFor="nameInvitation">Nom(s) sur l'invitation</Label>
                         <Input
                             id="nameInvitation"
@@ -151,7 +166,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                             required
                         />
                     </div>
-                    <div className="space-y-2">
+                    <div className="space-y-2 w-full ">
                         <Label htmlFor="location">Localisation</Label>
                         <div className="flex gap-2 grid-cols-1 grid  mb-2">
                             <Button
@@ -183,7 +198,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                         Voir le restultat
                     </Button>
                     <Button onClick={openCommandForm} type="submit" className="w-full bg-green-900">
-                        Commander
+                        {loadingUpdate ? "...Chargement" : formData.id ? "Modifier" : " Commander"}
                     </Button>
                 </div>
                 <MapModal

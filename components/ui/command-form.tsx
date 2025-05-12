@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useFetchData } from '@/hooks/useFetchData';
+import { useData } from '@/lib/data';
 
 const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, closeModalForm }: {
     onSubmit: (e: React.FormEvent) => void,
@@ -11,7 +12,9 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
     openModal: boolean,
     closeModalForm: any
 }) => {
+    const { user, updateInvitation } = useData()
     const { loading, fetch } = useFetchData({ uri: "auth/invitations/command" })
+    const { loading: loadingUpdate, fetch: fetchUpdate } = useFetchData({ uri: "auth/invitations/commandeUpdate" })
     function Calcule(): number {
         if (formData.invitations >= 10000) {
             return (formData.invitations * 0.7) - (((formData.invitations * 0.7) / 100) * 50)
@@ -29,55 +32,80 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
             return (formData.invitations * 0.7)
         }
     }
+
     function CalculeSansReduction(): number {
         return (formData.invitations * 0.7)
     }
-    
+
     if (!openModal) return <div className="w-fit"></div>
     return (
         <>
             <div className="w-full fixed top-0 bottom-0 left-0 right-0 flex items-center bg-black bg-opacity-30 justify-center z-50">
                 <div className="w-11/12 md:w-[600px] h-fit bg-white relative shadow-lg rounded-xl p-3">
-                    <h1 className="font-bold text-xl">Commander vos invitations</h1>
+                    <h1 className="font-bold text-xl">Modifier la commande</h1>
                     <form
                         onSubmit={function (e: any) {
                             e.preventDefault()
-                            fetch(formData, "POST")
-                                .then(function ({ data: { message } }: any) {
-                                    alert(message)
-                                    onSubmit(e)
-                                    closeModalForm()
-                                })
-                                .catch(function (error) {
-                                    console.log(error)
-                                })
-                        }} className="space-y-4 w-full h-fit overflow-y-scroll p-2">
-                        <div className="space-y-2">
+                            if (formData.id) {
+                                fetchUpdate({ ...formData, price: Calcule() }, "POST")
+                                    .then(function ({ data: { message, data } }: any) {
+                                        if (message) {
+                                            alert(message)
+                                            onSubmit({ ...e })
+                                            updateInvitation(data, user)
+                                            closeModalForm()
+                                        }
+                                    })
+                            } else {
+                                fetch({ user: user.id, ...formData, price: Calcule() }, "POST")
+                                    .then(function ({ data: { message, data } }: any) {
+                                        if (message) {
+                                            alert(message)
+                                            onSubmit({ ...e, ...data })
+                                            closeModalForm()
+                                        }
+                                    })
+                            }
+                        }} className="space-y-4 w-full flex flex-wrap h-fit overflow-y-scroll p-2">
+                        <div className="space-y-2 w-full">
                             <Label htmlFor="initiateurDeLaDemande">Nom complet du demandeur</Label>
                             <Input
                                 id="initiateurDeLaDemande"
                                 value={formData.initiateurDeLaDemande}
                                 onChange={(e) => setFormData({ ...formData, initiateurDeLaDemande: e.target.value })}
-                                placeholder="Ex: Mariage de Medine et Jeereq"
+                                placeholder="Ex: Mariage de Jeereq et Medine"
                                 required
                             />
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-2 w-1/2 pr-1">
                             <Label htmlFor="phone">Numéro de téléphone</Label>
                             <Input
                                 type='tel'
                                 value={formData.phone}
+                                disabled={formData?.id}
                                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
                                 placeholder="Ex: +243 817 125 577"
                                 required
                             />
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-2 w-1/2 pl-1">
+                            <Label htmlFor="email">Email</Label>
+                            <Input
+                                type='email'
+                                value={formData.email}
+                                disabled={formData?.id}
+                                onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+                                placeholder="Ex: jeereq@gmail.com"
+                                required
+                            />
+                        </div>
+                        <div className="space-y-2 w-full">
                             <Label htmlFor="invitations">Nombre d'invitations (Minimum de 50)</Label>
                             <Input
                                 id="invitations"
                                 minLength={50}
                                 min={50}
+                                disabled={formData?.id}
                                 type='number'
                                 value={formData.invitations}
                                 onChange={(e) => setFormData({ ...formData, invitations: e.target.value })}
@@ -86,7 +114,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                             />
                         </div>
 
-                        <div className="w-full space-y-2">
+                        <div className="w-full space-y-2 w-full">
                             <Label >
                                 Le coût unitaire d'une invitation est de  <b>0.7$</b>
                             </Label>
@@ -113,7 +141,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                             </Label>}
                         </div>
 
-                        <div className="space-y-2">
+                        <div className="space-y-2 w-1/2 pr-1">
                             <Label htmlFor="city">Ville</Label>
                             <Input
                                 id="city"
@@ -126,7 +154,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                                 required
                             />
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-2 w-1/2 pl-1">
                             <Label htmlFor="country">Pays</Label>
                             <Input
                                 id="country"
@@ -144,7 +172,7 @@ const CommandFormInvitation = ({ onSubmit, formData, setFormData, openModal, clo
                                 Annuler
                             </Button>
                             <Button type="submit" className="w-full bg-green-900">
-                                {loading ? "...Chargement" : "Envoyer"}
+                                {(loading || loadingUpdate) ? "...Chargement" : formData.id ? "Sauvegarder" : "Envoyer"}
                             </Button>
                         </div>
                     </form>
