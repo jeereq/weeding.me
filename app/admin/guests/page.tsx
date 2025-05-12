@@ -9,12 +9,15 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/u
 import { Checkbox } from "@/components/ui/checkbox";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Textarea } from "@/components/ui/textarea";
-import { Search, Mail, Filter, Users, Eye, Building2, User, UsersRound, Plus, Trash2, Link } from "lucide-react";
+import { Search, Mail, Filter, Users, Eye, User, UsersRound, Plus, Trash2, Link } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import { Label } from "@/components/ui/label";
 import { useData } from '@/lib/data';
 import { useFetchData } from '@/hooks/useFetchData';
+import TemplateRed from '@/components/templates/red';
+import TemplateYellow from '@/components/templates/yellow';
+import TemplateGreen from '@/components/templates/green';
+import { templates } from '@/lib/utils';
 
 interface Member {
   name: string;
@@ -27,38 +30,10 @@ interface Guest {
   email: string;
   phone: string;
   status: 'pending' | 'attending' | 'declined';
-  type: 'family' | 'company' | 'group' | 'individual' | 'couple';
-  userTemplate: string;
+  type: 'family' | 'company' | 'group' | 'singel' | 'couple';
+  userTemplate: any;
   members: Member[];
 }
-
-interface Invitation {
-  id: string;
-  title: string;
-  date: string;
-  location: string;
-  template: string;
-  message: string;
-}
-
-const mockInvitations: Record<string, Invitation> = {
-  'inv1': {
-    id: 'inv1',
-    title: 'Mariage de Sophie et Thomas',
-    date: '2025-07-15',
-    location: 'Château de Versailles',
-    template: 'Élégance Florale',
-    message: 'Nous sommes ravis de vous convier à notre mariage...'
-  },
-  'inv2': {
-    id: 'inv2',
-    title: 'Soirée Entreprise Annuelle',
-    date: '2025-12-20',
-    location: 'Grand Hôtel Paris',
-    template: 'Corporate Classic',
-    message: 'À l\'occasion de notre soirée annuelle...'
-  }
-};
 
 const GuestsPage: FC = () => {
   const [guests, setGuests] = useState<Guest[]>([]);
@@ -90,9 +65,10 @@ const GuestsPage: FC = () => {
   const filteredGuests = guests.filter(guest => {
     const matchesSearch = guest.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       guest.email.toLowerCase().includes(searchTerm.toLowerCase());
-    const matchesStatus = statusFilter === 'all' || guest.status === statusFilter;
-    const matchesType = typeFilter === 'all' || guest.type === typeFilter;
-    return matchesSearch && matchesStatus && matchesType;
+    const matchesStatus = statusFilter === 'all' || guest.status == statusFilter;
+    const matchesType = typeFilter === 'all' || guest.type == typeFilter;
+    const matchesInvitation = invitationFilter === 'all' || guest.userTemplate?.id == invitationFilter;
+    return matchesSearch && matchesStatus && matchesType && matchesInvitation;
   });
 
   const handleSelectAll = (checked: boolean) => {
@@ -133,7 +109,7 @@ const GuestsPage: FC = () => {
   const handleRemoveMember = (index: number) => {
     setNewGuest({
       ...newGuest,
-      members: newGuest.members.filter((_, i) => i !== index),
+      members: newGuest.members.filter((_: any, i: number) => i !== index),
     });
   };
 
@@ -153,9 +129,20 @@ const GuestsPage: FC = () => {
     }
   };
 
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'attending':
+        return "Présent"
+      case 'declined':
+        return "Décliné"
+      default:
+        return 'En attente';
+    }
+  };
+
   const getTypeIcon = (type: string) => {
     switch (type) {
-      case 'celibataire':
+      case 'singel':
         return <User className="h-4 w-4" />;
       case 'couple':
         return <UsersRound className="h-4 w-4" />;
@@ -170,11 +157,9 @@ const GuestsPage: FC = () => {
       id: Math.random().toString(),
       ...newGuest,
       status: 'pending',
-      rsvpDate: '-',
-      members: newGuest.type !== 'individual' ? newGuest.members : undefined,
+      members: newGuest.type !== 'singel' ? newGuest.members : [],
     };
     fetchCreate(newGuest, "POST").then(function ({ data }) {
-      console.log(data)
       if (data) {
         setGuests([guest, ...guests]);
       }
@@ -185,13 +170,13 @@ const GuestsPage: FC = () => {
 
   useEffect(function () {
     fetch({ id: user.id }, "POST").then(function ({ data }) {
-      console.log(data)
       if (data.data) {
         setGuests(data.data)
       }
     })
 
   }, [])
+
   if (loading) return <div className="w-full">
     <h1 className="font-bold text-center">
       ...Chargement
@@ -252,11 +237,12 @@ const GuestsPage: FC = () => {
                   <SelectValue placeholder="Type d'invité" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="all">Toutes les types</SelectItem>
                   <SelectItem value="family">Famille</SelectItem>
                   <SelectItem value="couple">Couple</SelectItem>
                   <SelectItem value="company">Entreprise</SelectItem>
                   <SelectItem value="group">Groupe</SelectItem>
-                  <SelectItem value="individual">Célibataire</SelectItem>
+                  <SelectItem value="singel">Célibataire</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -267,10 +253,11 @@ const GuestsPage: FC = () => {
                   <SelectValue placeholder="Invitations" />
                 </SelectTrigger>
                 <SelectContent>
+                  <SelectItem value="all">Toutes les invitations</SelectItem>
                   {user?.templates?.filter(function ({ active }: any) {
                     return active
-                  }).map(function ({ id, title }: any) {
-                    return <SelectItem value={id}>{title}</SelectItem>
+                  }).map(function ({ id, title, color }: any) {
+                    return <SelectItem value={id} style={{ color }}>{title}</SelectItem>
                   })}
                 </SelectContent>
               </Select>
@@ -291,6 +278,9 @@ const GuestsPage: FC = () => {
                 <TableHead>Email</TableHead>
                 <TableHead>
                   Phone
+                </TableHead>
+                <TableHead>
+                  Invitation
                 </TableHead>
                 <TableHead>Statut</TableHead>
                 <TableHead>Date RSVP</TableHead>
@@ -316,19 +306,20 @@ const GuestsPage: FC = () => {
                   </TableCell>
                   <TableCell className="font-medium">
                     <div>
-                      {guest.type != "individual" ? guest?.members?.map(function ({ name }: any) {
+                      {guest.type != "singel" ? guest?.members?.map(function ({ name }: any) {
                         return name
                       }).join(" & ") : guest.name}
                     </div>
                   </TableCell>
                   <TableCell>{guest.email}</TableCell>
                   <TableCell>{guest.phone}</TableCell>
+                  <TableCell style={{ color: guest.userTemplate.color }}>{guest.userTemplate.title}</TableCell>
                   <TableCell>
-                    <span className={`capitalize ${getStatusColor(guest.status)}`}>
-                      {guest.status}
+                    <span className={`capitalize font-bold ${getStatusColor(guest.status)}`}>
+                      {getStatusText(guest.status)}
                     </span>
                   </TableCell>
-                  <TableCell>{guest.createdAt}</TableCell>
+                  <TableCell>{new Date(guest?.createdAt).toLocaleDateString()}</TableCell>
                   <TableCell className="text-right space-x-2">
                     <Button
                       variant="ghost"
@@ -388,83 +379,30 @@ const GuestsPage: FC = () => {
       </Dialog>
 
       <Dialog open={previewDialogOpen} onOpenChange={setPreviewDialogOpen}>
-        <DialogContent className="max-w-3xl">
-          <DialogHeader>
-            <DialogTitle>Prévisualisation de l'invitation</DialogTitle>
-          </DialogHeader>
+        <DialogContent className="max-w-2xl h-[90vh] overflow-y-scroll">
           {selectedGuest && (
-            <div className="space-y-6">
-              <div className="grid grid-cols-2 gap-6">
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Détails de l'invité</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="font-medium mb-2">Type d'invité</h4>
-                        <div className="flex items-center gap-2">
-                          {getTypeIcon(selectedGuest.type)}
-                          <Badge variant="secondary" className="capitalize">
-                            {selectedGuest.type}
-                          </Badge>
-                        </div>
-                      </div>
-                      {selectedGuest.members && (
-                        <div>
-                          <h4 className="font-medium mb-2">Membres</h4>
-                          <ScrollArea className="h-[200px]">
-                            <div className="space-y-2">
-                              {selectedGuest.members.map((member, idx) => (
-                                <div key={idx} className="flex justify-between items-center">
-                                  <span>{member.name}</span>
-                                  {member.relation && (
-                                    <Badge variant="outline">{member.relation}</Badge>
-                                  )}
-                                </div>
-                              ))}
-                            </div>
-                          </ScrollArea>
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-
-                <Card>
-                  <CardHeader>
-                    <CardTitle>Invitation</CardTitle>
-                  </CardHeader>
-                  <CardContent>
-                    <div className="space-y-4">
-                      <div>
-                        <h4 className="text-sm font-medium text-muted-foreground">Événement</h4>
-                        <p className="text-lg font-medium">
-                          {mockInvitations[selectedGuest.invitationId].title}
-                        </p>
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-medium text-muted-foreground">Date</h4>
-                        <p>{new Date(mockInvitations[selectedGuest.invitationId].date).toLocaleDateString()}</p>
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-medium text-muted-foreground">Lieu</h4>
-                        <p>{mockInvitations[selectedGuest.invitationId].location}</p>
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-medium text-muted-foreground">Template</h4>
-                        <p>{mockInvitations[selectedGuest.invitationId].template}</p>
-                      </div>
-                      <div>
-                        <h4 className="text-sm font-medium text-muted-foreground">Message</h4>
-                        <p className="text-sm">
-                          {mockInvitations[selectedGuest.invitationId].message}
-                        </p>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              </div>
+            <div className="space-y-6 w-full">
+              {selectedGuest.userTemplate?.template == 1 && <TemplateGreen template={templates.find(function ({ id }) {
+                return id == 1
+              })} data={{
+                ...selectedGuest.userTemplate, nameInvitation: selectedGuest.type != "singel" ? selectedGuest?.members?.map(function ({ name }: any) {
+                  return name
+                }).join(" & ") : selectedGuest.name
+              }} />}
+              {selectedGuest.userTemplate?.template == 2 && <TemplateRed template={templates.find(function ({ id }) {
+                return id == 2
+              })} data={{
+                ...selectedGuest.userTemplate, nameInvitation: selectedGuest.type != "singel" ? selectedGuest?.members?.map(function ({ name }: any) {
+                  return name
+                }).join(" & ") : selectedGuest.name
+              }} />}
+              {selectedGuest.userTemplate?.template == 3 && <TemplateYellow template={templates.find(function ({ id }) {
+                return id == 3
+              })} data={{
+                ...selectedGuest.userTemplate, nameInvitation: selectedGuest.type != "singel" ? selectedGuest?.members?.map(function ({ name }: any) {
+                  return name
+                }).join(" & ") : selectedGuest.name
+              }} />}
             </div>
           )}
         </DialogContent>
@@ -484,7 +422,7 @@ const GuestsPage: FC = () => {
                   setNewGuest({
                     ...newGuest,
                     type: value,
-                    members: value === 'individual' ? [] : newGuest.members,
+                    members: value === 'singel' ? [] : newGuest.members,
                   });
                 }}
               >
@@ -496,7 +434,7 @@ const GuestsPage: FC = () => {
                   <SelectItem value="couple">Couple</SelectItem>
                   <SelectItem value="company">Entreprise</SelectItem>
                   <SelectItem value="group">Groupe</SelectItem>
-                  <SelectItem value="individual">Célibataire</SelectItem>
+                  <SelectItem value="singel">Célibataire</SelectItem>
                 </SelectContent>
               </Select>
             </div>
@@ -507,16 +445,15 @@ const GuestsPage: FC = () => {
                 onValueChange={(value) => setNewGuest({ ...newGuest, userTemplate: value })}
               >
                 <SelectTrigger>
-                  <SelectValue />
+                  <Mail className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Invitation" />
                 </SelectTrigger>
                 <SelectContent>
                   {user?.templates?.filter(function ({ active }: any) {
                     return active
-                  }).map(({ id, title }: any) => (
-                    <SelectItem key={id} value={id}>
-                      {title}
-                    </SelectItem>
-                  ))}
+                  }).map(function ({ id, title, color }: any) {
+                    return <SelectItem value={id} style={{ color }}>{title}</SelectItem>
+                  })}
                 </SelectContent>
               </Select>
             </div>
@@ -543,7 +480,7 @@ const GuestsPage: FC = () => {
               />
             </div>
 
-            {newGuest.type !== 'individual' ? (
+            {newGuest.type !== 'singel' ? (
               <div className="space-y-4 w-full">
                 <div className="flex justify-between items-center">
                   <Label>Membres</Label>
@@ -553,7 +490,7 @@ const GuestsPage: FC = () => {
                   </Button>
                 </div>
                 <div className="space-y-4">
-                  {newGuest.members.map((member, index) => (
+                  {newGuest.members.map((member: any, index: number) => (
                     <div key={index} className="flex gap-4 items-start">
                       <div className="flex-1">
                         <Input
@@ -590,14 +527,14 @@ const GuestsPage: FC = () => {
                 Annuler
               </Button>
               <Button type={"submit"}>
-                {loadingCreate ? "..Chargement" : " Créer l'invité"}
+                {loadingCreate ? "...Chargement" : "Créer l'invité"}
               </Button>
             </div>
           </form>
         </DialogContent>
       </Dialog>
     </div>
-  );
-};
+  )
+}
 
 export default GuestsPage;

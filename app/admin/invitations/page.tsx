@@ -59,7 +59,7 @@ export default function InvitationsPage() {
   const { user, updateInvitation } = useData()
   const [isSee, setIsSee] = useState(false)
   const { fetch, loading } = useFetchData({ uri: "auth/invitations/activeCommand" })
-  const { fetch: fetchDesactive, loading: loadingDesactive } = useFetchData({ uri: "auth/invitations/activeCommand" })
+  const { fetch: fetchDesactive, loading: loadingDesactive } = useFetchData({ uri: "auth/invitations/desctiveCommand" })
   const [formData, setFormData] = useState<any>({
     ...props,
     template: 1,
@@ -148,7 +148,7 @@ export default function InvitationsPage() {
         onSubmit={handleCreate}
       />
 
-      <div className="grid gap-2 md:grid-cols-3 lg:grid-cols-4">
+      <div className="grid gap-2 md:grid-cols-3 ">
         {user.templates.map((invitation: any) => (
           <>
             <Card key={invitation.id} className="overflow-hidden">
@@ -174,8 +174,8 @@ export default function InvitationsPage() {
                 </p>
                 <div className="flex justify-between items-center">
                   <div title={`${invitation.title} ${invitation.invitations} invitations, ${invitation.price.toFixed(2)}$ `} className="flex items-center mr-1 text-sm text-muted-foreground">
-                    <Users  className="h-4 w-4 mr-1" />
-                    {invitation.invitations} Invitations <span className="font-bold ml-2 mr-1">$</span> {invitation.price.toFixed(2)}
+                    <Users className="h-4 w-4 mr-1" />
+                    {invitation.invitations} Invitation(s) <span className="font-bold ml-2 mr-1">$</span> {invitation.price.toFixed(2)}
                   </div>
                   <div className="flex gap-1">
                     <Button
@@ -206,7 +206,7 @@ export default function InvitationsPage() {
                       size="sm"
                       onClick={() => openGuestsModal(invitation)}
                     >
-                      <Users className="h-4 w-4" />
+                      <Users className="h-4 w-4 mr-1" /> {invitation.guests.length} Invité(s)
                     </Button>
                   </div>
                 </div>
@@ -214,7 +214,7 @@ export default function InvitationsPage() {
             </Card>
 
             <Dialog open={isGuestsOpen && selectedInvitation?.id == invitation.id} onOpenChange={setIsGuestsOpen}>
-              <DialogContent className="max-w-3xl">
+              <DialogContent className="max-w-3xl max-h-[70vh] overflow-y-scroll">
                 <DialogHeader>
                   <DialogTitle>Les invités du mariage de {selectedInvitation?.title}</DialogTitle>
                 </DialogHeader>
@@ -229,9 +229,12 @@ export default function InvitationsPage() {
                       </TableRow>
                     </TableHeader>
                     <TableBody>
-                      {user?.guests?.map((guest: any) => (
+                      {selectedInvitation?.guests?.map((guest: any) => (
                         <TableRow key={guest.id}>
-                          <TableCell>{guest.name}</TableCell>
+                          <TableCell>
+                            {guest.type != "singel" ? guest?.members?.map(function ({ name }: any) {
+                              return name
+                            }).join(" & ") : guest.name}</TableCell>
                           <TableCell>{guest.email}</TableCell>
                           <TableCell>{guest.phone}</TableCell>
                           <TableCell>
@@ -241,15 +244,6 @@ export default function InvitationsPage() {
                               }`}>
                               {guest.status}
                             </span>
-                          </TableCell>
-                          <TableCell className="text-right">
-                            <Button
-                              variant="ghost"
-                              size="sm"
-                              onClick={() => selectedInvitation && handleRemoveGuest(selectedInvitation.id, guest.id)}
-                            >
-                              Supprimer
-                            </Button>
                           </TableCell>
                         </TableRow>
                       ))}

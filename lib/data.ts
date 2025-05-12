@@ -57,7 +57,7 @@ export const useData = create<useData>()(
         set({
           user: {
             ...user, templates: user.templates.map(function (item: any) {
-              return data.id == item.id ? data : item
+              return data.id == item.id ? { ...data, guests: item.guests } : item
             })
           }
         });

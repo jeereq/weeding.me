@@ -16,9 +16,7 @@ import { useData } from "@/lib/data";
 export default function Templates() {
   const [searchTerm, setSearchTerm] = useState("");
   const router = useRouter();
-  const { user } = useData()
-  const [invitations, setInvitations] = useState([])
-  const { loading, fetch } = useFetchData({ uri: "auth/users/templates" })
+  const { loading } = useFetchData({ uri: "auth/users/templates" })
 
   const filteredTemplates = templates.filter((template) => (
     template.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -30,11 +28,6 @@ export default function Templates() {
     router.push(`/templates/${templateId}?title=${encodeURIComponent(templates.find(t => t.id === templateId)?.title || '')}`);
   };
 
-  useEffect(function () {
-    fetch({ id: user?.id }, "POST").then(function (data) {
-      console.log(data)
-    })
-  }, [])
 
   if (loading) return <div className="w-full">
     <h1 className="font-bold text-center">
