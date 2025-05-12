@@ -50,14 +50,14 @@ export const useData = create<useData>()(
       },
       pushInvitation: async (data: any, user: any) => {
         set({
-          user: { ...user, templates: [...user.templates, data] }
+          user: { ...user, templates: [...user.templates, { ...data, guests: [] }] }
         });
       },
       updateInvitation: async (data: any, user: any) => {
         set({
           user: {
             ...user, templates: user.templates.map(function (item: any) {
-              return data.id == item.id ? { ...data, guests: item.guests } : item
+              return data.id == item.id ? { ...data, guests: item.guests || [] } : item
             })
           }
         });
