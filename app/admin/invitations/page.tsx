@@ -299,7 +299,7 @@ export default function InvitationsPage() {
               </DialogContent>
             </Dialog>
             <Dialog open={isViewOpen && selectedInvitation?.id == invitation.id} onOpenChange={setIsViewOpen}>
-              <DialogContent className="max-w-3xl">
+              <DialogContent className="max-w-3xl bg-gray-100">
                 <TableBody>
                   <div className="w-full">
                     <div className="w-[600px] 0 mx-auto px-4 sm:px-6 lg:px-8">
