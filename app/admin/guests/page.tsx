@@ -154,20 +154,10 @@ const GuestsPage: FC = () => {
   const submit = (e: any) => {
     e.preventDefault()
     e.stopPropagation()
-    const guest: Guest = {
-      id: Math.random().toString(),
-      ...newGuest,
-      userTemplate: user?.templates?.find(function ({ template }: any) {
-        return template == newGuest.userTemplate
-      }),
-      status: 'pending',
-      members: newGuest.type !== 'singel' ? newGuest.members : [],
-    };
-    delete newGuest.id
+
     fetchCreate(newGuest, "POST").then(function ({ data }) {
-      console.log(data)
       if (data.data) {
-        setGuests([guest, ...guests]);
+        setGuests([data.data, ...guests]);
         setCreateDialogOpen(false)
         alert(data.message)
       }
@@ -534,7 +524,7 @@ const GuestsPage: FC = () => {
               <Button variant="outline" onClick={(e: any) => {
                 e.preventDefault()
                 e.stopPropagation()
-                
+
                 setCreateDialogOpen(false)
               }}>
                 Annuler

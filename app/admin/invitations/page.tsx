@@ -212,7 +212,6 @@ export default function InvitationsPage() {
                 </div>
               </CardContent>
             </Card>
-
             <Dialog open={isGuestsOpen && selectedInvitation?.id == invitation.id} onOpenChange={setIsGuestsOpen}>
               <DialogContent className="max-w-3xl max-h-[70vh] overflow-y-scroll">
                 <DialogHeader>
