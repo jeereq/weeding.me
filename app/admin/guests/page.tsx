@@ -292,7 +292,7 @@ const GuestsPage: FC = () => {
                   Invitation
                 </TableHead>
                 <TableHead>Statut</TableHead>
-                <TableHead>Date RSVP</TableHead>
+                <TableHead>Date de reponse</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
