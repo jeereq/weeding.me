@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Plus, Users, Badge, RefreshCw, Eye, Pencil } from 'lucide-react';
+import { Plus, Users, Badge, RefreshCw, Eye, Pencil, Trash2 } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { props, useData } from '@/lib/data';
 import { templates } from '@/lib/utils';
@@ -55,11 +55,13 @@ export default function InvitationsPage() {
   const [isGuestsOpen, setIsGuestsOpen] = useState(false);
   const [isActiveOpen, setIsActiveOpen] = useState(false);
   const [isViewOpen, setIsViewOpen] = useState(false);
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [selectedInvitation, setSelectedInvitation] = useState<Invitation | null>(null);
-  const { user, updateInvitation } = useData()
+  const { user, updateInvitation, deleteInvitation } = useData()
   const [isSee, setIsSee] = useState(false)
   const { fetch, loading } = useFetchData({ uri: "auth/invitations/activeCommand" })
   const { fetch: fetchDesactive, loading: loadingDesactive } = useFetchData({ uri: "auth/invitations/desctiveCommand" })
+  const { fetch: fetchDelete, loading: loadingDelete } = useFetchData({ uri: "auth/invitations/delete" })
   const [formData, setFormData] = useState<any>({
     ...props,
     template: 1,
@@ -88,18 +90,13 @@ export default function InvitationsPage() {
     });
   };
 
-  const handleRemoveGuest = (invitationId: string, guestId: string) => {
-    const updatedInvitations = invitations.map(inv =>
-      inv.id === invitationId
-        ? { ...inv, guests: inv.guests.filter((g: any) => g.id !== guestId) }
-        : inv
-    );
-    setInvitations(updatedInvitations);
-  };
-
   const openActiveModal = (invitation: Invitation) => {
     setSelectedInvitation(invitation);
     setIsActiveOpen(true);
+  };
+  const openDeleteModal = (invitation: Invitation) => {
+    setSelectedInvitation(invitation);
+    setIsDeleteOpen(true);
   };
 
   const openGuestsModal = (invitation: Invitation) => {
@@ -204,6 +201,15 @@ export default function InvitationsPage() {
                     <Button
                       variant="ghost"
                       size="sm"
+                      disabled={user?.role?.id == 4}
+                      className={`text-red-500`}
+                      onClick={() => openDeleteModal(invitation)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       onClick={() => openGuestsModal(invitation)}
                     >
                       <Users className="h-4 w-4 mr-1" /> {invitation.guests.length} Invité(s)
@@ -292,6 +298,42 @@ export default function InvitationsPage() {
                       className={`w-full ${invitation.active ? "bg-red-500" : " bg-green-900"}`}
                     >
                       {(loading || loadingDesactive) ? "...Chargement" : invitation.active ? "Desactiver" : "Activer"}
+                    </Button>
+                  </div>
+                </TableBody>
+              </DialogContent>
+            </Dialog>
+            <Dialog open={isDeleteOpen && selectedInvitation?.id == invitation.id} onOpenChange={setIsActiveOpen}>
+              <DialogContent className="max-w-3xl">
+                <DialogHeader>
+                  <DialogTitle>
+                    Voulez-vous supprimer cette demande d'invitation : {selectedInvitation?.title} ?
+                  </DialogTitle>
+                </DialogHeader>
+                <TableBody>
+                  <div className="w-full gap-2 grid grid-cols-2 mt-2">
+                    <Button
+                      onClick={function () {
+                        setIsDeleteOpen(false)
+                      }}
+                      type="submit"
+                      className="w-full"
+                    >
+                      Annuler
+                    </Button>
+                    <Button
+                      onClick={function () {
+                        fetchDelete({ id: invitation.id }, "POST").then(function ({ data }) {
+                          if (data.data) {
+                            deleteInvitation(invitation, user)
+                            setIsDeleteOpen(false)
+                          }
+                        })
+                      }}
+                      type="submit"
+                      className={`w-full bg-red-500`}
+                    >
+                      {(loading || loadingDelete) ? "...Chargement" : "Supprimer"}
                     </Button>
                   </div>
                 </TableBody>

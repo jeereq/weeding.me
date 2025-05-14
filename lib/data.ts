@@ -7,6 +7,7 @@ interface useData {
   login: (data: any) => Promise<void>;
   pushInvitation: (data: any, user: any) => Promise<void>;
   updateInvitation: (data: any, user: any) => Promise<void>;
+  deleteInvitation: (data: any, user: any) => Promise<void>;
   loginJwt: (data: any) => Promise<void>;
   register: (data: any, jwt: string) => Promise<void>;
   logout: () => void;
@@ -58,6 +59,16 @@ export const useData = create<useData>()(
           user: {
             ...user, templates: user.templates.map(function (item: any) {
               return data.id == item.id ? { ...data, guests: item.guests || [] } : item
+            })
+          }
+        });
+      },
+      deleteInvitation: async (data: any, user: any) => {
+        set({
+          user: {
+            ...user,
+            templates: user.templates.filter(function (item: any) {
+              return data.id != item.id
             })
           }
         });
