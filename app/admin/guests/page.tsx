@@ -43,6 +43,7 @@ const GuestsPage: FC = () => {
   const [typeFilter, setTypeFilter] = useState<string>('all');
   const [invitationFilter, setInvitationTypeFilter] = useState<string>('all');
   const [messageDialogOpen, setMessageDialogOpen] = useState(false);
+  const [messageRappelDialogOpen, setMessageRappelDialogOpen] = useState(false);
   const [messageContent, setMessageContent] = useState('');
   const [previewDialogOpen, setPreviewDialogOpen] = useState(false);
   const [selectedGuest, setSelectedGuest] = useState<Guest | null>(null);
@@ -187,12 +188,21 @@ const GuestsPage: FC = () => {
         <h1 className="text-3xl font-bold">Invités</h1>
         <div className="flex gap-4">
           <Button
+            onClick={() => setMessageRappelDialogOpen(true)}
+            disabled={selectedGuests.length === 0}
+          >
+            <Mail className="h-4 w-4 lg:mr-2" />
+            <span className="w-fit lg:block hidden">
+              Message Rappel
+            </span>
+          </Button>
+          <Button
             onClick={() => setMessageDialogOpen(true)}
             disabled={selectedGuests.length === 0}
           >
             <Mail className="h-4 w-4 lg:mr-2" />
             <span className="w-fit lg:block hidden">
-              Message groupé ({selectedGuests.length})
+              Message Invitation
             </span>
           </Button>
           <Button onClick={() => setCreateDialogOpen(true)}>
@@ -348,10 +358,11 @@ const GuestsPage: FC = () => {
           </Table>
         </CardContent>
       </Card>
+
       <Dialog open={messageDialogOpen} onOpenChange={setMessageDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Envoyer un message groupé</DialogTitle>
+            <DialogTitle>Envoyer un message d'invitation</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
             <div>
@@ -365,7 +376,36 @@ const GuestsPage: FC = () => {
                 rows={6}
               />
             </div>
-            <div className="flex justify-end space-x-2">
+            <div className="gap-1 w-full grid grid-cols-2">
+              <Button variant="outline" onClick={() => setMessageDialogOpen(false)}>
+                Annuler
+              </Button>
+              <Button onClick={handleSendMessage}>
+                Envoyer
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={messageRappelDialogOpen} onOpenChange={setMessageRappelDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Envoyer un message de rappel</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div>
+              <p className="text-sm text-muted-foreground mb-2">
+                Envoi à {selectedGuests.length} invité{selectedGuests.length > 1 ? 's' : ''}
+              </p>
+              <Textarea
+                placeholder="Votre message..."
+                value={messageContent}
+                onChange={(e) => setMessageContent(e.target.value)}
+                rows={6}
+              />
+            </div>
+            <div className="gap-1 w-full grid grid-cols-2">
               <Button variant="outline" onClick={() => setMessageDialogOpen(false)}>
                 Annuler
               </Button>
