@@ -57,6 +57,7 @@ const GuestsPage: FC = () => {
     email: '',
     phone: '',
     type: 'couple',
+    invitation: 1,
     status: 'pending',
     userTemplate: 'inv1',
     members: [],
@@ -156,6 +157,9 @@ const GuestsPage: FC = () => {
     const guest: Guest = {
       id: Math.random().toString(),
       ...newGuest,
+      userTemplate: user?.templates?.find(function ({ template }: any) {
+        return template == newGuest.userTemplate
+      }),
       status: 'pending',
       members: newGuest.type !== 'singel' ? newGuest.members : [],
     };
@@ -527,7 +531,12 @@ const GuestsPage: FC = () => {
               </div>}
 
             <div className="grid grid-cols-2 w-full space-x-2">
-              <Button variant="outline" onClick={() => setCreateDialogOpen(false)}>
+              <Button variant="outline" onClick={(e: any) => {
+                e.preventDefault()
+                e.stopPropagation()
+                
+                setCreateDialogOpen(false)
+              }}>
                 Annuler
               </Button>
               <Button type={"submit"}>

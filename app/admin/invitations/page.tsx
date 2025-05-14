@@ -302,7 +302,7 @@ export default function InvitationsPage() {
               <DialogContent className="max-w-3xl">
                 <TableBody>
                   <div className="w-full">
-                    <div className="w-full 0 mx-auto px-4 sm:px-6 lg:px-8">
+                    <div className="w-[600px] 0 mx-auto px-4 sm:px-6 lg:px-8">
                       <div className="w-full w-fit h-[85vh] overflow-y-scroll mx-auto ">
                         <motion.div
                           key={invitation.template}
