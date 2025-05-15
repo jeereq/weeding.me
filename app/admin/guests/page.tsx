@@ -61,8 +61,8 @@ const GuestsPage: FC = () => {
     phone: '',
     type: 'couple',
     invitation: 1,
-    status: 'pending',
-    userTemplate: 'inv1',
+    status: 'noStarted',
+    userTemplate: '',
     members: [],
   });
 
@@ -133,6 +133,8 @@ const GuestsPage: FC = () => {
         return 'text-green-600';
       case 'declined':
         return 'text-red-600';
+      case 'noStarted':
+        return 'text-gray-600';
       default:
         return 'text-yellow-600';
     }
@@ -144,8 +146,10 @@ const GuestsPage: FC = () => {
         return "Présent"
       case 'declined':
         return "Décliné"
+      case 'pending':
+        return "En attente"
       default:
-        return 'En attente';
+        return 'Pas envoyé';
     }
   };
 
@@ -241,7 +245,7 @@ const GuestsPage: FC = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Tous les statuts</SelectItem>
-                  <SelectItem value="noStarted">Pas commencé</SelectItem>
+                  <SelectItem value="noStarted">Pas envoyé</SelectItem>
                   <SelectItem value="attending">Présent</SelectItem>
                   <SelectItem value="pending">En attente</SelectItem>
                   <SelectItem value="declined">Décliné</SelectItem>
@@ -413,9 +417,28 @@ const GuestsPage: FC = () => {
               </Select>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground mb-2">
-                Envoi à {selectedGuests.length} invité{selectedGuests.length > 1 ? 's' : ''}
-              </p>
+              <div className="w-full mb-2 flex">
+                <div onClick={function () {
+                  setMessageContent(`${messageContent} {{nom}}`)
+                }} className="w-fit cursor-pointer rounded-full hover:bg-gray-300 bg-gray-100 mr-2 py-1 px-3">
+                  nom
+                </div>
+                <div onClick={function () {
+                  setMessageContent(`${messageContent} {{invitation}}`)
+                }} className="w-fit cursor-pointer rounded-full hover:bg-gray-300 bg-gray-100 mr-2 py-1 px-3">
+                  invitation
+                </div>
+                <div onClick={function () {
+                  setMessageContent(`${messageContent} {{date}}`)
+                }} className="w-fit cursor-pointer rounded-full hover:bg-gray-300 bg-gray-100 mr-2 py-1 px-3">
+                  date
+                </div>
+                <div onClick={function () {
+                  setMessageContent(`${messageContent} {{address}}`)
+                }} className="w-fit cursor-pointer rounded-full hover:bg-gray-300 bg-gray-100 py-1 px-3">
+                  address
+                </div>
+              </div>
               <Textarea
                 placeholder="Votre message..."
                 value={messageContent}
@@ -449,7 +472,7 @@ const GuestsPage: FC = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Tous les statuts</SelectItem>
-                  <SelectItem value="noStarted">Pas commencé</SelectItem>
+                  <SelectItem value="noStarted">Pas envoyé</SelectItem>
                   <SelectItem value="attending">Présent</SelectItem>
                   <SelectItem value="pending">En attente</SelectItem>
                   <SelectItem value="declined">Décliné</SelectItem>
