@@ -135,7 +135,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                             />
                         </div>
                     </div>
-                    <div className="w-full space-y-2 w-1/2 pr-1">
+                    <div className="space-y-2  w-full lg:w-1/2  pr-1">
                         <Label htmlFor="typeInvitation">Type d'invitation</Label>
                         <select name="typeInvitation" id="typeInvitation" className='w-full py-2'
                             value={formData.typeInvitation}
@@ -152,7 +152,7 @@ const InvitationFormInvitation = ({ onSubmit, formData, setFormData, openModal, 
                             </option>
                         </select>
                     </div>
-                    <div className="space-y-2 w-full pl-1">
+                    <div className="space-y-2 w-full lg:w-1/2 pl-1">
                         <Label htmlFor="nameInvitation">Nom(s) sur l'invitation</Label>
                         <Input
                             id="nameInvitation"

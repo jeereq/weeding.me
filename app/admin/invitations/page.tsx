@@ -303,7 +303,7 @@ export default function InvitationsPage() {
                 </TableBody>
               </DialogContent>
             </Dialog>
-            <Dialog open={isDeleteOpen && selectedInvitation?.id == invitation.id} onOpenChange={setIsActiveOpen}>
+            <Dialog open={isDeleteOpen && selectedInvitation?.id == invitation.id} onOpenChange={setIsDeleteOpen}>
               <DialogContent className="max-w-3xl">
                 <DialogHeader>
                   <DialogTitle>
