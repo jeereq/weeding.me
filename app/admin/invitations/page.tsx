@@ -145,7 +145,7 @@ export default function InvitationsPage() {
         onSubmit={handleCreate}
       />
 
-      <div className="grid gap-2 md:grid-cols-2 lg:grid-cols-3 ">
+      <div className="grid gap-1 lg:gap-2 md:grid-cols-2 lg:grid-cols-3 ">
         {user.templates.map((invitation: any) => (
           <>
             <Card key={invitation.id} className="overflow-hidden">
@@ -219,7 +219,7 @@ export default function InvitationsPage() {
               </CardContent>
             </Card>
             <Dialog open={isGuestsOpen && selectedInvitation?.id == invitation.id} onOpenChange={setIsGuestsOpen}>
-              <DialogContent className="max-w-3xl max-h-[70vh] overflow-y-scroll">
+              <DialogContent className="w-full lg:max-w-3xl max-h-[70vh] overflow-y-scroll">
                 <DialogHeader>
                   <DialogTitle>Les invités du mariage de {selectedInvitation?.title}</DialogTitle>
                 </DialogHeader>
@@ -340,11 +340,11 @@ export default function InvitationsPage() {
               </DialogContent>
             </Dialog>
             <Dialog open={isViewOpen && selectedInvitation?.id == invitation.id} onOpenChange={setIsViewOpen}>
-              <DialogContent className="max-w-3xl bg-gray-100">
+              <DialogContent className="w-full lg:max-w-3xl bg-gray-100">
                 <TableBody>
                   <div className="w-full">
-                    <div className="w-[600px] 0 mx-auto px-4 sm:px-6 lg:px-8">
-                      <div className="w-full w-fit h-[85vh] overflow-y-scroll mx-auto ">
+                    <div className="lg:w-[500px] w-full 0 mx-auto px-4 lg:px-8">
+                      <div className="w-full h-[85vh] overflow-y-scroll mx-auto ">
                         <motion.div
                           key={invitation.template}
                           initial={{ opacity: 0, y: 20 }}

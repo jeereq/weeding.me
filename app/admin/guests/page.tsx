@@ -531,7 +531,7 @@ const GuestsPage: FC = () => {
                 onClick={function () {
                   setIsDeleteOpen(false)
                 }}
-                disabled={selectedGuest.status == "noStarted"}
+                disabled={selectedGuest.status != "noStarted"}
                 type="submit"
                 className="w-full"
               >
