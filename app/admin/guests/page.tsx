@@ -144,8 +144,10 @@ const GuestsPage: FC = () => {
         return "Présent"
       case 'declined':
         return "Décliné"
+      case 'pending':
+        return "En attente"
       default:
-        return 'En attente';
+        return 'Pas envoyé';
     }
   };
 
@@ -241,7 +243,7 @@ const GuestsPage: FC = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Tous les statuts</SelectItem>
-                  <SelectItem value="noStarted">Pas commencé</SelectItem>
+                  <SelectItem value="noStarted">Pas envoyé</SelectItem>
                   <SelectItem value="attending">Présent</SelectItem>
                   <SelectItem value="pending">En attente</SelectItem>
                   <SelectItem value="declined">Décliné</SelectItem>
@@ -468,7 +470,7 @@ const GuestsPage: FC = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Tous les statuts</SelectItem>
-                  <SelectItem value="noStarted">Pas commencé</SelectItem>
+                  <SelectItem value="noStarted">Pas envoyé</SelectItem>
                   <SelectItem value="attending">Présent</SelectItem>
                   <SelectItem value="pending">En attente</SelectItem>
                   <SelectItem value="declined">Décliné</SelectItem>
