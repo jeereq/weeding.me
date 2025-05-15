@@ -20,13 +20,15 @@ export default function AdminLayout({
       router.push('/login');
     }
   }, [user, router,]);
-  
+
   useEffect(() => {
-    fetch({ email: user.email }, "POST").then(function ({ data }) {
-      if (data.data) {
-        login(data.data)
-      }
-    })
+    if (user?.email) {
+      fetch({ email: user?.email }, "POST").then(function ({ data }) {
+        if (data.data) {
+          login(data.data)
+        }
+      })
+    }
   }, [pathname]);
 
   if (!user) {

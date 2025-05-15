@@ -1,7 +1,7 @@
 "use client";
 
 import { FC, useEffect, useState } from 'react';
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
@@ -42,16 +42,18 @@ const GuestsPage: FC = () => {
   const [statusFilter, setStatusFilter] = useState<string>('all');
   const [typeFilter, setTypeFilter] = useState<string>('all');
   const [invitationFilter, setInvitationTypeFilter] = useState<string>('all');
+  const [name, setName] = useState<string>("")
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
   const [messageDialogOpen, setMessageDialogOpen] = useState(false);
   const [messageRappelDialogOpen, setMessageRappelDialogOpen] = useState(false);
   const [messageContent, setMessageContent] = useState('');
   const [previewDialogOpen, setPreviewDialogOpen] = useState(false);
-  const [selectedGuest, setSelectedGuest] = useState<Guest | null>(null);
+  const [selectedGuest, setSelectedGuest] = useState<any | null>(null);
   const [createDialogOpen, setCreateDialogOpen] = useState(false);
   const { user } = useData()
   const { fetch, loading } = useFetchData({ uri: "auth/users/invitations" })
   const { fetch: fetchCreate, loading: loadingCreate } = useFetchData({ uri: "auth/invitations/create" })
-
+  const { fetch: fetchDelete, loading: loadingDelete } = useFetchData({ uri: "auth/invite/delete" })
   const [newGuest, setNewGuest] = useState<any>({
     id: null,
     name: '',
@@ -80,6 +82,11 @@ const GuestsPage: FC = () => {
       setSelectedGuests([]);
     }
   };
+  const openDeleteModal = (guest: any) => {
+    setSelectedGuest(guest);
+    setIsDeleteOpen(true);
+  };
+
 
   const handleSelectGuest = (guestId: string, checked: boolean) => {
     if (checked) {
@@ -156,14 +163,15 @@ const GuestsPage: FC = () => {
     e.preventDefault()
     e.stopPropagation()
 
+    delete newGuest.id
+
     fetchCreate(newGuest, "POST").then(function ({ data }) {
       if (data.data) {
         setGuests([data.data, ...guests]);
         setCreateDialogOpen(false)
         alert(data.message)
       }
-    }).catch(function (error) {
-      console.log(error)
+    }).catch(function () {
       setCreateDialogOpen(false)
     })
   }
@@ -189,7 +197,7 @@ const GuestsPage: FC = () => {
         <div className="flex gap-4">
           <Button
             onClick={() => setMessageRappelDialogOpen(true)}
-            disabled={selectedGuests.length != 0}
+          // disabled={selectedGuests.length != 0}
           >
             <Mail className="h-4 w-4 lg:mr-2" />
             <span className="w-fit lg:block hidden">
@@ -198,7 +206,7 @@ const GuestsPage: FC = () => {
           </Button>
           <Button
             onClick={() => setMessageDialogOpen(true)}
-            disabled={selectedGuests.length != 0}
+          // disabled={selectedGuests.length != 0}
           >
             <Mail className="h-4 w-4 lg:mr-2" />
             <span className="w-fit lg:block hidden">
@@ -233,6 +241,7 @@ const GuestsPage: FC = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Tous les statuts</SelectItem>
+                  <SelectItem value="noStarted">Pas commencé</SelectItem>
                   <SelectItem value="attending">Présent</SelectItem>
                   <SelectItem value="pending">En attente</SelectItem>
                   <SelectItem value="declined">Décliné</SelectItem>
@@ -341,6 +350,14 @@ const GuestsPage: FC = () => {
                     <Button
                       variant="ghost"
                       size="sm"
+                      className='text-red-500'
+                      onClick={() => openDeleteModal(guest)}
+                    >
+                      <Trash2 className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
                       onClick={() => {
                         const url = `${window.location.origin}/invitation/${guest.id}`;
                         navigator.clipboard.writeText(url);
@@ -432,6 +449,7 @@ const GuestsPage: FC = () => {
                 </SelectTrigger>
                 <SelectContent>
                   <SelectItem value="all">Tous les statuts</SelectItem>
+                  <SelectItem value="noStarted">Pas commencé</SelectItem>
                   <SelectItem value="attending">Présent</SelectItem>
                   <SelectItem value="pending">En attente</SelectItem>
                   <SelectItem value="declined">Décliné</SelectItem>
@@ -473,6 +491,52 @@ const GuestsPage: FC = () => {
             </div>
           </div>
         </DialogContent>
+      </Dialog>
+
+      <Dialog open={isDeleteOpen} onOpenChange={setIsDeleteOpen}>
+        {selectedGuest && (<DialogContent className="max-w-3xl">
+          <DialogHeader>
+            <DialogTitle>
+              Voulez-vous supprimer cet invité : {selectedGuest.type != "singel" ? selectedGuest?.members?.map(function ({ name }: any) {
+                return name
+              }).join(" & ") : selectedGuest.name} ?
+            </DialogTitle>
+          </DialogHeader>
+          <TableBody>
+            <div className="w-full gap-2 grid grid-cols-2 mt-2">
+              <Button
+                onClick={function () {
+                  setIsDeleteOpen(false)
+                }}
+                disabled={selectedGuest.status == "noStarted"}
+                type="submit"
+                className="w-full"
+              >
+                Annuler
+              </Button>
+              <Button
+                onClick={function () {
+                  fetchDelete({ id: selectedGuest.id }, "POST").then(function ({ data }) {
+
+                    if (data.data) {
+                      const guest: any = data.data
+                      setGuests(function (data: any[]) {
+                        return data.filter(function (item: any) {
+                          return item.id != selectedGuest?.id
+                        })
+                      })
+                      setIsDeleteOpen(false)
+                    }
+                  })
+                }}
+                type="submit"
+                className={`w-full bg-red-500`}
+              >
+                {(loadingDelete) ? "...Chargement" : "Supprimer"}
+              </Button>
+            </div>
+          </TableBody>
+        </DialogContent>)}
       </Dialog>
 
       <Dialog open={previewDialogOpen} onOpenChange={setPreviewDialogOpen}>
