@@ -413,9 +413,28 @@ const GuestsPage: FC = () => {
               </Select>
             </div>
             <div>
-              <p className="text-sm text-muted-foreground mb-2">
-                Envoi à {selectedGuests.length} invité{selectedGuests.length > 1 ? 's' : ''}
-              </p>
+              <div className="w-full mb-2 flex">
+                <div onClick={function(){
+                  setMessageContent(`${messageContent} {{nom}}`)
+                }} className="w-fit cursor-pointer rounded-full hover:bg-gray-300 bg-gray-100 mr-2 py-1 px-3">
+                  nom
+                </div>
+                <div onClick={function(){
+                  setMessageContent(`${messageContent} {{invitation}}`)
+                }} className="w-fit cursor-pointer rounded-full hover:bg-gray-300 bg-gray-100 mr-2 py-1 px-3">
+                  invitation
+                </div>
+                <div onClick={function(){
+                  setMessageContent(`${messageContent} {{date}}`)
+                }} className="w-fit cursor-pointer rounded-full hover:bg-gray-300 bg-gray-100 mr-2 py-1 px-3">
+                  date
+                </div>
+                <div onClick={function(){
+                  setMessageContent(`${messageContent} {{address}}`)
+                }} className="w-fit cursor-pointer rounded-full hover:bg-gray-300 bg-gray-100 py-1 px-3">
+                  address
+                </div>
+              </div>
               <Textarea
                 placeholder="Votre message..."
                 value={messageContent}
