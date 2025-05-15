@@ -173,9 +173,11 @@ const GuestsPage: FC = () => {
       if (data.data) {
         setGuests([data.data, ...guests]);
         setCreateDialogOpen(false)
-        alert(data.message)
       }
-    }).catch(function () {
+      alert(data.message)
+      console.log(data)
+    }).catch(function (error: any) {
+      console.log(error)
       setCreateDialogOpen(false)
     })
   }
