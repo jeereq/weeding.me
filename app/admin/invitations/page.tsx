@@ -89,7 +89,31 @@ export default function InvitationsPage() {
       location: { lat: null, lng: null, address: '' },
     });
   };
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'attending':
+        return "Présent"
+      case 'declined':
+        return "Décliné"
+      case 'pending':
+        return "En attente"
+      default:
+        return 'Pas envoyé';
+    }
+  };
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'attending':
+        return 'text-green-600';
+      case 'declined':
+        return 'text-red-600';
+      case 'noStarted':
+        return 'text-gray-600';
+      default:
+        return 'text-yellow-600';
+    }
+  };
   const openActiveModal = (invitation: Invitation) => {
     setSelectedInvitation(invitation);
     setIsActiveOpen(true);
@@ -162,6 +186,9 @@ export default function InvitationsPage() {
                 <div className="absolute bottom-2 right-2 flex gap-2 font-bold">
                   {templates.find(t => t.id == invitation.template)?.category}
                 </div>
+                {invitation.invitationsUser && <div className="w-fit absolute bottom-2 left-2">
+                  {invitation.invitationsUser} Invitation(s)
+                </div>}
               </div>
               <CardContent className="p-6">
                 <h3 className="text-lg font-semibold mb-2" style={{ color: invitation.color }}>{invitation.title}</h3>
@@ -169,12 +196,13 @@ export default function InvitationsPage() {
                 <p className="text-sm text-muted-foreground mb-4">
                   {invitation.address}
                 </p>
-                <div className="flex justify-between items-center">
-                  <div title={`${invitation.title} ${invitation.invitations} invitations, ${invitation.price.toFixed(2)}$ `} className="flex items-center mr-1 text-sm text-muted-foreground">
+                <div className="flex grid lg:grid-cols-2 items-center">
+                  <div title={`${invitation.title} ${invitation.invitations} invitations, ${invitation.price.toFixed(2)}$ `}
+                    className="flex w-full lg:w-fit items-center mr-1 text-sm text-muted-foreground">
                     <Users className="h-4 w-4 mr-1" />
                     {invitation.invitations} Invitation(s) <span className="font-bold ml-2 mr-1">$</span> {invitation.price.toFixed(2)}
                   </div>
-                  <div className="flex gap-1">
+                  <div className=" w-full pt-3 lg:w-fit grid grid-cols-5 gap-1">
                     <Button
                       variant="ghost"
                       size="sm"
@@ -243,11 +271,8 @@ export default function InvitationsPage() {
                           <TableCell>{guest.email}</TableCell>
                           <TableCell>{guest.phone}</TableCell>
                           <TableCell>
-                            <span className={`capitalize ${guest.status === 'confirmed' ? 'text-green-600' :
-                              guest.status === 'declined' ? 'text-red-600' :
-                                'text-yellow-600'
-                              }`}>
-                              {guest.status}
+                            <span className={`capitalize ${getStatusColor(guest.status)}`}>
+                              {getStatusText(guest.status)}
                             </span>
                           </TableCell>
                         </TableRow>

@@ -237,7 +237,7 @@ const GuestsPage: FC = () => {
                 className="pl-10"
               />
             </div>
-            <div className="w-full lg:w-[200px]">
+            <div className="w-full">
               <Select value={statusFilter} onValueChange={setStatusFilter}>
                 <SelectTrigger>
                   <Filter className="h-4 w-4 mr-2" />
@@ -252,7 +252,7 @@ const GuestsPage: FC = () => {
                 </SelectContent>
               </Select>
             </div>
-            <div className="w-full lg:w-[200px]">
+            <div className="w-full">
               <Select value={typeFilter} onValueChange={setTypeFilter}>
                 <SelectTrigger>
                   <Users className="h-4 w-4 mr-2" />
@@ -268,7 +268,7 @@ const GuestsPage: FC = () => {
                 </SelectContent>
               </Select>
             </div>
-            <div className="w-full lg:w-[200px]">
+            <div className="w-full">
               <Select value={invitationFilter} onValueChange={setInvitationTypeFilter}>
                 <SelectTrigger>
                   <Mail className="h-4 w-4 mr-2" />
