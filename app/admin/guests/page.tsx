@@ -61,8 +61,8 @@ const GuestsPage: FC = () => {
     phone: '',
     type: 'couple',
     invitation: 1,
-    status: 'pending',
-    userTemplate: 'inv1',
+    status: 'noStarted',
+    userTemplate: '',
     members: [],
   });
 
