@@ -43,6 +43,7 @@ const GuestsPage: FC = () => {
   const [typeFilter, setTypeFilter] = useState<string>('all');
   const [invitationFilter, setInvitationTypeFilter] = useState<string>('all');
   const [messageDialogOpen, setMessageDialogOpen] = useState(false);
+  const [messageRappelDialogOpen, setMessageRappelDialogOpen] = useState(false);
   const [messageContent, setMessageContent] = useState('');
   const [previewDialogOpen, setPreviewDialogOpen] = useState(false);
   const [selectedGuest, setSelectedGuest] = useState<Guest | null>(null);
@@ -57,6 +58,7 @@ const GuestsPage: FC = () => {
     email: '',
     phone: '',
     type: 'couple',
+    invitation: 1,
     status: 'pending',
     userTemplate: 'inv1',
     members: [],
@@ -153,17 +155,10 @@ const GuestsPage: FC = () => {
   const submit = (e: any) => {
     e.preventDefault()
     e.stopPropagation()
-    const guest: Guest = {
-      id: Math.random().toString(),
-      ...newGuest,
-      status: 'pending',
-      members: newGuest.type !== 'singel' ? newGuest.members : [],
-    };
-    delete newGuest.id
+
     fetchCreate(newGuest, "POST").then(function ({ data }) {
-      console.log(data)
       if (data.data) {
-        setGuests([guest, ...guests]);
+        setGuests([data.data, ...guests]);
         setCreateDialogOpen(false)
         alert(data.message)
       }
@@ -193,12 +188,21 @@ const GuestsPage: FC = () => {
         <h1 className="text-3xl font-bold">Invités</h1>
         <div className="flex gap-4">
           <Button
-            onClick={() => setMessageDialogOpen(true)}
-            disabled={selectedGuests.length === 0}
+            onClick={() => setMessageRappelDialogOpen(true)}
+            disabled={selectedGuests.length != 0}
           >
             <Mail className="h-4 w-4 lg:mr-2" />
             <span className="w-fit lg:block hidden">
-              Message groupé ({selectedGuests.length})
+              Message Rappel
+            </span>
+          </Button>
+          <Button
+            onClick={() => setMessageDialogOpen(true)}
+            disabled={selectedGuests.length != 0}
+          >
+            <Mail className="h-4 w-4 lg:mr-2" />
+            <span className="w-fit lg:block hidden">
+              Message Invitation
             </span>
           </Button>
           <Button onClick={() => setCreateDialogOpen(true)}>
@@ -288,7 +292,7 @@ const GuestsPage: FC = () => {
                   Invitation
                 </TableHead>
                 <TableHead>Statut</TableHead>
-                <TableHead>Date RSVP</TableHead>
+                <TableHead>Date de reponse</TableHead>
                 <TableHead className="text-right">Actions</TableHead>
               </TableRow>
             </TableHeader>
@@ -354,12 +358,43 @@ const GuestsPage: FC = () => {
           </Table>
         </CardContent>
       </Card>
+
       <Dialog open={messageDialogOpen} onOpenChange={setMessageDialogOpen}>
         <DialogContent>
           <DialogHeader>
-            <DialogTitle>Envoyer un message groupé</DialogTitle>
+            <DialogTitle>Envoyer un message d'invitation</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
+            <div className="w-full grid gap-1 grid-cols-2">
+              <Select value={typeFilter} onValueChange={setTypeFilter}>
+                <SelectTrigger>
+                  <Users className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Type d'invité" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Toutes les types</SelectItem>
+                  <SelectItem value="family">Famille</SelectItem>
+                  <SelectItem value="couple">Couple</SelectItem>
+                  <SelectItem value="company">Entreprise</SelectItem>
+                  <SelectItem value="group">Groupe</SelectItem>
+                  <SelectItem value="singel">Célibataire</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={invitationFilter} onValueChange={setInvitationTypeFilter}>
+                <SelectTrigger>
+                  <Mail className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Invitations" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Toutes les invitations</SelectItem>
+                  {user?.templates?.filter(function ({ active }: any) {
+                    return active
+                  }).map(function ({ id, title, color }: any) {
+                    return <SelectItem value={id} style={{ color }}>{title}</SelectItem>
+                  })}
+                </SelectContent>
+              </Select>
+            </div>
             <div>
               <p className="text-sm text-muted-foreground mb-2">
                 Envoi à {selectedGuests.length} invité{selectedGuests.length > 1 ? 's' : ''}
@@ -371,8 +406,65 @@ const GuestsPage: FC = () => {
                 rows={6}
               />
             </div>
-            <div className="flex justify-end space-x-2">
+            <div className="gap-1 w-full grid grid-cols-2">
               <Button variant="outline" onClick={() => setMessageDialogOpen(false)}>
+                Annuler
+              </Button>
+              <Button onClick={handleSendMessage}>
+                Envoyer
+              </Button>
+            </div>
+          </div>
+        </DialogContent>
+      </Dialog>
+
+      <Dialog open={messageRappelDialogOpen} onOpenChange={setMessageRappelDialogOpen}>
+        <DialogContent>
+          <DialogHeader>
+            <DialogTitle>Envoyer un message de rappel</DialogTitle>
+          </DialogHeader>
+          <div className="space-y-4">
+            <div className="w-full grid gap-1 grid-cols-2">
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger>
+                  <Filter className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Filtrer par statut" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Tous les statuts</SelectItem>
+                  <SelectItem value="attending">Présent</SelectItem>
+                  <SelectItem value="pending">En attente</SelectItem>
+                  <SelectItem value="declined">Décliné</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={invitationFilter} onValueChange={setInvitationTypeFilter}>
+                <SelectTrigger>
+                  <Mail className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Invitations" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Toutes les invitations</SelectItem>
+                  {user?.templates?.filter(function ({ active }: any) {
+                    return active
+                  }).map(function ({ id, title, color }: any) {
+                    return <SelectItem value={id} style={{ color }}>{title}</SelectItem>
+                  })}
+                </SelectContent>
+              </Select>
+            </div>
+            <div>
+              <p className="text-sm text-muted-foreground mb-2">
+                Envoi à {selectedGuests.length} invité{selectedGuests.length > 1 ? 's' : ''}
+              </p>
+              <Textarea
+                placeholder="Votre message..."
+                value={messageContent}
+                onChange={(e) => setMessageContent(e.target.value)}
+                rows={6}
+              />
+            </div>
+            <div className="gap-1 w-full grid grid-cols-2">
+              <Button variant="outline" onClick={() => setMessageRappelDialogOpen(false)}>
                 Annuler
               </Button>
               <Button onClick={handleSendMessage}>
@@ -527,7 +619,12 @@ const GuestsPage: FC = () => {
               </div>}
 
             <div className="grid grid-cols-2 w-full space-x-2">
-              <Button variant="outline" onClick={() => setCreateDialogOpen(false)}>
+              <Button variant="outline" onClick={(e: any) => {
+                e.preventDefault()
+                e.stopPropagation()
+
+                setCreateDialogOpen(false)
+              }}>
                 Annuler
               </Button>
               <Button type={"submit"}>
