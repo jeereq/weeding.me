@@ -184,7 +184,7 @@ const GuestsPage: FC = () => {
 
   useEffect(function () {
     fetch({ id: user.id }, "POST").then(function ({ data }) {
-      if (data.data) {
+      if (data?.data) {
         setGuests(data.data)
       }
     })
