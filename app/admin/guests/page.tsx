@@ -365,20 +365,36 @@ const GuestsPage: FC = () => {
             <DialogTitle>Envoyer un message d'invitation</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <Select value={typeFilter} onValueChange={setTypeFilter}>
-              <SelectTrigger>
-                <Users className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="Type d'invité" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Toutes les types</SelectItem>
-                <SelectItem value="family">Famille</SelectItem>
-                <SelectItem value="couple">Couple</SelectItem>
-                <SelectItem value="company">Entreprise</SelectItem>
-                <SelectItem value="group">Groupe</SelectItem>
-                <SelectItem value="singel">Célibataire</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="w-full grid gap-1 grid-cols-2">
+              <Select value={typeFilter} onValueChange={setTypeFilter}>
+                <SelectTrigger>
+                  <Users className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Type d'invité" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Toutes les types</SelectItem>
+                  <SelectItem value="family">Famille</SelectItem>
+                  <SelectItem value="couple">Couple</SelectItem>
+                  <SelectItem value="company">Entreprise</SelectItem>
+                  <SelectItem value="group">Groupe</SelectItem>
+                  <SelectItem value="singel">Célibataire</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={invitationFilter} onValueChange={setInvitationTypeFilter}>
+                <SelectTrigger>
+                  <Mail className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Invitations" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Toutes les invitations</SelectItem>
+                  {user?.templates?.filter(function ({ active }: any) {
+                    return active
+                  }).map(function ({ id, title, color }: any) {
+                    return <SelectItem value={id} style={{ color }}>{title}</SelectItem>
+                  })}
+                </SelectContent>
+              </Select>
+            </div>
             <div>
               <p className="text-sm text-muted-foreground mb-2">
                 Envoi à {selectedGuests.length} invité{selectedGuests.length > 1 ? 's' : ''}
@@ -408,18 +424,34 @@ const GuestsPage: FC = () => {
             <DialogTitle>Envoyer un message de rappel</DialogTitle>
           </DialogHeader>
           <div className="space-y-4">
-            <Select value={statusFilter} onValueChange={setStatusFilter}>
-              <SelectTrigger>
-                <Filter className="h-4 w-4 mr-2" />
-                <SelectValue placeholder="Filtrer par statut" />
-              </SelectTrigger>
-              <SelectContent>
-                <SelectItem value="all">Tous les statuts</SelectItem>
-                <SelectItem value="attending">Présent</SelectItem>
-                <SelectItem value="pending">En attente</SelectItem>
-                <SelectItem value="declined">Décliné</SelectItem>
-              </SelectContent>
-            </Select>
+            <div className="w-full grid gap-1 grid-cols-2">
+              <Select value={statusFilter} onValueChange={setStatusFilter}>
+                <SelectTrigger>
+                  <Filter className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Filtrer par statut" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Tous les statuts</SelectItem>
+                  <SelectItem value="attending">Présent</SelectItem>
+                  <SelectItem value="pending">En attente</SelectItem>
+                  <SelectItem value="declined">Décliné</SelectItem>
+                </SelectContent>
+              </Select>
+              <Select value={invitationFilter} onValueChange={setInvitationTypeFilter}>
+                <SelectTrigger>
+                  <Mail className="h-4 w-4 mr-2" />
+                  <SelectValue placeholder="Invitations" />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="all">Toutes les invitations</SelectItem>
+                  {user?.templates?.filter(function ({ active }: any) {
+                    return active
+                  }).map(function ({ id, title, color }: any) {
+                    return <SelectItem value={id} style={{ color }}>{title}</SelectItem>
+                  })}
+                </SelectContent>
+              </Select>
+            </div>
             <div>
               <p className="text-sm text-muted-foreground mb-2">
                 Envoi à {selectedGuests.length} invité{selectedGuests.length > 1 ? 's' : ''}
