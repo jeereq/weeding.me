@@ -89,7 +89,31 @@ export default function InvitationsPage() {
       location: { lat: null, lng: null, address: '' },
     });
   };
+  const getStatusText = (status: string) => {
+    switch (status) {
+      case 'attending':
+        return "Présent"
+      case 'declined':
+        return "Décliné"
+      case 'pending':
+        return "En attente"
+      default:
+        return 'Pas envoyé';
+    }
+  };
 
+  const getStatusColor = (status: string) => {
+    switch (status) {
+      case 'attending':
+        return 'text-green-600';
+      case 'declined':
+        return 'text-red-600';
+      case 'noStarted':
+        return 'text-gray-600';
+      default:
+        return 'text-yellow-600';
+    }
+  };
   const openActiveModal = (invitation: Invitation) => {
     setSelectedInvitation(invitation);
     setIsActiveOpen(true);
@@ -247,11 +271,8 @@ export default function InvitationsPage() {
                           <TableCell>{guest.email}</TableCell>
                           <TableCell>{guest.phone}</TableCell>
                           <TableCell>
-                            <span className={`capitalize ${guest.status === 'confirmed' ? 'text-green-600' :
-                              guest.status === 'declined' ? 'text-red-600' :
-                                'text-yellow-600'
-                              }`}>
-                              {guest.status}
+                            <span className={`capitalize ${getStatusColor(guest.status)}`}>
+                              {getStatusText(guest.status)}
                             </span>
                           </TableCell>
                         </TableRow>
