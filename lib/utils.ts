@@ -1,19 +1,20 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-export const API = "https://weeding-me-api.onrender.com"
+// export const API = "https://weeding-me-api.onrender.com"
+export const API = "http://localhost:1337"
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 export const convertInBase64 = (file: any, callBack: any) => {
-    let reader = new FileReader();
-    reader.readAsDataURL(file);
+  let reader = new FileReader();
+  reader.readAsDataURL(file);
 
-    reader.onload = async () => {
-        let fileIn64Base: any = await reader.result;
-        callBack(fileIn64Base)
-        return fileIn64Base;
-    };
+  reader.onload = async () => {
+    let fileIn64Base: any = await reader.result;
+    callBack(fileIn64Base)
+    return fileIn64Base;
+  };
 };
 
 export function createHeart() {
@@ -31,7 +32,7 @@ export function createHeart() {
   heart.style.animationDelay = `${randomDelay}s`;
 
   // Durée d'animation légèrement aléatoire
-  const randomDuration = 4 + Math.random() * 2;  heart.style.animationDuration = `${randomDuration}s`;
+  const randomDuration = 4 + Math.random() * 2; heart.style.animationDuration = `${randomDuration}s`;
 
   // Taille aléatoire
   const randomSize = 1 + Math.random() * 0.5;
