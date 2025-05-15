@@ -227,7 +227,7 @@ const GuestsPage: FC = () => {
       </div>
       <Card>
         <CardContent>
-          <div className="flex gap-4 py-6">
+          <div className="grid gap-1 lg:gap-4 grid-cols-1 lg:grid-cols-4 py-6">
             <div className="relative flex-1">
               <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground h-4 w-4" />
               <Input
@@ -237,7 +237,7 @@ const GuestsPage: FC = () => {
                 className="pl-10"
               />
             </div>
-            <div className="w-[200px]">
+            <div className="w-full lg:w-[200px]">
               <Select value={statusFilter} onValueChange={setStatusFilter}>
                 <SelectTrigger>
                   <Filter className="h-4 w-4 mr-2" />
@@ -252,7 +252,7 @@ const GuestsPage: FC = () => {
                 </SelectContent>
               </Select>
             </div>
-            <div className="w-[200px]">
+            <div className="w-full lg:w-[200px]">
               <Select value={typeFilter} onValueChange={setTypeFilter}>
                 <SelectTrigger>
                   <Users className="h-4 w-4 mr-2" />
@@ -268,7 +268,7 @@ const GuestsPage: FC = () => {
                 </SelectContent>
               </Select>
             </div>
-            <div className="w-[200px]">
+            <div className="w-full lg:w-[200px]">
               <Select value={invitationFilter} onValueChange={setInvitationTypeFilter}>
                 <SelectTrigger>
                   <Mail className="h-4 w-4 mr-2" />
@@ -285,7 +285,6 @@ const GuestsPage: FC = () => {
               </Select>
             </div>
           </div>
-
           <Table>
             <TableHeader>
               <TableRow>
@@ -531,7 +530,7 @@ const GuestsPage: FC = () => {
                 onClick={function () {
                   setIsDeleteOpen(false)
                 }}
-                disabled={selectedGuest.status == "noStarted"}
+                disabled={selectedGuest.status != "noStarted"}
                 type="submit"
                 className="w-full"
               >

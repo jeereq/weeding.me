@@ -7,7 +7,7 @@ import InvitationFormInvitation from "../ui/invitation-form";
 import { useRouter } from "next/navigation";
 import dynamic from 'next/dynamic'
 import TemplateImages from "../ui/templateImages";
-import { createHeart } from "@/lib/utils";
+import { convertInBase64, createHeart } from "@/lib/utils";
 const MapModal = dynamic(
     () => import('@/components/ui/map-modal'),
     { ssr: false }
@@ -50,12 +50,14 @@ export default function TemplateGreen({ template, data, hide = false }: any) {
     const onChange = (e: any) => {
         const { files } = e.target;
         if (files && files.length > 0) {
-            setImage(URL.createObjectURL(files[0]))
-            setFormData(function (state: any) {
-                return {
-                    ...state,
-                    image: URL.createObjectURL(files[0])
-                }
+            convertInBase64(files[0], function (file: any) {
+                setImage(file)
+                setFormData(function (state: any) {
+                    return {
+                        ...state,
+                        image: file
+                    }
+                })
             })
         }
     }
