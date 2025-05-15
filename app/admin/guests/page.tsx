@@ -156,14 +156,15 @@ const GuestsPage: FC = () => {
     e.preventDefault()
     e.stopPropagation()
 
+    delete newGuest.id
+
     fetchCreate(newGuest, "POST").then(function ({ data }) {
       if (data.data) {
         setGuests([data.data, ...guests]);
         setCreateDialogOpen(false)
         alert(data.message)
       }
-    }).catch(function (error) {
-      console.log(error)
+    }).catch(function () {
       setCreateDialogOpen(false)
     })
   }
