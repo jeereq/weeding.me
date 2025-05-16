@@ -10,7 +10,6 @@ import Footer from "@/components/landing/Footer";
 import { useRouter } from "next/navigation";
 import { templates } from "@/lib/utils";
 import { useFetchData } from "@/hooks/useFetchData";
-import { useData } from "@/lib/data";
 
 
 export default function Templates() {
