@@ -23,9 +23,11 @@ export default function InvitationContent({ guestId }: Props) {
         setSelectedGuest(data.data)
       }
     })
-    
+
     const confirm = searchParams.get("confirm")
 
+    console.log(confirm)
+    
     if (confirm) {
       fetch({ id: guestId }, "POST").then(function ({ data }) {
         if (data.data) {
