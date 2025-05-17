@@ -6,6 +6,7 @@ import { templates } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import { useFetchData } from '@/hooks/useFetchData';
 import { useSearchParams } from 'next/navigation';
+import { Button } from '@/components/ui/button';
 
 interface Props {
   guestId: any;
@@ -24,23 +25,6 @@ export default function InvitationContent({ guestId }: Props) {
       }
     })
 
-    const confirm = searchParams.get("confirm")
-
-    console.log(confirm)
-    
-    if (confirm) {
-      fetch({ id: guestId }, "POST").then(function ({ data }) {
-        if (data.data) {
-          alert(data.message)
-        }
-      })
-    } else {
-      fetchDesactive({ id: guestId }, "POST").then(function ({ data }) {
-        if (data.data) {
-          alert(data.message)
-        }
-      })
-    }
   }, [])
   if (!selectedGuest || loading || loadingDesactive || loadingPublic) return <div className="w-full h-screen flex items-center">
     <h1 className="font-bold  text-center w-full">
@@ -72,6 +56,39 @@ export default function InvitationContent({ guestId }: Props) {
           }).join(" & ") : selectedGuest.name
         }} />}
       </div>
+      {selectedGuest.status == "noStarted" && <div className="w-full fixed z-50 bottom-0 left-0 right-0">
+        <div className="w-[500px] grid grid-cols-2 mx-auto gap-1 p-5">
+          <Button
+            variant="ghost"
+            size="sm"
+            className='bg-red-500 text-white font-bold'
+            onClick={() => {
+              fetchDesactive({ id: guestId }, "POST").then(function ({ data }) {
+                if (data.data) {
+                  alert(data.message)
+                }
+              })
+
+            }}
+          >
+            Absent
+          </Button>
+          <Button
+            variant="ghost"
+            size="sm"
+            className='bg-green-500 text-white font-bold'
+            onClick={() => {
+              fetch({ id: guestId }, "POST").then(function ({ data }) {
+                if (data.data) {
+                  alert(data.message)
+                }
+              })
+            }}
+          >
+            Présent
+          </Button>
+        </div>
+      </div>}
     </div>
   );
 }
