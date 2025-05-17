@@ -22,7 +22,6 @@ export default function InvitationContent({ guestId }: Props) {
       if (data.data) {
         setSelectedGuest(data.data)
       }
-      console.log(data)
     })
   }, [])
 
@@ -59,7 +58,7 @@ export default function InvitationContent({ guestId }: Props) {
           }).join(" & ") : selectedGuest.name
         }} />}
       </div>
-      {(selectedGuest.status == "noStarted" || selectedGuest.status == "pending") && <div className="w-full fixed z-50 bottom-0 left-0 right-0">
+      {(selectedGuest.status == "noStarted" || selectedGuest.status == "pending") && <div className="w-full">
         <div className="w-full lg:w-[500px] grid grid-cols-2 mx-auto gap-1 p-5">
           <Button
             variant="ghost"
