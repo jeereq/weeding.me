@@ -19,7 +19,6 @@ export default function InvitationContent({ guestId }: Props) {
 
   useEffect(function () {
     fetchPublic({ id: guestId }, "POST").then(function ({ data }) {
-      console.log(data.data)
       if (data.data) {
         setSelectedGuest(data.data)
       }
@@ -32,26 +31,29 @@ export default function InvitationContent({ guestId }: Props) {
     </h1>
   </div>
   return (
-    <div className="w-full p-5  bg-gray-100">
+    <div className="w-full p-5 bg-gray-100">
       <div className="space-y-6 w-full md:w-[500px] mx-auto">
         {selectedGuest.userTemplate?.template == 1 && <TemplateGreen template={templates.find(function ({ id }) {
           return id == 1
         })} data={{
-          ...selectedGuest.userTemplate, nameInvitation: selectedGuest.type != "singel" ? selectedGuest?.members?.map(function ({ name }: any) {
+          ...selectedGuest.userTemplate,
+          nameInvitation: selectedGuest.type != "singel" ? selectedGuest?.members?.map(function ({ name }: any) {
             return name
           }).join(" & ") : selectedGuest.name
         }} />}
         {selectedGuest.userTemplate?.template == 2 && <TemplateRed template={templates.find(function ({ id }) {
           return id == 2
         })} data={{
-          ...selectedGuest.userTemplate, nameInvitation: selectedGuest.type != "singel" ? selectedGuest?.members?.map(function ({ name }: any) {
+          ...selectedGuest.userTemplate,
+          nameInvitation: selectedGuest.type != "singel" ? selectedGuest?.members?.map(function ({ name }: any) {
             return name
           }).join(" & ") : selectedGuest.name
         }} />}
         {selectedGuest.userTemplate?.template == 3 && <TemplateYellow template={templates.find(function ({ id }) {
           return id == 3
         })} data={{
-          ...selectedGuest.userTemplate, nameInvitation: selectedGuest.type != "singel" ? selectedGuest?.members?.map(function ({ name }: any) {
+          ...selectedGuest.userTemplate,
+          nameInvitation: selectedGuest.type != "singel" ? selectedGuest?.members?.map(function ({ name }: any) {
             return name
           }).join(" & ") : selectedGuest.name
         }} />}
