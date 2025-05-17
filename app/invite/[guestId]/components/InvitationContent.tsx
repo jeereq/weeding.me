@@ -13,7 +13,7 @@ interface Props {
 
 export default function InvitationContent({ guestId }: Props) {
   const { fetch, loading } = useFetchData({ uri: "auth/invite/active" })
-  const { fetch: fetchDesactive, loading: loadingDesactive } = useFetchData({ uri: "auth/invite/active" })
+  const { fetch: fetchDesactive, loading: loadingDesactive } = useFetchData({ uri: "auth/invite/desactive" })
   const { fetch: fetchPublic, loading: loadingPublic } = useFetchData({ uri: "auth/users/invitationPublic" })
   const [selectedGuest, setSelectedGuest]: any = useState(null)
 
