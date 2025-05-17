@@ -60,7 +60,7 @@ export default function InvitationContent({ guestId }: Props) {
         }} />}
       </div>
       {(selectedGuest.status == "noStarted" || selectedGuest.status == "pending") && <div className="w-full fixed z-50 bottom-0 left-0 right-0">
-        <div className="w-[500px] grid grid-cols-2 mx-auto gap-1 p-5">
+        <div className="w-full lg:w-[500px] grid grid-cols-2 mx-auto gap-1 p-5">
           <Button
             variant="ghost"
             size="sm"
