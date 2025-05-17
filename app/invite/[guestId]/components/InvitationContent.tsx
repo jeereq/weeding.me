@@ -19,6 +19,7 @@ export default function InvitationContent({ guestId }: Props) {
 
   useEffect(function () {
     fetchPublic({ id: guestId }, "POST").then(function ({ data }) {
+      console.log(data.data)
       if (data.data) {
         setSelectedGuest(data.data)
       }
