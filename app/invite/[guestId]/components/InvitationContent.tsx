@@ -5,7 +5,6 @@ import TemplateGreen from '@/components/templates/green';
 import { templates } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import { useFetchData } from '@/hooks/useFetchData';
-import { useSearchParams } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 
 interface Props {
@@ -13,20 +12,20 @@ interface Props {
 }
 
 export default function InvitationContent({ guestId }: Props) {
-  const searchParams = useSearchParams()
   const { fetch, loading } = useFetchData({ uri: "auth/invite/active" })
   const { fetch: fetchDesactive, loading: loadingDesactive } = useFetchData({ uri: "auth/invite/active" })
   const { fetch: fetchPublic, loading: loadingPublic } = useFetchData({ uri: "auth/users/invitationPublic" })
   const [selectedGuest, setSelectedGuest]: any = useState(null)
+
   useEffect(function () {
     fetchPublic({ id: guestId }, "POST").then(function ({ data }) {
       if (data.data) {
         setSelectedGuest(data.data)
       }
     })
-
   }, [])
-  if (!selectedGuest || loading || loadingDesactive || loadingPublic) return <div className="w-full h-screen flex items-center">
+
+  if (!selectedGuest || loadingPublic) return <div className="w-full h-screen flex items-center">
     <h1 className="font-bold  text-center w-full">
       ...Chargement
     </h1>
@@ -71,7 +70,7 @@ export default function InvitationContent({ guestId }: Props) {
 
             }}
           >
-            Absent
+            {loadingDesactive ? "...Chargement" : "Absent"}
           </Button>
           <Button
             variant="ghost"
@@ -85,7 +84,7 @@ export default function InvitationContent({ guestId }: Props) {
               })
             }}
           >
-            Présent
+            {loading ? "...Chargement" : "Présent"}
           </Button>
         </div>
       </div>}
