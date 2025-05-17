@@ -9,6 +9,7 @@ const nextConfig = {
     return config;
   },
   experimental: {
+    missingSuspenseWithCSRBailout: false,
     fontLoaders: [
       { loader: 'default', options: { timeout: 15000 } }
     ]
