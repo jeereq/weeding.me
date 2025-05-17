@@ -68,6 +68,7 @@ export default function InvitationContent({ guestId }: Props) {
               fetchDesactive({ id: guestId }, "POST").then(function ({ data }) {
                 if (data.data) {
                   alert(data.message)
+                  setSelectedGuest(data.data)
                 }
               })
 
@@ -83,6 +84,7 @@ export default function InvitationContent({ guestId }: Props) {
               fetch({ id: guestId }, "POST").then(function ({ data }) {
                 if (data.data) {
                   alert(data.message)
+                  setSelectedGuest(data.data)
                 }
               })
             }}
