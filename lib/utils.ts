@@ -1,8 +1,8 @@
 import { clsx, type ClassValue } from 'clsx';
 import { twMerge } from 'tailwind-merge';
 
-// export const API = "https://weeding-me-api.onrender.com"
-export const API = "http://localhost:1337"
+export const API = "https://weeding-me-api.onrender.com"
+// export const API = "http://localhost:1337"
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
