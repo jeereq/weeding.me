@@ -5,30 +5,42 @@ import TemplateGreen from '@/components/templates/green';
 import { templates } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import { useFetchData } from '@/hooks/useFetchData';
+import { useSearchParams } from 'next/navigation';
 
 interface Props {
   guestId: any;
 }
 
-
-
 export default function InvitationContent({ guestId }: Props) {
+  const searchParams = useSearchParams()
   const { fetch, loading } = useFetchData({ uri: "auth/invite/active" })
+  const { fetch: fetchDesactive, loading: loadingDesactive } = useFetchData({ uri: "auth/invite/active" })
   const { fetch: fetchPublic, loading: loadingPublic } = useFetchData({ uri: "auth/users/invitationPublic" })
   const [selectedGuest, setSelectedGuest]: any = useState(null)
   useEffect(function () {
-    fetch({ id: guestId }, "POST").then(function ({ data }) {
-      if (data.data) {
-        alert(data.message)
-      }
-    })
     fetchPublic({ id: guestId }, "POST").then(function ({ data }) {
       if (data.data) {
         setSelectedGuest(data.data)
       }
     })
+    
+    const confirm = searchParams.get("confirm")
+
+    if (confirm) {
+      fetch({ id: guestId }, "POST").then(function ({ data }) {
+        if (data.data) {
+          alert(data.message)
+        }
+      })
+    } else {
+      fetchDesactive({ id: guestId }, "POST").then(function ({ data }) {
+        if (data.data) {
+          alert(data.message)
+        }
+      })
+    }
   }, [])
-  if (!selectedGuest || loading || loadingPublic) return <div className="w-full h-screen flex items-center">
+  if (!selectedGuest || loading || loadingDesactive || loadingPublic) return <div className="w-full h-screen flex items-center">
     <h1 className="font-bold  text-center w-full">
       ...Chargement
     </h1>
