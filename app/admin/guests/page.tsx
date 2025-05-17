@@ -54,6 +54,7 @@ const GuestsPage: FC = () => {
   const { fetch, loading } = useFetchData({ uri: "auth/users/invitations" })
   const { fetch: fetchCreate, loading: loadingCreate } = useFetchData({ uri: "auth/invitations/create" })
   const { fetch: fetchDelete, loading: loadingDelete } = useFetchData({ uri: "auth/invite/delete" })
+  const { fetch: fetchMessage, loading: loadingMessage } = useFetchData({ uri: "auth/invite/createMessage" })
   const [newGuest, setNewGuest] = useState<any>({
     id: null,
     name: '',
@@ -99,8 +100,11 @@ const GuestsPage: FC = () => {
   const handleSendMessage = () => {
     console.log('Sending message to:', selectedGuests);
     console.log('Message:', messageContent);
-    setMessageDialogOpen(false);
-    setMessageContent('');
+    fetchMessage({ userTemplate: invitationFilter }, "POST").then(function (data: any) {
+      console.log(data)
+      setMessageDialogOpen(false);
+      setMessageContent('');
+    })
   };
 
   const handlePreviewInvitation = (guest: Guest) => {
@@ -127,6 +131,7 @@ const GuestsPage: FC = () => {
     updatedMembers[index] = { ...updatedMembers[index], [field]: value };
     setNewGuest({ ...newGuest, members: updatedMembers });
   };
+  
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'attending':
@@ -417,42 +422,12 @@ const GuestsPage: FC = () => {
                 </SelectContent>
               </Select>
             </div>
-            <div>
-              <div className="w-full mb-2 flex">
-                <div onClick={function () {
-                  setMessageContent(`${messageContent} {{nom}}`)
-                }} className="w-fit cursor-pointer rounded-full hover:bg-gray-300 bg-gray-100 mr-2 py-1 px-3">
-                  nom
-                </div>
-                <div onClick={function () {
-                  setMessageContent(`${messageContent} {{invitation}}`)
-                }} className="w-fit cursor-pointer rounded-full hover:bg-gray-300 bg-gray-100 mr-2 py-1 px-3">
-                  invitation
-                </div>
-                <div onClick={function () {
-                  setMessageContent(`${messageContent} {{date}}`)
-                }} className="w-fit cursor-pointer rounded-full hover:bg-gray-300 bg-gray-100 mr-2 py-1 px-3">
-                  date
-                </div>
-                <div onClick={function () {
-                  setMessageContent(`${messageContent} {{address}}`)
-                }} className="w-fit cursor-pointer rounded-full hover:bg-gray-300 bg-gray-100 py-1 px-3">
-                  address
-                </div>
-              </div>
-              <Textarea
-                placeholder="Votre message..."
-                value={messageContent}
-                onChange={(e) => setMessageContent(e.target.value)}
-                rows={6}
-              />
-            </div>
             <div className="gap-1 w-full grid grid-cols-2">
               <Button variant="outline" onClick={() => setMessageDialogOpen(false)}>
                 Annuler
               </Button>
               <Button onClick={handleSendMessage}>
-                Envoyer
+                {loadingMessage ? "...Chargement" : "Envoyer"}
               </Button>
             </div>
           </div>
@@ -564,9 +539,9 @@ const GuestsPage: FC = () => {
       </Dialog>
 
       <Dialog open={previewDialogOpen} onOpenChange={setPreviewDialogOpen}>
-        <DialogContent className="max-w-2xl h-[90vh] overflow-y-scroll">
+        <DialogContent className="max-w-2xl h-[90vh] bg-gray-100 overflow-y-scroll">
           {selectedGuest && (
-            <div className="space-y-6 w-full">
+            <div className="space-y-6 w-[500px] mx-auto">
               {selectedGuest.userTemplate?.template == 1 && <TemplateGreen template={templates.find(function ({ id }) {
                 return id == 1
               })} data={{
