@@ -47,6 +47,7 @@ interface Invitation {
     title: string;
   };
   guests: Guest[];
+  boissons: Guest[];
 }
 
 export default function InvitationsPage() {
@@ -57,11 +58,12 @@ export default function InvitationsPage() {
   const [isBoissonOpen, setIsBoissonOpen] = useState(false);
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
-  const [boissons, setBoissons] = useState<any>(Boissons)
+  const [boissons, setBoissons] = useState<any>([])
   const [selectedInvitation, setSelectedInvitation] = useState<Invitation | null>(null);
   const { user, updateInvitation, deleteInvitation } = useData()
   const [isSee, setIsSee] = useState(false)
   const { fetch, loading } = useFetchData({ uri: "auth/invitations/activeCommand" })
+  const { fetch: fetchUpdate, loading: loadingUpdate } = useFetchData({ uri: "auth/invitations/commandeUpdate" })
   const { fetch: fetchDesactive, loading: loadingDesactive } = useFetchData({ uri: "auth/invitations/desctiveCommand" })
   const { fetch: fetchDelete, loading: loadingDelete } = useFetchData({ uri: "auth/invitations/delete" })
   const [formData, setFormData] = useState<any>({
@@ -103,7 +105,6 @@ export default function InvitationsPage() {
         return 'Pas envoyé';
     }
   };
-
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'attending':
@@ -144,6 +145,27 @@ export default function InvitationsPage() {
     setIsSee(false);
   };
 
+  useEffect(function () {
+    setBoissons([])
+    if (selectedInvitation?.id && selectedInvitation?.boissons) {
+      setBoissons(selectedInvitation.boissons || [])
+    } else {
+      Object.entries(Boissons).forEach(function ([key, boissons]) {
+        return boissons.forEach(function (boisson: any) {
+          setBoissons(function (previous: any[]) {
+            return [
+              ...previous,
+              {
+                id: previous.length,
+                selected: false,
+                type: key,
+                ...boisson
+              }]
+          })
+        })
+      })
+    }
+  }, [selectedInvitation])
 
   if (loading) return <div className="w-full">
     <h1 className="font-bold text-center">
@@ -253,7 +275,7 @@ export default function InvitationsPage() {
                       size="sm"
                       onClick={() => openGuestsModal(invitation)}
                     >
-                     <Users className="h-4 w-4 mr-1" />
+                      <Users className="h-4 w-4 mr-1" />
                     </Button>
                   </div>
                 </div>
@@ -412,24 +434,59 @@ export default function InvitationsPage() {
                           transition={{ duration: 0.6 }}
                         >
                           <ul>
-                            {Object.entries(boissons).map(([key, boissons]: any) => {
-                              return <>
-                                {boissons.map((boisson: any) => {
-                                  return (
-                                    <li key={boisson.nom} className="flex cursor-pointer group items-center justify-start p-2 border-b">
-                                      <div className="w-[20px] h-[20px] border-2 group-hover:border-blue-500 rounded-full border mr-2"></div>
-                                      <div className="w-[200px]">
-                                        <span className="font-semibold pr-2 block">{boisson.nom}</span>
-                                        <span className="font-semibold pr-2 block">({key.replaceAll('_', ' ')})</span>
-                                      </div>
-                                      <span className="text-gray-500">{boisson.description} </span>
-                                    </li>
-                                  )
-                                })}
-                              </>
+                            {boissons.map((boisson: any) => {
+                              return (
+                                <li onClick={function () {
+                                  setBoissons(function (previous: any[]) {
+                                    return previous.map(function (current: any) {
+                                      if (current.id == boisson.id) {
+                                        return {
+                                          ...current,
+                                          selected: !current.selected
+                                        }
+                                      }
+                                      return current
+
+                                    })
+                                  })
+                                }} key={boisson.id} className="flex cursor-pointer group items-center justify-start p-2 border-b">
+                                  {boisson.selected ? <div className="w-[20px] h-[20px] border-2 border-blue-500 rounded-full border mr-2"></div> : <div className="w-[20px] h-[20px] border-2 group-hover:border-blue-500 rounded-full border mr-2"></div>}
+                                  <div className="w-[200px]">
+                                    <span className="font-semibold pr-2 block">{boisson.nom}</span>
+                                    <span className="font-semibold pr-2 block">({boisson.type.replaceAll('_', ' ')})</span>
+                                  </div>
+                                  <span className="text-gray-500">{boisson.description} </span>
+                                </li>
+                              )
                             })}
                           </ul>
                         </motion.div>
+                        <div className="w-full gap-2 grid grid-cols-2 mt-2">
+                          <Button
+                            onClick={function () {
+                              setIsBoissonOpen(false)
+                            }}
+                            type="submit"
+                            className="w-full"
+                          >
+                            Annuler
+                          </Button>
+                          <Button
+                            onClick={function () {
+                              fetchUpdate({ id: invitation.id, boissons }, "POST").then(function ({ data }) {
+                                console.log(data)
+                                if (data.data) {
+                                  updateInvitation({ ...data.data }, user)
+                                  setIsBoissonOpen(false)
+                                }
+                              })
+                            }}
+                            type="submit"
+                            className={`w-full bg-green-500`}
+                          >
+                            {(loadingUpdate) ? "...Chargement" : "Modifier"}
+                          </Button>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -439,7 +496,6 @@ export default function InvitationsPage() {
           </>
         ))}
       </div>
-
     </div>
   );
 }
