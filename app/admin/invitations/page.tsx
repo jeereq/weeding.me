@@ -3,10 +3,10 @@ import { useEffect, useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { Plus, Users, Badge, RefreshCw, Eye, Pencil, Trash2 } from 'lucide-react';
+import { Plus, Users, Badge, RefreshCw, Eye, Pencil, Trash2, Wine } from 'lucide-react';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { props, useData } from '@/lib/data';
-import { templates } from '@/lib/utils';
+import { Boissons, templates } from '@/lib/utils';
 import { motion } from "framer-motion";
 import InvitationFormInvitationAdmin from '@/components/ui/invitation-form-admin';
 import { useFetchData } from '@/hooks/useFetchData';
@@ -54,8 +54,10 @@ export default function InvitationsPage() {
   const [isCreateOpen, setIsCreateOpen] = useState(false);
   const [isGuestsOpen, setIsGuestsOpen] = useState(false);
   const [isActiveOpen, setIsActiveOpen] = useState(false);
+  const [isBoissonOpen, setIsBoissonOpen] = useState(false);
   const [isViewOpen, setIsViewOpen] = useState(false);
   const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [boissons, setBoissons] = useState<any>(Boissons)
   const [selectedInvitation, setSelectedInvitation] = useState<Invitation | null>(null);
   const { user, updateInvitation, deleteInvitation } = useData()
   const [isSee, setIsSee] = useState(false)
@@ -126,6 +128,10 @@ export default function InvitationsPage() {
   const openGuestsModal = (invitation: Invitation) => {
     setSelectedInvitation(invitation);
     setIsGuestsOpen(true);
+  };
+  const openBoissonsModal = (invitation: Invitation) => {
+    setSelectedInvitation(invitation);
+    setIsBoissonOpen(true);
   };
   const openViewsModal = (invitation: Invitation) => {
     setSelectedInvitation(invitation);
@@ -200,15 +206,22 @@ export default function InvitationsPage() {
                   <div title={`${invitation.title} ${invitation.invitations} invitations, ${invitation.price.toFixed(2)}$ `}
                     className="flex w-full lg:w-fit items-center mr-1 text-sm text-muted-foreground">
                     <Users className="h-4 w-4 mr-1" />
-                    {invitation.invitations} Invitation(s) <span className="font-bold ml-2 mr-1">$</span> {invitation.price.toFixed(2)}
+                    {invitation.invitations} <span className="font-bold ml-2 mr-1">$</span> {invitation.price.toFixed(2)}
                   </div>
-                  <div className=" w-full pt-3 lg:w-fit grid grid-cols-5 gap-1">
+                  <div className=" w-full pt-3 lg:w-fit grid grid-cols-6 gap-1">
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={() => openViewsModalWithoutUpdate(invitation)}
                     >
                       <Eye className="h-4 w-4" />
+                    </Button>
+                    <Button
+                      variant="ghost"
+                      size="sm"
+                      onClick={() => openBoissonsModal(invitation)}
+                    >
+                      <Wine className="h-4 w-4" />
                     </Button>
                     <Button
                       variant="ghost"
@@ -240,7 +253,7 @@ export default function InvitationsPage() {
                       size="sm"
                       onClick={() => openGuestsModal(invitation)}
                     >
-                      <Users className="h-4 w-4 mr-1" /> {invitation.guests.length} Invité(s)
+                     <Users className="h-4 w-4 mr-1" />
                     </Button>
                   </div>
                 </div>
@@ -379,6 +392,43 @@ export default function InvitationsPage() {
                           {invitation.template == 1 && <TemplateGreen hide={isSee} template={templates.find(t => t.id == invitation.template)} data={invitation} />}
                           {invitation.template == 2 && <TemplateYellow hide={isSee} template={templates.find(t => t.id == invitation.template)} data={invitation} />}
                           {invitation.template == 3 && <TemplateRed hide={isSee} template={templates.find(t => t.id == invitation.template)} data={invitation} />}
+                        </motion.div>
+                      </div>
+                    </div>
+                  </div>
+                </TableBody>
+              </DialogContent>
+            </Dialog>
+            <Dialog open={isBoissonOpen && selectedInvitation?.id == invitation.id} onOpenChange={setIsBoissonOpen}>
+              <DialogContent className="w-full lg:max-w-3xl bg-gray-100">
+                <TableBody>
+                  <div className="w-full">
+                    <div className="w-full 0 mx-auto ">
+                      <div className="w-full h-[85vh] overflow-y-scroll mx-auto ">
+                        <motion.div
+                          key={invitation.template}
+                          initial={{ opacity: 0, y: 20 }}
+                          animate={{ opacity: 1, y: 0 }}
+                          transition={{ duration: 0.6 }}
+                        >
+                          <ul>
+                            {Object.entries(boissons).map(([key, boissons]: any) => {
+                              return <>
+                                {boissons.map((boisson: any) => {
+                                  return (
+                                    <li key={boisson.nom} className="flex cursor-pointer group items-center justify-start p-2 border-b">
+                                      <div className="w-[20px] h-[20px] border-2 group-hover:border-blue-500 rounded-full border mr-2"></div>
+                                      <div className="w-[200px]">
+                                        <span className="font-semibold pr-2 block">{boisson.nom}</span>
+                                        <span className="font-semibold pr-2 block">({key.replaceAll('_', ' ')})</span>
+                                      </div>
+                                      <span className="text-gray-500">{boisson.description} </span>
+                                    </li>
+                                  )
+                                })}
+                              </>
+                            })}
+                          </ul>
                         </motion.div>
                       </div>
                     </div>
